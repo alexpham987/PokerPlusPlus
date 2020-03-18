@@ -1,6 +1,12 @@
 #include "pot.h"
 
-Pot::Pot()
+Pot::Pot(int initialPotValue) : _initialPotValue{initialPotValue}
 {}
-int Pot::addToPot(int potValue)
-{}
+int Pot::getCurrentPot()
+{
+  return potValue;
+}
+void Pot::addToPot(int amountToAdd)
+{
+  potValue = potValue + amountToAdd;
+}

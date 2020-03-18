@@ -4,9 +4,12 @@
 class Round
 {
   public:
-    Round();
-  private:
+    Round(int roundNumber);
+    int getRoundNumber();
+    void changeRoundNumber(int newRoundNumber);
 
+  private:
+    int _roundNumber;
 };
 
 #endif

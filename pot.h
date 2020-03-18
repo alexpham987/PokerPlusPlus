@@ -4,10 +4,12 @@
 class Pot
 {
   public:
-    Pot();
-    int addToPot(int potValue);
+    Pot(int initialPotValue);
+    int getCurrentPot();
+    void addToPot(int amountToAdd);
 
   private:
+    int _initialPotValue;
     int potValue;
 };
 

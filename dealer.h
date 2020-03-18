@@ -4,10 +4,10 @@
 class Dealer
 {
   public:
-    Dealer(Deck deck);
+    Dealer(/*Deck deckOfCards*/);
     void dealCards();
     void dealChips();
-    bool gameResult(bool playerWin);
+    bool gameResult(/*something here?*/);
 
   private:
     bool playerWin;

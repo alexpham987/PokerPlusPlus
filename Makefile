@@ -1,18 +1,42 @@
-# this is an example makefile for the first homework
-# assignment this semester
+#compiler options
+CXXFLAGS+=--std=c++17 -lstdc++fs
 
-all: asio-1.12.2 src/chat_server src/chat_client src/json
+#source files
+SOURCES=$(wildcard *.cpp)
 
-asio-1.12.2:
-	tar xzf asio-1.12.2.tar.gz
+#object files
+OBJECTS=$(SOURCES:.cpp=.o)
 
-CXXFLAGS+= -DASIO_STANDALONE -Wall -O0 -g -std=c++11
-CPPFLAGS+=-I./include -I./asio-1.12.2/include
-LDLIBS+= -lpthread
+#main link objects
+MOBJECTS=$(filter-out test%,$(OBJECTS))
+
+#test link objects
+TOBJECTS=$(filter-out main.o,$(OBJECTS))
+
+#included libraries
+INCLUDE=`/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
+
+#executable filename
+EXECUTABLE=pokerpp
+
+all: $(EXECUTABLE)
+
+#Special symbols used:
+#$^ - is all the dependencies (in this case =$(OBJECTS) )
+#$@ - is the result name (in this case =$(EXECUTABLE) )
+
+$(EXECUTABLE): $(MOBJECTS)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
+
+test: CXXFLAGS+= -g
+test: $(TOBJECTS)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
+
+debug: CXXFLAGS+= -g
+debug: $(EXECUTABLE)
+
+%.o: %.cpp *.h
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-	-rm -rf asio-1.12.2
-	-rm -f src/chat_client
-	-rm -f src/chat_server		
-	-rm -f src/json
-
+	-rm -f $(EXECUTABLE) test $(OBJECTS)
