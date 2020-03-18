@@ -5,6 +5,7 @@ class Dealer
 {
   public:
     Dealer(/*Deck deckOfCards*/);
+    void shuffleCards(/*Deck deckOfCards*/);
     void dealCards();
     void dealChips();
     bool gameResult(/*something here?*/);

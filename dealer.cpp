@@ -2,6 +2,8 @@
 
 Dealer::Dealer(/*Deck deckOfCards*/)
 {}
+void Dealer::shuffleCards(/*Deck deckOfCards*/)
+{}
 void Dealer::dealCards()
 {}
 void Dealer::dealChips()
