@@ -1,14 +1,16 @@
 #ifndef DEALER_H
 #define DEALER_H
 
+#include "deck.h"
+
 class Dealer
 {
   public:
-    Dealer(/*Deck deckOfCards*/);
-    void shuffleCards(/*Deck deckOfCards*/);
+    Dealer(Deck deck);
+    void shuffleCards(Deck deck);
     void dealCards();
     void dealChips();
-    bool gameResult(/*something here?*/);
+    bool gameResult();
 
   private:
     bool playerWin;

@@ -1,14 +1,14 @@
 #include "dealer.h"
 
-Dealer::Dealer(/*Deck deckOfCards*/)
+Dealer::Dealer(Deck deck)
 {}
-void Dealer::shuffleCards(/*Deck deckOfCards*/)
+void Dealer::shuffleCards(Deck deck)
 {}
 void Dealer::dealCards()
 {}
 void Dealer::dealChips()
 {}
-bool Dealer::gameResult(/*something here?*/)
+bool Dealer::gameResult()
 {
   if(playerWin == true)
   {
