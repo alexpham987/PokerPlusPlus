@@ -1,7 +1,7 @@
 #ifndef DEALER_H
 #define DEALER_H
 
-#include "deck.h"
+//#include "deck.h"
 
 class Dealer
 {
@@ -11,6 +11,7 @@ class Dealer
     void dealCards();
     void dealChips();
     bool gameResult();
+    void dealerTransmission(std::string json);
 
   private:
     bool playerWin;

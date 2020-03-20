@@ -19,3 +19,5 @@ bool Dealer::gameResult()
     return false;
   }
 }
+void dealerTransmission(std::string json)
+{}
