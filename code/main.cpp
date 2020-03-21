@@ -1,12 +1,14 @@
-<<<<<<< HEAD
+#include <iostream>
+#include "json.hpp"
+#include "Mainwin.h"
+#include <gtkmm.h>
 
-int main() {
-	
-	return 0;
+int main(int argc, char *argv[]) {
+
+   auto app = Gtk::Application::create(argc, argv, "edu.uta.cse3310.POKERPP.v1_0");
+   
+   Mainwin win;
+   
+   return app->run(win);
+
 }
-=======
-int main(void)
-{
-  return 0;
-}
->>>>>>> e92df8b7dbb057fa9fc2adf7b3d15a031739705f

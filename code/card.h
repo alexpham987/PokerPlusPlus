@@ -10,7 +10,7 @@ const std::vector<std::string> suit_to_string = {"C", "D", "H", "S"};
 
 const int MAX_SUIT = 4;
 const int MIN_NUM = 2;
-const int MAX_NUM = 10;
+const int MAX_NUM = 13;
 
 class Card {
 
@@ -18,6 +18,7 @@ class Card {
 	Card(int num, Suit suit);
 	int num () const;
 	Suit suit() const;
+	int compareCard();
 	std::string card_to_string();
 	
   private:

@@ -13,6 +13,10 @@ int Card::num() const {return _num;}
 
 Suit Card::suit() const {return _suit;}
 
+int Card::compareCard() {
+	return 0;
+}
+
 std::string Card::card_to_string() {
 	return " ";
 }
