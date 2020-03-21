@@ -12,6 +12,10 @@ bool Dealer::gameResult()
 {
   return false;
 }
+void Dealer::exchangeCards(int amountOfCards)
+{}
+void Dealer::revealHand()
+{}
 void Dealer::playerJoin(Player player)
 {}
 void Dealer::playerLeave(Player player)

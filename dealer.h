@@ -8,17 +8,20 @@
 #include "asio.hpp"
 #include <vector>
 #include <string>
+#include <deque>
 
 using asio::ip::tcp;
 
 class Dealer
 {
   public:
-    Dealer(bool playerResult();
+    Dealer(bool playerResult);
     void shuffleCards();
     void dealCards();
     void dealChips();
     bool gameResult();
+    void exchangeCards(int amountOfCards);
+    void revealHand();
 
     //dealer communication to player below
     void playerJoin(Player player);
@@ -30,7 +33,7 @@ class Dealer
     bool _playerResult;
     std::vector<Card> deck;
     std::vector<Chip> chips;
-    std::vector<Player> players;
+    std::deque<Player> players;
 };
 
 #endif
