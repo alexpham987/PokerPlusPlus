@@ -36,7 +36,7 @@ debug: CXXFLAGS+= -g
 debug: $(EXECUTABLE)
 
 %.o: %.cpp *.h
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@ 
 
 clean:
 	-rm -f $(EXECUTABLE) test $(OBJECTS)
