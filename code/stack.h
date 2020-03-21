@@ -13,7 +13,7 @@ class Stack
     void add_chips (int value_chips_added);  //adds chips to player's stack
     void remove_chips (int value_chips_removed); //removes chips from player's stack
     
-
+   friend class Dealer;
 };
 
 

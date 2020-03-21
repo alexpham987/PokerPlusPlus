@@ -16,3 +16,6 @@ Hand::~Hand()
 
 void modify_hand (std::vector <Card> mod_hand)
 {}
+
+void calc_value (std::vector <Card> _hand)
+{}
