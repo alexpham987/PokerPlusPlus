@@ -1,6 +1,6 @@
 #include "dealer.h"
 
-Dealer::Dealer(bool playerResult) : _playerResult:{playerResult}
+Dealer::Dealer(bool playerResult) : _playerResult{playerResult}
 {}
 void Dealer::shuffleCards()
 {}

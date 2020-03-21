@@ -5,12 +5,12 @@
 #include "card.h"
 #include "deck.h"
 #include "player.h"
-#include "asio.hpp"
+//#include asio
 #include <vector>
 #include <string>
 #include <deque>
 
-using asio::ip::tcp;
+//using asio::ip::tcp;
 
 class Dealer
 {
