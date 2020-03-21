@@ -8,7 +8,12 @@ class Hand
 {
    int hand_value;            //value of hand, will create method to calculate
    std::vector <Card> _hand;  //vector with all 5 cards player is holding
+   void modify_hand (std::vector <Card> mod_hand);
 
+  public:
+
+   Hand( std::vector < Card >);
+   ~Hand();
 };
 
 #endif

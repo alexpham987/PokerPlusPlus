@@ -6,6 +6,13 @@
 
 #include "hand.h"
 
-//using asio::ip::tcp;
+Hand::Hand ( std::vector <Card> _hand)
+{
+   this -> _hand = _hand;
+}
 
+Hand::~Hand()
+{}
 
+void modify_hand (std::vector <Card> mod_hand)
+{}

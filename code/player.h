@@ -16,7 +16,9 @@ class Player
    std::string _name;
    int id;
 
-   nlohmann::json move_j() const;
+   nlohmann::json move_j() const; // method to be used by dealer to find out player move 
+
+   friend class Dealer;
 };
 
 
