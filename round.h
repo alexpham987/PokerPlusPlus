@@ -6,7 +6,7 @@
 class Round
 {
   public:
-    Round(int roundNumber);
+    Round(int roundNumber, std::string roundType);
     int getRoundNumber();
     void changeRoundNumber(int newRoundNumber);
     std::string getRoundType();
@@ -14,7 +14,7 @@ class Round
 
   private:
     int _roundNumber;
-    std::string roundType;
+    std::string _roundType;
 };
 
 #endif
