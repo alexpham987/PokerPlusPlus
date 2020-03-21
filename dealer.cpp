@@ -1,8 +1,8 @@
 #include "dealer.h"
 
-Dealer::Dealer(Deck deck)
+Dealer::Dealer(bool playerResult) : _playerResult:{playerResult}
 {}
-void Dealer::shuffleCards(Deck deck)
+void Dealer::shuffleCards()
 {}
 void Dealer::dealCards()
 {}
@@ -10,14 +10,11 @@ void Dealer::dealChips()
 {}
 bool Dealer::gameResult()
 {
-  if(playerWin == true)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return false;
 }
-void dealerTransmission(std::string json)
+void Dealer::playerJoin(Player player)
+{}
+void Dealer::playerLeave(Player player)
+{}
+void Dealer::deliverMessage(std::string message)
 {}

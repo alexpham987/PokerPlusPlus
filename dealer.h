@@ -1,20 +1,36 @@
 #ifndef DEALER_H
 #define DEALER_H
 
-//#include "deck.h"
+#include "chip.h"
+#include "card.h"
+#include "deck.h"
+#include "player.h"
+#include "asio.hpp"
+#include <vector>
+#include <string>
+
+using asio::ip::tcp;
 
 class Dealer
 {
   public:
-    Dealer(Deck deck);
-    void shuffleCards(Deck deck);
+    Dealer(bool playerResult();
+    void shuffleCards();
     void dealCards();
     void dealChips();
     bool gameResult();
-    void dealerTransmission(std::string json);
+
+    //dealer communication to player below
+    void playerJoin(Player player);
+    void playerLeave(Player player);
+    void deliverMessage(std::string message);
+
 
   private:
-    bool playerWin;
+    bool _playerResult;
+    std::vector<Card> deck;
+    std::vector<Chip> chips;
+    std::vector<Player> players;
 };
 
 #endif

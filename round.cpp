@@ -1,6 +1,6 @@
 #include "round.h"
 
-Round::Round(int roundNumber, std::string roundType) : _roundNumber{roundNumber}, : _roundType{roundType}
+Round::Round(int roundNumber, std::string roundType) : _roundNumber{roundNumber}, _roundType{roundType}
 {}
 int Round::getRoundNumber()
 {
@@ -12,9 +12,9 @@ void Round::changeRoundNumber(int newRoundNumber)
 }
 std::string Round::getRoundType()
 {
-  return roundType;
+  return _roundType;
 }
 void Round::changeRoundType(std::string newRoundType)
 {
-  roundType = newRoundType;
+  _roundType = newRoundType;
 }
