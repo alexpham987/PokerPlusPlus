@@ -13,7 +13,17 @@ int Card::num() const {return _num;}
 
 Suit Card::suit() const {return _suit;}
 
-int Card::compareCard() {
+int Card::compareCard(Card C) {
+	int num;
+	if(_num == 11 || _num == 12 || _num == 13)
+		num = 11;
+	else
+		num = _num;
+
+	if(num < C.num()) return -1;
+	else if(num > C.num()) return 1;
+	else return 0;
+		
 	return 0;
 }
 

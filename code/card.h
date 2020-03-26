@@ -20,7 +20,7 @@ class Card {
 	Card(int num, Suit suit);
 	int num () const;
 	Suit suit() const;
-	int compareCard();
+	int compareCard(Card C);
 	std::string card_to_string();
 	
   private:
