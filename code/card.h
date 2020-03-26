@@ -4,9 +4,11 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#include <sstream>
+#include <map>
+#include <iostream>
 
 enum Suit {C,D,H,S};
-const std::vector<std::string> suit_to_string = {"C", "D", "H", "S"};
 
 const int MAX_SUIT = 4;
 const int MIN_NUM = 2;

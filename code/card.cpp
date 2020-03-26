@@ -18,6 +18,36 @@ int Card::compareCard() {
 }
 
 std::string Card::card_to_string() {
+	std::stringstream ss;
+
+	switch (_num) {
+		case 1: ss << "Ace of ";
+			break;
+		case 2: ss << "Two of ";
+			break;
+		case 3: ss << "Three of ";
+			break;
+		case 4: ss << "Four of ";
+			break;
+		case 5: ss << "Five of ";
+			break;
+		case 6: ss << "Five of ";
+			break;
+		case 7: ss << "Seven of ";
+			break;
+		case 8: ss << "Eight of ";
+			break;
+		case 9: ss << "Nine of ";
+			break;
+		case 10: ss << "Ten of ";
+			break;
+		case 11: ss << "Jack of ";
+			break;
+		case 12: ss << "Queen of ";
+			break;
+		case 13: ss << "King of";
+			break;
+	}
 	return " ";
 }
 
