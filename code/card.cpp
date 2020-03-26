@@ -48,7 +48,17 @@ std::string Card::card_to_string() {
 		case 13: ss << "King of";
 			break;
 	}
-	return " ";
+
+	std::map<Suit, std::string> suit_string = 
+	{
+		{Suit::C, "Clovers"},
+		{Suit::D, "Diamonds"},
+		{Suit::H, "Hearts"},
+		{Suit::S, "Spades"}
+	};
+	ss << suit_string[_suit];
+
+	return ss.str();
 }
 
 
