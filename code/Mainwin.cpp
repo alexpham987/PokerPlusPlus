@@ -6,6 +6,11 @@
 Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder{refGlade} {
 
 	builder->get_widget("fold_button", fold_button);
+	builder->get_widget("check_button", check_button);
+	builder->get_widget("bet_button", bet_button);
+	builder->get_widget("bet_entry", bet_entry);
+	builder->get_widget("msg", msg);
+
 }
 
 Mainwin::~Mainwin() {}

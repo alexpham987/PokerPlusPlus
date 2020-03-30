@@ -23,8 +23,8 @@ class Mainwin : public Gtk::Window
     private:                                               
         Gtk::Label* msg;
 	Gtk::Button* fold_button;
-	Gtk::Button* check;
-	Gtk::Button* bet;
+	Gtk::Button* check_button;
+	Gtk::Button* bet_button;
 	Gtk::Entry* bet_entry;
 	Glib::RefPtr<Gtk::Builder> builder;
 
