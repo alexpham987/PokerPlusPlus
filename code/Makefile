@@ -1,5 +1,5 @@
 #compiler options
-CXXFLAGS+=--std=c++17 -lstdc++fs
+CXXFLAGS+= -DASIO_STANDALONE -Wall -std=c++11 -lstdc++fs -I./include -I./asio-1.12.2/include
 
 #source files
 SOURCES=$(wildcard *.cpp)
@@ -36,7 +36,7 @@ debug: CXXFLAGS+= -g
 debug: $(EXECUTABLE)
 
 %.o: %.cpp *.h
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@ 
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
 	-rm -f $(EXECUTABLE) test $(OBJECTS)
