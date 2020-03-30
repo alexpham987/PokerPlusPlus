@@ -4,11 +4,13 @@
 #include <gtkmm.h>
 
 int main(int argc, char *argv[]) {
+	Gtk::Main kit(argc, argv);
+	Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file("PokerPP.glade");
 
-   auto app = Gtk::Application::create(argc, argv, "edu.uta.cse3310.POKERPP.v1_0");
-   
-   Mainwin win;
-   
-   return app->run(win);
+	Mainwin *win = 0;
+	builder->get_widget_derived("Mainwin", win);
 
+	kit.run(*win);
+	return 0;
 }
+

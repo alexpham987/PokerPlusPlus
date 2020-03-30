@@ -7,6 +7,7 @@
 #include <sstream>
 #include <map>
 #include <iostream>
+//#include <gtkmm.h>
 
 enum Suit {C,D,H,S};
 
@@ -26,6 +27,7 @@ class Card {
   private:
 	int _num;
 	Suit _suit;
+	//Gtk::Image *CardImage;
 };
 
 #endif

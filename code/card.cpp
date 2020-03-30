@@ -7,6 +7,7 @@ Card::Card(int num, Suit suit) : _num{num}, _suit{suit}
 	
 	if(suit < 0 || suit > MAX_SUIT)
 		throw std::runtime_error("Suit : Out of Range!");
+	//CardImage = Gtk::manage(new Gtk::Image{".png"});
 }
 	
 int Card::num() const {return _num;}
