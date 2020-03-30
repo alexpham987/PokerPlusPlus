@@ -198,7 +198,7 @@
               </object>
             </child>
             <child>
-              <object class="GtkMenuItem" id="menutiem_help">
+              <object class="GtkMenuItem" id="menuitem_help">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Help</property>

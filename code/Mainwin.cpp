@@ -13,8 +13,12 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	builder->get_widget("MenuBar", MenuBar);
 	builder->get_widget("menuitem_help", menuitem_help);
 	builder->get_widget("menuitem_about", menuitem_about);
+	builder->get_widget("menuitem_file", menuitem_file);
+	builder->get_widget("menuitem_quit", menuitem_quit);
 
 	menuitem_about->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_about_click));
+
+	menuitem_quit->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_quit_click));
 	
 
 }
