@@ -10,6 +10,12 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	builder->get_widget("bet_button", bet_button);
 	builder->get_widget("bet_entry", bet_entry);
 	builder->get_widget("msg", msg);
+	builder->get_widget("MenuBar", MenuBar);
+	builder->get_widget("menuitem_help", menuitem_help);
+	builder->get_widget("menuitem_about", menuitem_about);
+
+	menuitem_about->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_about_click));
+	
 
 }
 

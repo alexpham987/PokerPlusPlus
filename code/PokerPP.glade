@@ -24,7 +24,7 @@
           </object>
           <packing>
             <property name="x">20</property>
-            <property name="y">300</property>
+            <property name="y">290</property>
           </packing>
         </child>
         <child>
@@ -38,7 +38,7 @@
           </object>
           <packing>
             <property name="x">130</property>
-            <property name="y">300</property>
+            <property name="y">290</property>
           </packing>
         </child>
         <child>
@@ -50,7 +50,7 @@
           </object>
           <packing>
             <property name="x">250</property>
-            <property name="y">300</property>
+            <property name="y">290</property>
           </packing>
         </child>
         <child>
@@ -64,18 +64,18 @@
           </object>
           <packing>
             <property name="x">430</property>
-            <property name="y">300</property>
+            <property name="y">290</property>
           </packing>
         </child>
         <child>
-          <object class="GtkMenuBar">
+          <object class="GtkMenuBar" id="MenuBar">
             <property name="name">menubar</property>
             <property name="width_request">600</property>
             <property name="height_request">0</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkMenuItem">
+              <object class="GtkMenuItem" id="menuitem_file">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_File</property>
@@ -198,7 +198,7 @@
               </object>
             </child>
             <child>
-              <object class="GtkMenuItem">
+              <object class="GtkMenuItem" id="menuitem_help">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Help</property>
@@ -208,12 +208,14 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkImageMenuItem">
+                      <object class="GtkImageMenuItem" id="menuitem_about">
                         <property name="label">gtk-about</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="on_about_click" swapped="no"/>
+                        <signal name="activate-item" handler="on_about_click()" swapped="no"/>
                       </object>
                     </child>
                   </object>

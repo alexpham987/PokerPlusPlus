@@ -20,7 +20,12 @@ class Mainwin : public Gtk::Window
 	void on_fold_click();
 	void on_about_click();
 		
-    private:                                               
+    private: 
+	Gtk::MenuBar* MenuBar;
+	Gtk::MenuItem* menuitem_help;
+	Gtk::MenuItem* menuitem_about; 
+	Gtk::MenuItem* menuitem_file;
+	Gtk::MenuItem* menuitem_quit;                                             
         Gtk::Label* msg;
 	Gtk::Button* fold_button;
 	Gtk::Button* check_button;
