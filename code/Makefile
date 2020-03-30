@@ -1,5 +1,5 @@
 #compiler options
-CXXFLAGS+=--std=c++17 -lstdc++fs
+CXXFLAGS+= -DASIO_STANDALONE -Wall -std=c++11 -lstdc++fs
 
 #source files
 SOURCES=$(wildcard *.cpp)
@@ -26,7 +26,7 @@ all: $(EXECUTABLE)
 #$@ - is the result name (in this case =$(EXECUTABLE) )
 
 $(EXECUTABLE): $(MOBJECTS)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE) 
 
 test: CXXFLAGS+= -g
 test: $(TOBJECTS)
