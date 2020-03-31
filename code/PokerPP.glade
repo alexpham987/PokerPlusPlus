@@ -361,7 +361,7 @@
               <object class="GtkImage" id="chip_1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="stock">gtk-add</property>
+                <property name="pixbuf">Chips/chip_blue.png</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -373,7 +373,7 @@
               <object class="GtkImage" id="chip_2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="stock">gtk-add</property>
+                <property name="pixbuf">Chips/chip_green.png</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -385,7 +385,7 @@
               <object class="GtkImage" id="chip_3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="stock">gtk-add</property>
+                <property name="pixbuf">Chips/chip_red.png</property>
               </object>
               <packing>
                 <property name="expand">True</property>

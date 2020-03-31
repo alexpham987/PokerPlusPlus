@@ -235,7 +235,7 @@
               <object class="GtkImage" id="card_1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="stock">gtk-about</property>
+                <property name="pixbuf">Cards/2D.jpg</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -245,10 +245,9 @@
             </child>
             <child>
               <object class="GtkImage" id="card_2">
-                <property name="name">card_2</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="stock">gtk-about</property>
+                <property name="pixbuf">Cards/2H.jpg</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -260,7 +259,7 @@
               <object class="GtkImage" id="card_3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="stock">gtk-about</property>
+                <property name="pixbuf">Cards/2S.jpg</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -272,7 +271,7 @@
               <object class="GtkImage" id="card_4">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="stock">gtk-about</property>
+                <property name="pixbuf">Cards/2C.jpg</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -284,7 +283,7 @@
               <object class="GtkImage" id="card_5">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="stock">gtk-about</property>
+                <property name="pixbuf">Cards/3C.jpg</property>
               </object>
               <packing>
                 <property name="expand">True</property>
