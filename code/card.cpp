@@ -72,4 +72,23 @@ std::string Card::card_to_string() {
 	return ss.str();
 }
 
+std::string Card::card_to_filename() {
+	std::stringstream ss;
+	ss << "Cards/";
+	ss << _num;
+
+	std::map<Suit, std::string> suit_string = 
+	{
+		{Suit::C, "C"},
+		{Suit::D, "D"},
+		{Suit::H, "H"},
+		{Suit::S, "S"}
+	};
+	ss << suit_string[_suit];
+	ss << ".jpg";
+
+	return ss.str();
+}
+	
+
 
