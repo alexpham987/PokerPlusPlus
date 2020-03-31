@@ -1,13 +1,16 @@
-#include "card.h"
-#include "chip.h"
 #include <iostream>
+#include "json.hpp"
+#include "Mainwin.h"
+#include <gtkmm.h>
 
-int main() {
-	Card c(2,C);
-	std::cout << c.card_to_filename() << std::endl;
+int main(int argc, char *argv[]) {
+	Gtk::Main kit(argc, argv);
+	Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file("PokerPP.glade");
 
-	Chip c1(GREEN);
-	std::cout << c1.chip_to_filename() << std::endl;
+	Mainwin *win = 0;
+	builder->get_widget_derived("Mainwin", win);
 
+	kit.run(*win);
 	return 0;
 }
+
