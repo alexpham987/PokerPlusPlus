@@ -1,18 +1,18 @@
-#ifndef DEALER_H
-#define DEALER_H
+#ifndef DEALER_GAME_H
+#define DEALER_GAME_H
 
 #include "chip.h"
 #include "card.h"
 #include "deck.h"
-#include "player.h"
+//#include "player.h"
 #include <vector>
 #include <string>
 #include <deque>
 
-class Dealer
+class Dealer_Game
 {
   public:
-    Dealer(bool playerResult);
+    Dealer_Game(bool playerResult);
     void shuffleCards();
     void dealCards();
     void dealChips();
@@ -20,17 +20,11 @@ class Dealer
     void exchangeCards(int amountOfCards);
     void revealHand();
 
-    //dealer communication to player below
-    void playerJoin(Player player);
-    void playerLeave(Player player);
-    void deliverMessage(std::string message);
-
-
   private:
     bool _playerResult;
     std::vector<Card> deck;
     std::vector<Chip> chips;
-    std::deque<Player> players;
+    //std::deque<Player> players;
 };
 
 #endif

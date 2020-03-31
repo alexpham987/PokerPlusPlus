@@ -3,16 +3,15 @@
 // class for Player
 //
 //
-#include "player.h"
+#include "player_game.h"
 
 
-Player::Player(){
+Player_Game::Player_Game(){
 
    boost::uuids::random_generator generator;
 
    boost::uuids::uuid id = generator();
 }
 
-nlohmann::json Player::move_j() const
+nlohmann::json Player_Game::move_j() const
 {}
-
