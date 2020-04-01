@@ -55,6 +55,7 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 		playername_label->set_label(player_name);
 	}
 	dialog->close();
+	delete dialog;
 
 }
 

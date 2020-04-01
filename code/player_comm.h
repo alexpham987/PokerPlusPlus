@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <deque>
 #include <iostream>
-#include <thread>
 #include <assert.h>
 #include "asio.hpp"
 #include "chat_message.hpp"

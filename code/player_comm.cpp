@@ -205,18 +205,7 @@ int main(int argc, char *argv[])
       return 1;
    }
 
-   asio::io_context io_context;
 
-   tcp::resolver resolver(io_context);
-   auto endpoints = resolver.resolve(argv[1], argv[2]);
-   c = new chat_client(io_context, endpoints);
-   assert(c);
-   std::thread t([&io_context](){ io_context.run(); });
-
-   gtk_main();
-
-   c->close();
-   t.join();
 
    return 0;
 }
