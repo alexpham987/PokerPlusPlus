@@ -34,6 +34,28 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	ante_button->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_ante_click));
 	
 
+	Gtk::Dialog *dialog = new Gtk::Dialog();
+	dialog->set_transient_for(*this);
+	dialog->set_title("Enter Name");
+	Gtk::HBox b_name;
+
+	Gtk::Entry e_name;
+	e_name.set_max_length(50);
+	b_name.pack_start(e_name, Gtk::PACK_SHRINK);
+	dialog->get_vbox()->pack_start(b_name, Gtk::PACK_SHRINK);
+
+	dialog->add_button("Enter", 0);
+	dialog->show_all();
+	int result = 1;
+	std::string player_name;
+
+	while(result) {
+		result = dialog->run();
+		player_name = e_name.get_text();
+		playername_label->set_label(player_name);
+	}
+	dialog->close();
+
 }
 
 Mainwin::~Mainwin() {}
