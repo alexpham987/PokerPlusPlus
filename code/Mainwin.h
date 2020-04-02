@@ -10,6 +10,7 @@
 #include "json.hpp"
 #include "chat_message.hpp"
 #include "player_comm.h"
+#include "player_game.h"
 
 class Mainwin : public Gtk::Window
 {
@@ -39,6 +40,9 @@ class Mainwin : public Gtk::Window
 	Gtk::Button* ante_button;
 	Gtk::Entry* bet_entry;
 	Glib::RefPtr<Gtk::Builder> builder;
+
+private:
+	Player_Game _p;
 
 };
 #endif 
