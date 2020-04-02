@@ -11,7 +11,8 @@ Chip::Chip(Color color) : _color{color}
 		_value = 5;
 	else
 		_value = 25;
-	
+
+	chipimage = Gtk::manage(new Gtk::Image{this->chip_to_filename()});	
 }
 	
 Color Chip::color() const {return _color;}
