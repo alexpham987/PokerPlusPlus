@@ -2,7 +2,12 @@
 
 Deck::Deck()
 {
-	//Create deck of 52 cards
+	for(int i = 1; i <= 13; i++) {
+		_deck.push_back(Card(i,C));
+		_deck.push_back(Card(i,D));
+		_deck.push_back(Card(i,H));
+		_deck.push_back(Card(i,S));
+	}
 	
 	if(_deck.size() != 52)
 		throw std::runtime_error("Deck : Out of Range!");
@@ -10,16 +15,17 @@ Deck::Deck()
 }
 
 Card Deck::deal() {
-	return Card(0,S);	
+	Card c = _deck.back();
+	_deck.pop_back();
+	return c;
+		
 }
 
 int Deck::remaining_cards() {
-	return 0;
+	return _deck.size();
 }
 
 bool Deck::deck_empty() {
-	return 0;
+	return _deck.empty();
 }
 
-Card Deck::getCard() {
-}
