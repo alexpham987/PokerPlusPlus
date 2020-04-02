@@ -1,5 +1,4 @@
 #include "Mainwin.h"
-#include "chat_message.hpp"
 #include <dirent.h>
 #include <fstream>
 #include <experimental/filesystem>
@@ -74,53 +73,95 @@ void Mainwin::on_about_click() {
 	dialog.set_version("Version 1.1.0");    
 	dialog.set_copyright("Copyright 2020");    
 	dialog.set_license_type(Gtk::License::LICENSE_GPL_3_0);    
-	std::vector< Glib::ustring > authors = {"*list authors*"};    
+	std::vector< Glib::ustring > authors = {"\nBailey Brown \nAlex Pham \nMarcos Juarez"};    
 	dialog.set_authors(authors);    
 	dialog.run(); 
 	}
 
 void Mainwin::on_check_click() {
-	/*chat_message msg;
+	//check if any player has bet yet
 
-	nlohmann::json j;
-	j["name"] = "Bailey Brown";
-	j["id"] = 1001555076;
+	chat_message msg;
 
-	std::string json = j.dump();
-	json.append(line);
-	strcpy(line, json.c_str());
+	nlohmann::json to_dealer;
+	to_dealer["decision"] = "check";
+	to_dealer["name"] = "name";
+	to_dealer["uuid"] = "xyz";
 
-	msg.body_length(std::strlen(line));
-	std::memcpy(msg.body(), line, msg.body_length());
+	std::string json_str = to_dealer.dump();
+
+	msg.body_length(std::strlen(json_str.c_str()));
+	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
 	msg.encode_header();
-	c.write(msg);*/
 
-	/* First, the method should check if any player has bet yet
-	 * if they have, the player must choose a different option
-	 * if they have not, a JSON will be sent to the dealer 
-	 * and it will move on to the next player's turn */
+	//player_comm.write(msg);
 }
 
 void Mainwin::on_bet_click() {
-	/* This method should take the text from bet_entry and attempt to convert it to a long
-	 * If this fails, this was an invalid input and the player must enter something
-	 * different
-	 * Next, the method should check if the bet entered is lower than the current bet
-	 * If it is lower, the player must enter something different
-	 * Once the entry is correct, a JSON will be sent to the dealer 
-	 * and it will move on to the next player's turn */
+	//Check if bet_entry->get_text() is valid
+	int bet_amount = std::stoi(bet_entry->get_text());
+
+	chat_message msg;
+	nlohmann::json to_dealer;
+
+	//if there is no current bet
+		to_dealer["decision"] = "bet";
+	//else if bet_amount < current bet
+		std::cout << "error" << std::endl;
+	//else if bet_amount > current bet amount
+		to_dealer["decision"] = "raise";
+	//else
+		to_dealer["decision"] = "call";
+
+	to_dealer["bet"] = bet_amount;
+	to_dealer["name"] = "name";
+	to_dealer["uuid"] = "xyz";
+
+	std::string json_str = to_dealer.dump();
+
+	msg.body_length(std::strlen(json_str.c_str()));
+	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
+	msg.encode_header();
+	//player_comm.write(msg);
 }
 
 void Mainwin::on_fold_click() {
-	/* This method will simply send a JSON to the dealer and will not be allowed to
-	 * particpate in the current game
-	 * The player will spectate the rest of the game until it ends or the window is
-	 * closed */
+
+	chat_message msg;
+
+	nlohmann::json to_dealer;
+	to_dealer["decision"] = "fold";
+	to_dealer["name"] = "name";
+	to_dealer["uuid"] = "xyz";
+
+	std::string json_str = to_dealer.dump();
+
+	msg.body_length(std::strlen(json_str.c_str()));
+	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
+	msg.encode_header();
+
+	//player_comm.write(msg);
+	
+	//Allow player to spectate	
 }
 
 void Mainwin::on_ante_click() {
-	/* This method will only be used at the begnning of the game
-	 * It will have almost the same funcitonality as the bet button
-	 * Once a player has ante'd the correct amount, it will send a JSON to dealer
-	 * and move on to the next player's turn */
+	//Check if bet_entry->get_text() is valid
+	int ante_amount = std::stoi(bet_entry->get_text());
+
+	chat_message msg;
+
+	nlohmann::json to_dealer;
+	to_dealer["decision"] = "ante";
+	to_dealer["amount"] = ante_amount;
+	to_dealer["name"] = "name";
+	to_dealer["uuid"] = "xyz";
+
+	std::string json_str = to_dealer.dump();
+
+	msg.body_length(std::strlen(json_str.c_str()));
+	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
+	msg.encode_header();
+
+	//player_comm.write(msg);
 }

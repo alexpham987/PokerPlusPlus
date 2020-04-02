@@ -7,6 +7,9 @@
 #include <exception>
 #include <iostream>
 #include <sstream>
+#include "json.hpp"
+#include "chat_message.hpp"
+#include "player_comm.h"
 
 class Mainwin : public Gtk::Window
 {
