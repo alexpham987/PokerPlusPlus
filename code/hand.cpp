@@ -1,21 +1,15 @@
-//
-//
-// class for the cards at hand
-//
-//
-
 #include "hand.h"
 
-Hand::Hand ( std::vector <Card> _hand)
+Hand::Hand(std::vector<Card> hand)
 {
-   this -> _hand = _hand;
+   //this->hand = _hand;
 }
 
-Hand::~Hand()
+void modify_hand (std::vector<Card> mod_hand)
 {}
 
-void modify_hand (std::vector <Card> mod_hand)
-{}
+int calc_value(std::vector<Card> _hand)
+{return 0;}
 
-void calc_value (std::vector <Card> _hand)
-{}
+int find_high_card(std::vector<Card> _hand)
+{return 0;}
