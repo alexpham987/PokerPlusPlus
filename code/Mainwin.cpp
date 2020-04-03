@@ -86,7 +86,7 @@ void Mainwin::on_about_click() {
 
 void Mainwin::on_check_click() {
 	//check if any player has bet yet
-
+	player_comm *p = 0;
 	chat_message msg;
 
 	nlohmann::json to_dealer;
@@ -100,11 +100,12 @@ void Mainwin::on_check_click() {
 	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
 	msg.encode_header();
 
-	//player_comm.write(msg);
+  p->write(msg);
 }
 
 void Mainwin::on_bet_click() {
 	//Check if bet_entry->get_text() is valid
+	player_comm *p = 0;
 	int bet_amount = std::stoi(bet_entry->get_text());
 
 	chat_message msg;
@@ -128,11 +129,11 @@ void Mainwin::on_bet_click() {
 	msg.body_length(std::strlen(json_str.c_str()));
 	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
 	msg.encode_header();
-	//player_comm.write(msg);
+	p->write(msg);
 }
 
 void Mainwin::on_fold_click() {
-
+	player_comm *p = 0;
 	chat_message msg;
 
 	nlohmann::json to_dealer;
@@ -146,13 +147,14 @@ void Mainwin::on_fold_click() {
 	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
 	msg.encode_header();
 
-	//player_comm.write(msg);
+	p->write(msg);
 
 	//Allow player to spectate
 }
 
 void Mainwin::on_ante_click() {
 	//Check if bet_entry->get_text() is valid
+	player_comm *p = 0;
 	int ante_amount = std::stoi(bet_entry->get_text());
 
 	chat_message msg;
@@ -169,5 +171,5 @@ void Mainwin::on_ante_click() {
 	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
 	msg.encode_header();
 
-	//player_comm.write(msg);
+	p->write(msg);
 }

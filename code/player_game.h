@@ -11,7 +11,7 @@
 #include "chat_message.hpp"
 #include "asio.hpp"
 
-class Player_Game : public player_comm
+class Player_Game// : public player_comm
 {
    //Hand _hand;
   public:

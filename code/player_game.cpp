@@ -7,6 +7,7 @@ Player_Game::Player_Game()
 }
 void Player_Game::getPlayerUUID()
 {
+  player_comm *p = 0;
   boost::uuids::to_string(_uuid);
 
   chat_message uuid;
@@ -20,7 +21,7 @@ void Player_Game::getPlayerUUID()
 	std::memcpy(uuid.body(), json_str.c_str(), uuid.body_length());
 	uuid.encode_header();
 
-  player_comm.write(uuid);
+  p->write(uuid);
 }
 /*void Player_Game::getPlayerAnte(int anteAmount)
 {
