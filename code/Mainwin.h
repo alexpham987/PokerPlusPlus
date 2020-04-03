@@ -23,6 +23,7 @@ class Mainwin : public Gtk::Window
 	void on_bet_click();
 	void on_fold_click();
 	void on_ante_click();
+	void on_exchange_click();
 	void on_about_click();
 		
     private: 
@@ -39,10 +40,15 @@ class Mainwin : public Gtk::Window
 	Gtk::Button* bet_button;
 	Gtk::Button* ante_button;
 	Gtk::Entry* bet_entry;
+	Gtk::Button* exchange_button;
+	Gtk::Fixed *fixed;
+     	Gtk::Label* chip1_label; 
+      	Gtk::Label* chip2_label; 
+      	Gtk::Label* chip3_label;
 	Glib::RefPtr<Gtk::Builder> builder;
 
 private:
 	Player_Game _p;
 
 };
-#endif 
+#endif

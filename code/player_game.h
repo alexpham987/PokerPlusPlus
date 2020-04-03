@@ -26,11 +26,10 @@ class Player_Game
    int cards_requested;
    //std::string chat;
 
-   nlohmann::json move_j() const; // method to be used by dealer to find out player move
+   //nlohmann::json move_j() const; // method to be used by dealer to find out player move
 
    friend class player_comm;
    friend class Dealer_game
 };
-
 
 #endif
