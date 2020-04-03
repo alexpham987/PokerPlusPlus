@@ -2,9 +2,9 @@
 
 Stack::Stack() :_total{initial_total}
 {
-  _stack.push_back(1);
-  _stack.push_back(1);
-  _stack.push_back(1);
+  _stack.push_back(25);
+  _stack.push_back(5);
+  _stack.push_back(2);
 }
 
 void Stack::add_chips(int green, int red, int blue)
