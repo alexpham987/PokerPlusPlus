@@ -4,17 +4,24 @@
 #include <vector>
 #include "chip.h"
 
+#define initial_total 100
+#define red_multiplier 1
+#define green_multiplier 5
+#define blue_multiplier 25
+
 class Stack
 {
-  public:
-    void add_chips (int value_chips_added);  //adds chips to player's stack
-    void remove_chips (int value_chips_removed); //removes chips from player's stack
+  friend class Dealer;
 
-   friend class Dealer;
+  public:
+    Stack();
+    void add_chips(int green, int red, int blue);
+    void remove_chips(int green, int red, int blue);
+    int get_total();
 
   private:
-    int total;                  //total value of player's chips
-    std::vector <Chip> _stack;  //vector with all the player's chips
+    int _total;
+    std::vector<int> _stack;
 };
 
 
