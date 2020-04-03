@@ -6,9 +6,9 @@ Chip::Chip(Color color) : _color{color}
 		throw std::runtime_error("Color : Out of Range!");
 	
 	if(color == GREEN)
-		_value = 1;
-	else if(color == RED)
 		_value = 5;
+	else if(color == RED)
+		_value = 1;
 	else
 		_value = 25;
 

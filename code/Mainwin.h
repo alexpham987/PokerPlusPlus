@@ -42,10 +42,13 @@ class Mainwin : public Gtk::Window
 	Gtk::Entry* bet_entry;
 	Gtk::Button* exchange_button;
 	Gtk::Fixed *fixed;
+     	Gtk::Label* chip1_label; 
+      	Gtk::Label* chip2_label; 
+      	Gtk::Label* chip3_label;
 	Glib::RefPtr<Gtk::Builder> builder;
 
 private:
 	Player_Game _p;
 
 };
-#endif 
+#endif

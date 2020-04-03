@@ -6,6 +6,7 @@
 Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder{refGlade} {
 	set_title("Poker ++");
 
+
 	builder->get_widget("fixed", fixed);
 	builder->get_widget("fold_button", fold_button);
 	builder->get_widget("check_button", check_button);
@@ -15,6 +16,9 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	builder->get_widget("msg", msg);
 	builder->get_widget("bet_label", bet_label);
 	builder->get_widget("playername_label", playername_label);
+	builder->get_widget("chip1_label", chip1_label); //added chip1_label
+	builder->get_widget("chip2_label", chip2_label); //added chip2_label
+	builder->get_widget("chip3_label", chip3_label); //added chip3_label
 	builder->get_widget("MenuBar", MenuBar);
 	builder->get_widget("menuitem_help", menuitem_help);
 	builder->get_widget("menuitem_about", menuitem_about);
@@ -23,7 +27,6 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	//Excange button will need to be toggled ON during exchange cards round
 	builder->get_widget("exchange_button", exchange_button);
 	//exchange_button->set_sensitive(true);
-
 
 	menuitem_about->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_about_click));
 
@@ -84,9 +87,8 @@ void Mainwin::on_about_click() {
 	dialog.run();
 } 
 
-
 void Mainwin::on_check_click() {
-	std::cout << "check button pressed" << std::endl;
+	std::cout << "check button clicked" << std::endl;
 	//check if any player has bet yet
 
 	chat_message msg;
@@ -107,6 +109,7 @@ void Mainwin::on_check_click() {
 
 void Mainwin::on_bet_click() {
 	std::cout << "bet button pressed" << std::endl;
+
 	//Check if bet_entry->get_text() is valid
 	int bet_amount = std::stoi(bet_entry->get_text());
 
@@ -150,13 +153,12 @@ void Mainwin::on_fold_click() {
 	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
 	msg.encode_header();
 
-	//player_comm.write(msg);
-	
+	//player_comm.write(msg);	
 	//Allow player to spectate	
 }
 
 void Mainwin::on_ante_click() {
-	std::cout << "ante button pressed" << std::endl;
+	std::cout << "ante button clicked" << std::endl;
 	//Check if bet_entry->get_text() is valid
 	int ante_amount = std::stoi(bet_entry->get_text());
 
@@ -178,7 +180,7 @@ void Mainwin::on_ante_click() {
 }
 
 void Mainwin::on_exchange_click() {
-	std::cout << "button pressed" << std::endl;
+	std::cout << "exchange button pressed" << std::endl;
 	int result = 1;
 
 	Gtk::Dialog *dialog = new Gtk::Dialog();
