@@ -9,15 +9,28 @@ Player_Game::Player_Game(){
 
 }
 
-nlohmann::json Player_Game::move_j() const
+nlohmann::json Player_Game::move_j(std::string play, std::string event, int cards_requested, int total_bet) const
 {
+  player_comm *p = 0;
   nlohmann::json to_dealer;
+  chat_message uuid;
+  std::string json_str;
+
+
   to_dealer["from"] = { {"uuid",this->id} , {"name",this->_name} };
-  to_dealer["event"] = this->play;        // "stand","hit","fold","raise","join","request_cards"
+  to_dealer["event"] = play;        // "stand","hit","fold","raise","join","request_cards"
   to_dealer["cards_requested"] = this->cards_requested;    // optional, number of cards requested, 1 to 5
   to_dealer["current_bet"] = this->current_bet;
   to_dealer["total_bet"] = this->total_bet;
   //to_dealer["chat"] = std::string(chat);
 
-  return to_dealer
+  json_str = to_dealer.dump();
+
+  uuid.body_length(std::strlen(json_str.c_str()));
+  std::memcpy(uuid.body(), json_str.c_str(), uuid.body_length());
+  uuid.encode_header();
+
+  p -> write(uuid);
+
+  return to_dealer;
 }
