@@ -20,10 +20,9 @@ class Player_Game
    std::string _name;
    boost::uuids::uuid id;
 
-   nlohmann::json move_j() const; // method to be used by dealer to find out player move
+   //nlohmann::json move_j() const; // method to be used by dealer to find out player move
 
    //friend class Dealer;
 };
-
 
 #endif

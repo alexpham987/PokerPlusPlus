@@ -14,6 +14,9 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	builder->get_widget("msg", msg);
 	builder->get_widget("bet_label", bet_label);
 	builder->get_widget("playername_label", playername_label);
+	builder->get_widget("chip1_label", chip1_label); //added chip1_label
+	builder->get_widget("chip2_label", chip2_label); //added chip2_label
+	builder->get_widget("chip3_label", chip3_label); //added chip3_label
 	builder->get_widget("MenuBar", MenuBar);
 	builder->get_widget("menuitem_help", menuitem_help);
 	builder->get_widget("menuitem_about", menuitem_about);
@@ -32,7 +35,7 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	bet_button->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_bet_click));
 
 	ante_button->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_ante_click));
-	
+
 
 	Gtk::Dialog *dialog = new Gtk::Dialog();
 	dialog->set_transient_for(*this);
@@ -53,6 +56,9 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 		result = dialog->run();
 		player_name = e_name.get_text();
 		playername_label->set_label(player_name);
+		chip1_label->set_label("$25");
+		chip2_label->set_label("$5");
+		chip3_label->set_label("$1");
 	}
 	dialog->close();
 	delete dialog;
@@ -66,16 +72,16 @@ void Mainwin::on_quit_click() {
 	close();
 }
 
-void Mainwin::on_about_click() { 
-	Gtk::AboutDialog dialog{};    
-	dialog.set_transient_for(*this);    
-	dialog.set_program_name("Poker++");    
-	dialog.set_version("Version 1.1.0");    
-	dialog.set_copyright("Copyright 2020");    
-	dialog.set_license_type(Gtk::License::LICENSE_GPL_3_0);    
-	std::vector< Glib::ustring > authors = {"\nBailey Brown \nAlex Pham \nMarcos Juarez"};    
-	dialog.set_authors(authors);    
-	dialog.run(); 
+void Mainwin::on_about_click() {
+	Gtk::AboutDialog dialog{};
+	dialog.set_transient_for(*this);
+	dialog.set_program_name("Poker++");
+	dialog.set_version("Version 1.1.0");
+	dialog.set_copyright("Copyright 2020");
+	dialog.set_license_type(Gtk::License::LICENSE_GPL_3_0);
+	std::vector< Glib::ustring > authors = {"\nBailey Brown \nAlex Pham \nMarcos Juarez"};
+	dialog.set_authors(authors);
+	dialog.run();
 	}
 
 void Mainwin::on_check_click() {
@@ -141,8 +147,8 @@ void Mainwin::on_fold_click() {
 	msg.encode_header();
 
 	//player_comm.write(msg);
-	
-	//Allow player to spectate	
+
+	//Allow player to spectate
 }
 
 void Mainwin::on_ante_click() {
