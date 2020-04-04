@@ -12,8 +12,6 @@ class Deck {
 	  Card deal();
 	  int remaining_cards();
 	  bool deck_empty();
-	  Card getCard();
-	  
 	
 	private:
 	  std::vector<Card> _deck;

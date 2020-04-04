@@ -1,5 +1,5 @@
 #compiler options
-CXXFLAGS+=--std=c++17 -lstdc++fs
+CXXFLAGS+= -DASIO_STANDALONE -Wall -std=c++11 -lstdc++fs -I./include -I./asio-1.12.2/include
 
 #source files
 SOURCES=$(wildcard *.cpp)
@@ -14,7 +14,7 @@ MOBJECTS=$(filter-out test%,$(OBJECTS))
 TOBJECTS=$(filter-out main.o,$(OBJECTS))
 
 #included libraries
-INCLUDE=`/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
+INCLUDE=`/usr/bin/pkg-config gtkmm-3.0 --cflags --libs` 
 
 #executable filename
 EXECUTABLE=pokerpp
@@ -26,7 +26,7 @@ all: $(EXECUTABLE)
 #$@ - is the result name (in this case =$(EXECUTABLE) )
 
 $(EXECUTABLE): $(MOBJECTS)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE) 
 
 test: CXXFLAGS+= -g
 test: $(TOBJECTS)
@@ -36,7 +36,7 @@ debug: CXXFLAGS+= -g
 debug: $(EXECUTABLE)
 
 %.o: %.cpp *.h
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@ 
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
 	-rm -f $(EXECUTABLE) test $(OBJECTS)

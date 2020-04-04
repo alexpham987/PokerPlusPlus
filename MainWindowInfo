@@ -1,3 +1,0 @@
-I created a very short Mainwin class just so you guys can see what it might look like for our code. All it does is create a small window with a title, about button, and quit button. We will need many more methods I think, but it's a start. The code in main.cpp is only the code we need to make the window appear; this should be the only thing we need to put in main, which is why I like this method. It makes things pretty seperated and simple.
-
-As I said before, we don't have to make our GUI this way. This is definitley not the best/easiest way, this is just the only way I know how to do it. If you guys have better ideas please write some code for it or find some software to use and put it in the groupme or github. We will definitley try it. 
