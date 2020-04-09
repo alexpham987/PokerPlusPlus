@@ -448,7 +448,7 @@
             <property name="receives_default">True</property>
           </object>
           <packing>
-            <property name="x">260</property>
+            <property name="x">281</property>
             <property name="y">350</property>
           </packing>
         </child>

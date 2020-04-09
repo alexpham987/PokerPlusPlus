@@ -1,7 +1,6 @@
 #include "Mainwin.h"
 #include <dirent.h>
 #include <fstream>
-#include <experimental/filesystem>
 
 Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder{refGlade} {
 	set_title("Poker ++");
