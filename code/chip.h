@@ -4,9 +4,11 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#include <gtkmm.h>
+#include <sstream>
+#include <map>
 
-enum Color {WHITE ,RED, BLUE};
-const std::vector<std::string> color_to_string = {"White", "Red", "Blue"};
+enum Color {GREEN ,RED, BLUE};
 
 const int MAX_COLOR = 3;
 
@@ -17,10 +19,12 @@ class Chip {
 	Chip(Color color);
 	Color color() const;
 	int value() const;
+	std::string chip_to_filename();
 	
   private:
 	Color _color;
 	int _value;
+	Gtk::Image *chipimage;
 
 };
 

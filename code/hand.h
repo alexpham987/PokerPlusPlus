@@ -1,7 +1,8 @@
 #ifndef HAND_H
 #define HAND_H
 
-#include <vector>
+//#include <vector>
+#include <algorithm>
 #include "card.h"
 
 class Hand
