@@ -4,15 +4,17 @@
 #include "chip.h"
 #include "card.h"
 #include "deck.h"
-//#include "player.h"
+#include "stack.h"
+#include "json.hpp"
+#include "algorithm"
+#include "random"
 #include <vector>
 #include <string>
-#include <deque>
 
 class Dealer_Game
 {
   public:
-    Dealer_Game(bool playerResult);
+    Dealer_Game(bool playerResult, Deck d, Stack s);
     void shuffleCards();
     void dealCards();
     void dealChips();
@@ -22,9 +24,9 @@ class Dealer_Game
 
   private:
     bool _playerResult;
-    std::vector<Card> deck;
-    std::vector<Chip> chips;
-    //std::deque<Player> players;
+    std::random_device random;
+    Deck _d;
+    Stack _s;
 };
 
 #endif
