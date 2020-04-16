@@ -4,12 +4,14 @@
 #include "card.h"
 #include <vector>
 #include <stdexcept>
+#include <algorithm>
 
 class Deck {
 	
 	public:
 	  Deck();
 	  Card deal();
+	  void shuffle();
 	  int remaining_cards();
 	  bool deck_empty();
 	

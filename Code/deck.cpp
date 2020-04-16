@@ -21,6 +21,10 @@ Card Deck::deal() {
 		
 }
 
+void Deck::shuffle() {
+	std::random_shuffle(_deck.begin(), _deck.end());
+}
+
 int Deck::remaining_cards() {
 	return _deck.size();
 }
