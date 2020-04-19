@@ -15,20 +15,19 @@ bool comp_value(const Card & a, const Card & b)
 	return (a.num() < b.num());
 }
 
-Hand::Hand ( std::vector <Card> _hand)
+Hand::Hand ()
 {
-   this -> _hand = _hand;
 }
 
 Hand::~Hand()
 {}
 
-void Hand::modify_hand (std::vector <Card> mod_hand)
+void Hand::modify_hand (/*std::vector <Card> mod_hand*/)
 {
-  this -> _hand = mod_hand;
+ // this -> _hand = mod_hand;
 }
 
-int Hand::calc_value (std::vector <Card> _hand)
+int Hand::calc_value ()
 {
   int value = -1;
 

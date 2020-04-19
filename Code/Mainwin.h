@@ -17,6 +17,8 @@ class Mainwin : public Gtk::Window
     public:
         Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& reGlade);
         virtual ~Mainwin();
+	void setPlayerGame(Player_Game* pgame);
+
     protected:        
         void on_quit_click();  
 	void on_check_click();
@@ -48,7 +50,7 @@ class Mainwin : public Gtk::Window
 	Glib::RefPtr<Gtk::Builder> builder;
 
 private:
-	Player_Game _p;
+	Player_Game* _p;
 
 };
 #endif

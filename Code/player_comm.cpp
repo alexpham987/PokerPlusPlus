@@ -3,8 +3,9 @@
 GtkWidget *fromView  = NULL;  // text from the chat server
 
 player_comm::player_comm(asio::io_context& io_context, const tcp::resolver::results_type& endpoints)
-   : io_context_(io_context), socket_(io_context) {
-		   do_connect(endpoints);
+   : io_context_(io_context), socket_(io_context) 
+{
+	do_connect(endpoints);
 }
 
 void player_comm::write(const chat_message& msg)

@@ -17,11 +17,14 @@ int main(int argc, char *argv[]) {
    	assert(p);
    	std::thread t([&io_context](){ io_context.run(); });
 
+	Player_Game pgame(p);
+
 	Gtk::Main kit(argc, argv);
 	Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file("PokerPP.glade");
 
 	Mainwin *win = 0;
 	builder->get_widget_derived("Mainwin", win);
+	win->setPlayerGame(&pgame);
 
 	kit.run(*win);
 

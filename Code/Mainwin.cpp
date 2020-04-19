@@ -64,9 +64,13 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	dialog->close();
 	delete dialog;
 
+	//_p.setName(player_name);
+
 }
 
 Mainwin::~Mainwin() {}
+
+void Mainwin::setPlayerGame(Player_Game* pgame) { this->_p = pgame; }
 
 void Mainwin::on_quit_click() {
 	/* Alert the dealer that a player/spectator has left the game */
@@ -108,32 +112,18 @@ void Mainwin::on_check_click() {
 
 void Mainwin::on_bet_click() {
 	std::cout << "bet button pressed" << std::endl;
-
+	int bet_amount;
 	//Check if bet_entry->get_text() is valid
-	int bet_amount = std::stoi(bet_entry->get_text());
+	try {
+		bet_amount = std::stoi(bet_entry->get_text());
+	}
+	catch(std::exception e) {
+		bet_entry->set_text("### Invalid ###");
+		return;
+	}
+	
+	_p->move_j("bet", 0, bet_amount);	
 
-	chat_message msg;
-	nlohmann::json to_dealer;
-
-	//if there is no current bet
-		to_dealer["decision"] = "bet";
-	//else if bet_amount < current bet
-		//std::cout << "error" << std::endl;
-	//else if bet_amount > current bet amount
-		to_dealer["decision"] = "raise";
-	//else
-		to_dealer["decision"] = "call";
-
-	to_dealer["bet"] = bet_amount;
-	to_dealer["name"] = "name";
-	to_dealer["uuid"] = "xyz";
-
-	std::string json_str = to_dealer.dump();
-
-	msg.body_length(std::strlen(json_str.c_str()));
-	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
-	msg.encode_header();
-	//player_comm.write(msg);
 }
 
 void Mainwin::on_fold_click() {

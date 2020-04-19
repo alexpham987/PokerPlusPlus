@@ -1,5 +1,5 @@
 #compiler options
-CXXFLAGS+= -DASIO_STANDALONE -Wall -std=c++11 -lstdc++fs -I./include -I./asio-1.12.2/include
+CXXFLAGS+= -DASIO_STANDALONE -Wall -std=c++11 -lstdc++fs -I./include -I./asio-1.12.2/include -g
 
 #source files
 SOURCES=$(wildcard *.cpp)

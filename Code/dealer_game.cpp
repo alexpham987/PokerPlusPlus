@@ -14,7 +14,7 @@ void Dealer_Game::dealCards(chat_room& c)
 	std::set<chat_participant_ptr> participants = c.getParticipants();
 	for (auto participant: participants) {
 		for(int i = 0; i < 5; i++) 
-     		participant->deliverCards(deck.deal());
+     		std::cout << "participant->deliverCards(deck.deal());" << std::endl;
 	}
 
 }
