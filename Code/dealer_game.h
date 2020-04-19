@@ -4,17 +4,17 @@
 #include "chip.h"
 #include "card.h"
 #include "deck.h"
-//#include "player.h"
+#include "dealer_comm.h"
 #include <vector>
 #include <string>
 #include <deque>
 
-class Dealer_Game
+class Dealer_Game 
 {
   public:
     Dealer_Game(bool playerResult);
     void shuffleCards();
-    void dealCards();
+    void dealCards(chat_room& c);
     void dealChips();
     bool gameResult();
     void exchangeCards(int amountOfCards);
@@ -22,9 +22,8 @@ class Dealer_Game
 
   private:
     bool _playerResult;
-    std::vector<Card> deck;
+    Deck deck;
     std::vector<Chip> chips;
-    //std::deque<Player> players;
 };
 
 #endif

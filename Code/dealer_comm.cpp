@@ -2,7 +2,6 @@
 
 using asio::ip::tcp;
 
-
 //Class chat_room
 
   void chat_room::join(chat_participant_ptr participant)
@@ -26,6 +25,11 @@ using asio::ip::tcp;
     for (auto participant: participants_)
       participant->deliver(msg);
   }
+
+	std::set<chat_participant_ptr> chat_room::getParticipants() 
+	{
+		return participants_;
+	}
 
 
 //Class chat_session
@@ -113,16 +117,16 @@ using asio::ip::tcp;
   }
 
 
-//Class chat_server
+//Class Dealer_comm
 
-  chat_server::chat_server(asio::io_context& io_context,
+  Dealer_comm::Dealer_comm(asio::io_context& io_context,
       const tcp::endpoint& endpoint)
     : acceptor_(io_context, endpoint)
   {
     do_accept();
   }
 
-  void chat_server::do_accept()
+  void Dealer_comm::do_accept()
   {
     acceptor_.async_accept(
         [this](std::error_code ec, tcp::socket socket)

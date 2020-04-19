@@ -2,10 +2,22 @@
 
 Dealer_Game::Dealer_Game(bool playerResult) : _playerResult{playerResult}
 {}
+
 void Dealer_Game::shuffleCards()
-{}
-void Dealer_Game::dealCards()
-{}
+{
+	deck.shuffle();
+	deck.shuffle();
+	deck.shuffle();
+}
+void Dealer_Game::dealCards(chat_room& c)
+{
+	std::set<chat_participant_ptr> participants = c.getParticipants();
+	for (auto participant: participants) {
+		for(int i = 0; i < 5; i++) 
+     		participant->deliverCards(deck.deal());
+	}
+
+}
 void Dealer_Game::dealChips()
 {}
 bool Dealer_Game::gameResult()
