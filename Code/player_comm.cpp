@@ -70,7 +70,7 @@ void player_comm::write(const chat_message& msg)
             outline[0] = '\n';
             outline[read_msg_.body_length() + 1] = '\0';
             std::memcpy ( &outline[1], read_msg_.body(), read_msg_.body_length() );
-            gtk_label_set_text (GTK_LABEL(fromView), outline);
+            _message = nlohmann::json::parse(read_msg_.body());
             std::cout.write(read_msg_.body(), read_msg_.body_length());
             std::cout << "\n";
             do_read_header();

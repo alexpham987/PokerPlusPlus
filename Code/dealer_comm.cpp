@@ -6,6 +6,7 @@ using asio::ip::tcp;
 
   void chat_room::join(chat_participant_ptr participant)
   {
+	std::cout << "participant joined" << std::endl;
     participants_.insert(participant);
     for (auto msg: recent_msgs_)
       participant->deliver(msg);
@@ -76,6 +77,7 @@ using asio::ip::tcp;
 
   void chat_session::do_read_body()
   {
+	std::cout << "reading message" << std::endl;
     auto self(shared_from_this());
     asio::async_read(socket_,
         asio::buffer(read_msg_.body(), read_msg_.body_length()),

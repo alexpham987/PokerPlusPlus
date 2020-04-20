@@ -8,6 +8,7 @@
 #include <assert.h>
 #include "asio.hpp"
 #include "chat_message.hpp"
+#include "json.hpp"
 #include <gtkmm.h>
 
 using asio::ip::tcp;
@@ -19,6 +20,7 @@ class player_comm {
 		player_comm(asio::io_context& io_context, const tcp::resolver::results_type& endpoints);
 		void write(const chat_message& msg);
 		void close();
+		std::string message();
 		
 	private:
 		void do_connect(const tcp::resolver::results_type& endpoints);
@@ -28,9 +30,10 @@ class player_comm {
 
 	private:
 		asio::io_context& io_context_;
-  	tcp::socket socket_;
-  	chat_message read_msg_;
-  	chat_message_queue write_msgs_;
+  		tcp::socket socket_;
+  		chat_message read_msg_;
+  		chat_message_queue write_msgs_;
+		nlohmann::json _message = "";
  
 };		
 

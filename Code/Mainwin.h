@@ -7,6 +7,7 @@
 #include <exception>
 #include <iostream>
 #include <sstream>
+#include <vector>
 #include "json.hpp"
 #include "chat_message.hpp"
 #include "player_comm.h"
@@ -14,10 +15,12 @@
 
 class Mainwin : public Gtk::Window
 {
+
     public:
         Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& reGlade);
         virtual ~Mainwin();
 	void setPlayerGame(Player_Game* pgame);
+	void setLabel(std::string text);
 
     protected:        
         void on_quit_click();  
@@ -50,7 +53,8 @@ class Mainwin : public Gtk::Window
 	Glib::RefPtr<Gtk::Builder> builder;
 
 private:
-	Player_Game* _p;
+	std::string _player_name;
+	Player_Game* _p = 0;
 
 };
 #endif

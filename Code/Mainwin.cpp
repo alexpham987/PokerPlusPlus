@@ -54,23 +54,26 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	dialog->add_button("Enter", 0);
 	dialog->show_all();
 	int result = 1;
-	std::string player_name;
 
 	while(result) {
 		result = dialog->run();
-		player_name = e_name.get_text();
-		playername_label->set_label(player_name);
+		_player_name = e_name.get_text();
+		playername_label->set_label(_player_name);
 	}
 	dialog->close();
 	delete dialog;
 
-	//_p.setName(player_name);
-
+	msg->set_label(" ");
 }
 
 Mainwin::~Mainwin() {}
 
-void Mainwin::setPlayerGame(Player_Game* pgame) { this->_p = pgame; }
+void Mainwin::setPlayerGame(Player_Game* pgame) { 
+	this->_p = pgame; 
+	_p->setName(_player_name);
+}
+
+void Mainwin::setLabel(std::string text) {}
 
 void Mainwin::on_quit_click() {
 	/* Alert the dealer that a player/spectator has left the game */
@@ -113,97 +116,73 @@ void Mainwin::on_check_click() {
 void Mainwin::on_bet_click() {
 	std::cout << "bet button pressed" << std::endl;
 	int bet_amount;
-	//Check if bet_entry->get_text() is valid
+
 	try {
 		bet_amount = std::stoi(bet_entry->get_text());
-	}
-	catch(std::exception e) {
+	} catch(std::exception e) {
 		bet_entry->set_text("### Invalid ###");
 		return;
 	}
 	
-	_p->move_j("bet", 0, bet_amount);	
+	nlohmann::json info = _p->move_j("bet", 0, bet_amount);
 
 }
 
 void Mainwin::on_fold_click() {
 	std::cout << "fold button pressed" << std::endl;
 
-	chat_message msg;
-
-	nlohmann::json to_dealer;
-	to_dealer["decision"] = "fold";
-	to_dealer["name"] = "name";
-	to_dealer["uuid"] = "xyz";
-
-	std::string json_str = to_dealer.dump();
-
-	msg.body_length(std::strlen(json_str.c_str()));
-	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
-	msg.encode_header();
-
-	//player_comm.write(msg);	
+	_p->move_j("fold", 0, 0);	
 	//Allow player to spectate	
 }
 
+	
 void Mainwin::on_ante_click() {
 	std::cout << "ante button clicked" << std::endl;
-	//Check if bet_entry->get_text() is valid
-	int ante_amount = std::stoi(bet_entry->get_text());
-
-	chat_message msg;
-
-	nlohmann::json to_dealer;
-	to_dealer["decision"] = "ante";
-	to_dealer["amount"] = ante_amount;
-	to_dealer["name"] = "name";
-	to_dealer["uuid"] = "xyz";
-
-	std::string json_str = to_dealer.dump();
-
-	msg.body_length(std::strlen(json_str.c_str()));
-	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
-	msg.encode_header();
-
-	//player_comm.write(msg);
+		int ante_amount;
+	try {
+		ante_amount = std::stoi(bet_entry->get_text());
+	} catch(std::exception e) {
+		bet_entry->set_text("### Invalid ###");
+		return;
+	}
+		
+	_p->move_j("ante", 0, ante_amount);
 }
 
 void Mainwin::on_exchange_click() {
 	std::cout << "exchange button pressed" << std::endl;
-	int result = 1;
 
 	Gtk::Dialog *dialog = new Gtk::Dialog();
-	dialog->set_transient_for(*this);	
-	dialog->set_title("Choose Cards");
+	dialog->set_transient_for(*this);
+	dialog->set_title("Enter Card #s (1-5)");
+	Gtk::HBox b_cards;
 
-	Gtk::VBox cards;
+	Gtk::Entry e_cards;
+	e_cards.set_max_length(50);
+	b_cards.pack_start(e_cards, Gtk::PACK_SHRINK);
+	dialog->get_vbox()->pack_start(b_cards, Gtk::PACK_SHRINK);
 
-	Gtk::RadioButton c1("Card 1");
-	Gtk::RadioButton c2("Card 2");
-	c2.join_group(c1);
-	Gtk::RadioButton c3("Card 3");
-	c3.join_group(c1);
-	Gtk::RadioButton c4("Card 4");
-	c4.join_group(c1);
-	Gtk::RadioButton c5("Card 5");
-	c5.join_group(c1);
-	
-	cards.pack_start(c1, Gtk::PACK_SHRINK);
-	cards.pack_start(c2, Gtk::PACK_SHRINK);
-	cards.pack_start(c3, Gtk::PACK_SHRINK);
-	cards.pack_start(c4, Gtk::PACK_SHRINK);
-	cards.pack_start(c5, Gtk::PACK_SHRINK);
-
-	dialog->get_vbox()->pack_start(cards, Gtk::PACK_SHRINK);
-
-	dialog->add_button("No Cards", 0);
-	dialog->add_button("Enter", 1);
+	dialog->add_button("Enter", 0);
 	dialog->show_all();
+	int result = 1;
+	std::string exchange_cards;
+
 	while(result) {
 		result = dialog->run();
+		exchange_cards = e_cards.get_text();
+		std::cout << exchange_cards << std::endl;
 	}
 	dialog->close();
 	delete dialog;	
+
+	std::vector<int> cards;
+	std::stringstream ss(exchange_cards);
+	int num;
+	while(ss >> num)
+		cards.push_back(num);
+
+	_p->exchange_j("request_cards", sizeof(cards), cards);
+		
 }
 
 

@@ -3,6 +3,7 @@
 
 //#include <vector>
 #include <algorithm>
+#include <vector>
 #include "card.h"
 
 class Hand
@@ -13,7 +14,7 @@ class Hand
    ~Hand();
    //bool comp_suit(const Card & a, const Card & b);
    //bool comp_value(const Card & a, const Card & b);
-   void modify_hand ();
+   void modify_hand (std::vector<int> cards);
    int calc_value();
    int find_high_card();
 

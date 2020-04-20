@@ -22,9 +22,10 @@ Hand::Hand ()
 Hand::~Hand()
 {}
 
-void Hand::modify_hand (/*std::vector <Card> mod_hand*/)
+void Hand::modify_hand (std::vector<int> mod_cards)
 {
- // this -> _hand = mod_hand;
+  for(auto i : mod_cards)
+	_hand.erase(_hand.begin() + i);
 }
 
 int Hand::calc_value ()
