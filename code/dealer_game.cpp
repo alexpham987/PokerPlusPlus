@@ -4,7 +4,7 @@ Dealer_Game::Dealer_Game(bool playerResult, Deck d, Stack s) : _playerResult{pla
 {}
 void Dealer_Game::shuffleCards()
 {
-  //std::shuffle(std::begin(_d._deck), std::end(_d._deck), random);
+  std::shuffle(std::begin(_d._deck), std::end(_d._deck), random);
 }
 void Dealer_Game::dealCards()
 {

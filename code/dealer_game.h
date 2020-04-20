@@ -13,8 +13,8 @@
 
 class Dealer_Game
 {
-  friend class Deck;
-  friend class Stack;
+  //friend class Deck;
+  //friend class Stack;
 
   public:
     Dealer_Game(bool playerResult, Deck d, Stack s);
