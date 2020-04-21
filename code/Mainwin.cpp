@@ -1,7 +1,6 @@
 #include "Mainwin.h"
 #include <dirent.h>
 #include <fstream>
-#include <experimental/filesystem>
 
 Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder{refGlade} {
 	set_title("Poker ++");
@@ -65,27 +64,31 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	dialog->close();
 	delete dialog;
 
+	//_p.setName(player_name);
+
 }
 
 Mainwin::~Mainwin() {}
+
+void Mainwin::setPlayerGame(Player_Game* pgame) { this->_p = pgame; }
 
 void Mainwin::on_quit_click() {
 	/* Alert the dealer that a player/spectator has left the game */
 	close();
 }
 
-void Mainwin::on_about_click() { 
+void Mainwin::on_about_click() {
 	std::cout << "about pressed" << std::endl;
-	Gtk::AboutDialog dialog{};    
-	dialog.set_transient_for(*this);    
-	dialog.set_program_name("Poker++");    
-	dialog.set_version("Version 1.1.0");    
-	dialog.set_copyright("Copyright 2020");    
-	dialog.set_license_type(Gtk::License::LICENSE_GPL_3_0);    
-	std::vector< Glib::ustring > authors = {"Bailey Brown \nAlex Pham \nMarcos Juarez"};    
-	dialog.set_authors(authors);    
+	Gtk::AboutDialog dialog{};
+	dialog.set_transient_for(*this);
+	dialog.set_program_name("Poker++");
+	dialog.set_version("Version 1.1.0");
+	dialog.set_copyright("Copyright 2020");
+	dialog.set_license_type(Gtk::License::LICENSE_GPL_3_0);
+	std::vector< Glib::ustring > authors = {"Bailey Brown \nAlex Pham \nMarcos Juarez"};
+	dialog.set_authors(authors);
 	dialog.run();
-} 
+}
 
 void Mainwin::on_check_click() {
 	std::cout << "check button clicked" << std::endl;
@@ -109,32 +112,18 @@ void Mainwin::on_check_click() {
 
 void Mainwin::on_bet_click() {
 	std::cout << "bet button pressed" << std::endl;
-
+	int bet_amount;
 	//Check if bet_entry->get_text() is valid
-	int bet_amount = std::stoi(bet_entry->get_text());
+	try {
+		bet_amount = std::stoi(bet_entry->get_text());
+	}
+	catch(std::exception e) {
+		bet_entry->set_text("### Invalid ###");
+		return;
+	}
 
-	chat_message msg;
-	nlohmann::json to_dealer;
+	_p->move_j("bet", 0, bet_amount);
 
-	//if there is no current bet
-		to_dealer["decision"] = "bet";
-	//else if bet_amount < current bet
-		//std::cout << "error" << std::endl;
-	//else if bet_amount > current bet amount
-		to_dealer["decision"] = "raise";
-	//else
-		to_dealer["decision"] = "call";
-
-	to_dealer["bet"] = bet_amount;
-	to_dealer["name"] = "name";
-	to_dealer["uuid"] = "xyz";
-
-	std::string json_str = to_dealer.dump();
-
-	msg.body_length(std::strlen(json_str.c_str()));
-	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
-	msg.encode_header();
-	//player_comm.write(msg);
 }
 
 void Mainwin::on_fold_click() {
@@ -153,8 +142,8 @@ void Mainwin::on_fold_click() {
 	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
 	msg.encode_header();
 
-	//player_comm.write(msg);	
-	//Allow player to spectate	
+	//player_comm.write(msg);
+	//Allow player to spectate
 }
 
 void Mainwin::on_ante_click() {
@@ -184,7 +173,7 @@ void Mainwin::on_exchange_click() {
 	int result = 1;
 
 	Gtk::Dialog *dialog = new Gtk::Dialog();
-	dialog->set_transient_for(*this);	
+	dialog->set_transient_for(*this);
 	dialog->set_title("Choose Cards");
 
 	Gtk::VBox cards;
@@ -198,7 +187,7 @@ void Mainwin::on_exchange_click() {
 	c4.join_group(c1);
 	Gtk::RadioButton c5("Card 5");
 	c5.join_group(c1);
-	
+
 	cards.pack_start(c1, Gtk::PACK_SHRINK);
 	cards.pack_start(c2, Gtk::PACK_SHRINK);
 	cards.pack_start(c3, Gtk::PACK_SHRINK);
@@ -214,7 +203,5 @@ void Mainwin::on_exchange_click() {
 		result = dialog->run();
 	}
 	dialog->close();
-	delete dialog;	
+	delete dialog;
 }
-
-

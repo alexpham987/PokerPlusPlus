@@ -13,23 +13,20 @@
 
 class Player_Game
 {
-   //Hand _hand;
-
+  friend class player_comm;
+  friend class Dealer_game;
+  
   public:
+   Player_Game(player_comm* pc);
+   void setName(std::string name);
+   nlohmann::json move_j(std::string play, int cards_requested, int current_bet) const; // method to be used by dealer to find out player move
 
-   Player_Game();
-   Stack _stack;
+  private:
    std::string _name;
-   boost::uuids::uuid id;
-   int current_bet;
-   int total_bet;
-   int cards_requested;
-   //std::string chat;
-
-   nlohmann::json move_j(std::string play, std::string event, int cards_requested, int total_bet) const; // method to be used by dealer to find out player move
-
-   friend class player_comm;
-   friend class Dealer_game;
+   boost::uuids::uuid _id;
+   Stack _stack;
+   Hand _hand;
+   player_comm* _pc;
 };
 
 #endif

@@ -1,5 +1,5 @@
 #compiler options
-CXXFLAGS+= -DASIO_STANDALONE -g -Wall -std=c++11 -lstdc++fs -I./include -I./asio-1.12.2/include
+CXXFLAGS+= -DASIO_STANDALONE -Wall -std=c++11 -lstdc++fs -I./include -I./asio-1.12.2/include -g
 
 #source files
 SOURCES=$(wildcard *.cpp)
@@ -8,7 +8,8 @@ SOURCES=$(wildcard *.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 
 #main link objects
-MOBJECTS=$(filter-out test%,$(OBJECTS))
+MOBJECTSP=$(filter-out main_dealer.o,$(OBJECTS))
+MOBJECTSD=$(filter-out main_player.o,$(OBJECTS))
 
 #test link objects
 TOBJECTS=$(filter-out main.o,$(OBJECTS))
@@ -17,15 +18,19 @@ TOBJECTS=$(filter-out main.o,$(OBJECTS))
 INCLUDE=`/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
 
 #executable filename
-EXECUTABLE=pokerpp
+EXECUTABLEP=pokerplayer
+EXECUTABLED=pokerdealer
 
-all: $(EXECUTABLE)
+all: $(EXECUTABLEP) $(EXECUTABLED)
 
 #Special symbols used:
 #$^ - is all the dependencies (in this case =$(OBJECTS) )
 #$@ - is the result name (in this case =$(EXECUTABLE) )
 
-$(EXECUTABLE): $(MOBJECTS)
+$(EXECUTABLEP): $(MOBJECTSP)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
+
+$(EXECUTABLED): $(MOBJECTSD)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
 
 test: CXXFLAGS+= -g

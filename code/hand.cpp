@@ -15,20 +15,19 @@ bool comp_value(const Card & a, const Card & b)
 	return (a.num() < b.num());
 }
 
-Hand::Hand ( std::vector <Card> _hand)
+Hand::Hand ()
 {
-   this -> _hand = _hand;
 }
 
 Hand::~Hand()
 {}
 
-void Hand::modify_hand (std::vector <Card> mod_hand)
+void Hand::modify_hand (/*std::vector <Card> mod_hand*/)
 {
-  this -> _hand = mod_hand;
+ // this -> _hand = mod_hand;
 }
 
-int Hand::calc_value (std::vector <Card> _hand)
+int Hand::calc_value ()
 {
   int value = -1;
 
@@ -62,7 +61,7 @@ int Hand::calc_value (std::vector <Card> _hand)
       }
     }
   }
-  
+
   next:std::sort(_hand.begin(), _hand.end(), comp_value); //sort by card value
   if( (_hand[0].num() == _hand[1].num() && _hand[1].num() == _hand[2].num() && _hand[2].num() == _hand[3].num() ) ||
       (_hand[1].num() == _hand[2].num() && _hand[2].num() == _hand[3].num() && _hand[3].num() == _hand[4].num() )   )
@@ -71,7 +70,7 @@ int Hand::calc_value (std::vector <Card> _hand)
     value = 3; // Four of a Kind
     return value;
   }
-  
+
   if( (_hand[0].num() == _hand[1].num() && _hand[1].num() == _hand[2].num() && _hand[3].num() == _hand[4].num() ) ||
       (_hand[0].num() == _hand[1].num() && _hand[2].num() == _hand[3].num() && _hand[3].num() == _hand[4].num() )   )
       // Check for full house, either xxyyy or xxxyy
@@ -79,7 +78,7 @@ int Hand::calc_value (std::vector <Card> _hand)
     value = 4; // Full House
     return value;
   }
-  
+
   if( ( _hand[0].num() == _hand[1].num() && _hand[1].num() == _hand[2].num() ) ||
       ( _hand[1].num() == _hand[2].num() && _hand[2].num() == _hand[3].num() ) ||
       ( _hand[2].num() == _hand[3].num() && _hand[3].num() == _hand[4].num() )   )

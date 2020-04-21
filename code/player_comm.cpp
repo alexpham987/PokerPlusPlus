@@ -3,8 +3,9 @@
 GtkWidget *fromView  = NULL;  // text from the chat server
 
 player_comm::player_comm(asio::io_context& io_context, const tcp::resolver::results_type& endpoints)
-   : io_context_(io_context), socket_(io_context) {
-		   do_connect(endpoints);
+   : io_context_(io_context), socket_(io_context)
+{
+	do_connect(endpoints);
 }
 
 void player_comm::write(const chat_message& msg)
@@ -47,6 +48,10 @@ void player_comm::write(const chat_message& msg)
         {
           if (!ec && read_msg_.decode_header())
           {
+            for(unsigned int i = 0; i < chat_message::max_body_length; i++)
+            {
+              read_msg_.body()[i] = '\0';
+            }
             do_read_body();
           }
           else
@@ -210,5 +215,3 @@ int main(int argc, char *argv[])
    return 0;
 }
 */
-
-

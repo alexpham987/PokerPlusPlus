@@ -1,3 +1,4 @@
+
 #ifndef HAND_H
 #define HAND_H
 
@@ -7,19 +8,20 @@
 
 class Hand
 {
-   int hand_value;            //value of hand
-   std::vector <Card> _hand;  //vector with all 5 cards player is holding
-   void modify_hand (std::vector <Card> mod_hand);
-   int calc_value(std::vector <Card> _hand);
-   int find_high_card(std::vector <Card> _hand);
-
+  friend class Dealer;
+  
   public:
-
-   Hand( std::vector < Card >);
+   Hand();
    ~Hand();
+   //bool comp_suit(const Card & a, const Card & b);
+   //bool comp_value(const Card & a, const Card & b);
+   void modify_hand ();
+   int calc_value();
+   int find_high_card();
 
-   friend class Dealer;
+  private:
+   int hand_value;            //value of hand
+   std::vector <Card> _hand;
 };
 
 #endif
-   
