@@ -104,20 +104,8 @@ void Mainwin::on_check_click() {
 	std::cout << "check button clicked" << std::endl;
 	//check if any player has bet yet
 
-	chat_message msg;
-
-	nlohmann::json to_dealer;
-	to_dealer["decision"] = "check";
-	to_dealer["name"] = "name";
-	to_dealer["uuid"] = "xyz";
-
-	std::string json_str = to_dealer.dump();
-
-	msg.body_length(std::strlen(json_str.c_str()));
-	std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
-	msg.encode_header();
-
-	//player_comm.write(msg);
+	chat_message info = _pg.move_j("check", 0, 0);
+	_pc->write(info);
 }
 
 void Mainwin::on_bet_click() {
@@ -139,8 +127,8 @@ void Mainwin::on_bet_click() {
 void Mainwin::on_fold_click() {
 	std::cout << "fold button pressed" << std::endl;
 
-	//_p->move_j("fold", 0, 0);	
-	//Allow player to spectate	
+	chat_message info = _pg.move_j("fold", 0, 0);
+	_pc->write(info);	
 }
 
 	
@@ -153,8 +141,9 @@ void Mainwin::on_ante_click() {
 		bet_entry->set_text("### Invalid ###");
 		return;
 	}
-		
-	//_p->move_j("ante", 0, ante_amount);
+
+	chat_message info = _pg.move_j("ante", 0, ante_amount);
+	_pc->write(info);
 }
 
 void Mainwin::on_exchange_click() {
@@ -189,7 +178,8 @@ void Mainwin::on_exchange_click() {
 	while(ss >> num)
 		cards.push_back(num);
 
-	//_p->exchange_j("request_cards", sizeof(cards), cards);
+	chat_message info = _pg.exchange_j("request_cards", cards.size(), cards);
+	_pc->write(info);
 		
 }
 

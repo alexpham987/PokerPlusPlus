@@ -48,6 +48,10 @@ void player_comm::write(const chat_message& msg)
         {
           if (!ec && read_msg_.decode_header())
           {
+			for(unsigned int i = 0; i < chat_message::max_body_length; i++)
+			{
+				read_msg_.body()[i] = '\0';
+			}
             do_read_body();
           }
           else
@@ -65,15 +69,12 @@ void player_comm::write(const chat_message& msg)
         {
           if (!ec)
           {
-			std::cout << "player comm" << std::endl;
             char outline[read_msg_.body_length() + 2];
                                        // '\n' + '\0' is 2 more chars
             outline[0] = '\n';
             outline[read_msg_.body_length() + 1] = '\0';
             std::memcpy ( &outline[1], read_msg_.body(), read_msg_.body_length() );
-			std::cout << "parsing" << std::endl;
             nlohmann::json info = nlohmann::json::parse(read_msg_.body());
-			std::cout << "label" << std::endl;
 			this->updateLabel(info);
             std::cout.write(read_msg_.body(), read_msg_.body_length());
             std::cout << "\n";

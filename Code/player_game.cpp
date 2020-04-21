@@ -35,14 +35,11 @@ chat_message Player_Game::move_j(std::string play, int cards_requested, int curr
   std::memcpy(uuid.body(), json_str.c_str(), uuid.body_length());
   uuid.encode_header();
 
-  std::cout << json_str << std::endl;
-  //_pc->write(uuid);
-
   return uuid;
 
 }
 
-void Player_Game::exchange_j(std::string play, int cards_requested, std::vector<int> cards) 
+chat_message Player_Game::exchange_j(std::string play, int cards_requested, std::vector<int> cards) 
 {
   _hand.modify_hand(cards);
 
@@ -65,8 +62,7 @@ void Player_Game::exchange_j(std::string play, int cards_requested, std::vector<
   std::memcpy(uuid.body(), json_str.c_str(), uuid.body_length());
   uuid.encode_header();
 
-  std::cout << json_str << std::endl;
-  //_pc->write(uuid);
+  return uuid;
 }
 
 

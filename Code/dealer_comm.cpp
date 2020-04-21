@@ -66,6 +66,10 @@ using asio::ip::tcp;
         {
           if (!ec && read_msg_.decode_header())
           {
+			for(unsigned int i = 0; i < chat_message::max_body_length; i++) 
+			{
+				read_msg_.body()[i] = '\0';
+			}
             do_read_body();
           }
           else

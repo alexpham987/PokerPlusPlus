@@ -18,7 +18,7 @@ class Player_Game
    Player_Game();
    void setName(std::string name);
    chat_message move_j(std::string play, int cards_requested, int current_bet) const;
-   void exchange_j(std::string play, int cards_requested, std::vector<int> cards);
+   chat_message exchange_j(std::string play, int cards_requested, std::vector<int> cards);
 
   private:
    std::string _name;
