@@ -68,12 +68,19 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 
 Mainwin::~Mainwin() {}
 
-void Mainwin::setPlayerGame(Player_Game* pgame) { 
-	this->_p = pgame; 
-	_p->setName(_player_name);
+void Mainwin::setPlayerGame(Player_Game pgame) { 
+	_pg = pgame; 
+	_pg.setName(_player_name);
 }
 
-void Mainwin::setLabel(std::string text) {}
+void Mainwin::setPlayerComm(player_comm* pcomm) {
+	_pc = pcomm;
+}
+
+void Mainwin::setLabel(std::string text) 
+{
+	msg->set_label(text);
+}
 
 void Mainwin::on_quit_click() {
 	/* Alert the dealer that a player/spectator has left the game */
@@ -124,14 +131,15 @@ void Mainwin::on_bet_click() {
 		return;
 	}
 	
-	nlohmann::json info = _p->move_j("bet", 0, bet_amount);
+	chat_message info = _pg.move_j("bet", 0, bet_amount);
+	_pc->write(info);
 
 }
 
 void Mainwin::on_fold_click() {
 	std::cout << "fold button pressed" << std::endl;
 
-	_p->move_j("fold", 0, 0);	
+	//_p->move_j("fold", 0, 0);	
 	//Allow player to spectate	
 }
 
@@ -146,7 +154,7 @@ void Mainwin::on_ante_click() {
 		return;
 	}
 		
-	_p->move_j("ante", 0, ante_amount);
+	//_p->move_j("ante", 0, ante_amount);
 }
 
 void Mainwin::on_exchange_click() {
@@ -181,7 +189,7 @@ void Mainwin::on_exchange_click() {
 	while(ss >> num)
 		cards.push_back(num);
 
-	_p->exchange_j("request_cards", sizeof(cards), cards);
+	//_p->exchange_j("request_cards", sizeof(cards), cards);
 		
 }
 

@@ -1,7 +1,7 @@
 #include "player_game.h"
 
 
-Player_Game::Player_Game(player_comm* pc) : _pc{pc} 
+Player_Game::Player_Game() 
 {
   
    boost::uuids::random_generator generator;
@@ -14,7 +14,7 @@ void Player_Game::setName(std::string name) { _name = name; }
 	
 
 //Changed this function a little to make it easier to use in mainwin
-nlohmann::json Player_Game::move_j(std::string play, int cards_requested, int current_bet) const
+chat_message Player_Game::move_j(std::string play, int cards_requested, int current_bet) const
 {
   nlohmann::json to_dealer;
   chat_message uuid;
@@ -36,9 +36,9 @@ nlohmann::json Player_Game::move_j(std::string play, int cards_requested, int cu
   uuid.encode_header();
 
   std::cout << json_str << std::endl;
-  _pc->write(uuid);
+  //_pc->write(uuid);
 
-  return to_dealer;
+  return uuid;
 
 }
 
@@ -66,7 +66,7 @@ void Player_Game::exchange_j(std::string play, int cards_requested, std::vector<
   uuid.encode_header();
 
   std::cout << json_str << std::endl;
-  _pc->write(uuid);
+  //_pc->write(uuid);
 }
 
 

@@ -13,13 +13,16 @@
 #include "player_comm.h"
 #include "player_game.h"
 
+class player_comm;
+
 class Mainwin : public Gtk::Window
 {
 
     public:
         Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& reGlade);
         virtual ~Mainwin();
-	void setPlayerGame(Player_Game* pgame);
+	void setPlayerGame(Player_Game pgame);
+	void setPlayerComm(player_comm* pcomm);
 	void setLabel(std::string text);
 
     protected:        
@@ -54,7 +57,8 @@ class Mainwin : public Gtk::Window
 
 private:
 	std::string _player_name;
-	Player_Game* _p = 0;
+	Player_Game _pg;
+	player_comm* _pc;
 
 };
 #endif
