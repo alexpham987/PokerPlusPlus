@@ -4,7 +4,9 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#ifndef SERVER
 #include <gtkmm.h>
+#endif
 #include <sstream>
 #include <map>
 
@@ -24,8 +26,9 @@ class Chip {
   private:
 	Color _color;
 	int _value;
+#ifndef SERVER
 	Gtk::Image *chipimage;
-
+#endif
 };
 
 #endif

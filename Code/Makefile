@@ -1,5 +1,5 @@
 #compiler options
-CXXFLAGS+= -DASIO_STANDALONE -Wall -std=c++11 -lstdc++fs -I./include -I./asio-1.12.2/include -g
+CXXFLAGS+= -DASIO_STANDALONE -Wall -std=c++11 -I./include -I./asio-1.12.2/include -g
 
 #source files
 SOURCES=$(wildcard *.cpp)
@@ -30,8 +30,14 @@ all: $(EXECUTABLEP) $(EXECUTABLED)
 $(EXECUTABLEP): $(MOBJECTSP)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE) 
 
-$(EXECUTABLED): $(MOBJECTSD)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
+#$(EXECUTABLED): $(MOBJECTSD)
+#	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
+
+
+$(EXECUTABLED):dealer_game.cpp round.cpp chip.cpp hand.cpp deck.cpp \
+               stack.cpp main_dealer.cpp  \
+               pot.cpp card.cpp dealer_comm.cpp
+	$(CXX) $(CXXFLAGS) -DSERVER $^ -o $@ -lpthread
 
 test: CXXFLAGS+= -g
 test: $(TOBJECTS)
@@ -44,6 +50,6 @@ debug: $(EXECUTABLE)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-	-rm -f $(EXECUTABLE) test $(OBJECTS)
+	-rm -f $(EXECUTABLEP) test $(OBJECTS) $(EXECUTABLED)
 
 
