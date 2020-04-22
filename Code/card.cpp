@@ -3,13 +3,13 @@
 Card::Card(int num, Suit suit) : _num{num}, _suit{suit} 
 {
 	if(num < MIN_NUM || num > MAX_NUM)
-		throw std::runtime_error("Number : Out of Range!");
+		throw std::runtime_error("Number Out of Range!");
 	
 	if(suit < 0 || suit > MAX_SUIT)
-		throw std::runtime_error("Suit : Out of Range!");
+		throw std::runtime_error("Suit Out of Range!");
 
 
-	cardimage = Gtk::manage(new Gtk::Image{this->card_to_filename()});
+	//cardimage = Gtk::manage(new Gtk::Image{this->card_to_filename()});
 }
 	
 int Card::num() const {return _num;}

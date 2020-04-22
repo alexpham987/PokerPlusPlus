@@ -11,6 +11,7 @@
 #include "asio.hpp"
 #include "chat_message.hpp"
 #include "card.h"
+#include "dealer_game.h"
 
 using asio::ip::tcp;
 
@@ -25,7 +26,6 @@ class chat_participant
 public:
 	virtual ~chat_participant() {}
 	virtual void deliver(const chat_message& msg) = 0;
-	//virtual void deliverCards(const Card card);
 };
 
 typedef std::shared_ptr<chat_participant> chat_participant_ptr;
@@ -63,8 +63,8 @@ class chat_session
 	chat_room& room_;
 	chat_message read_msg_;
 	chat_message_queue write_msgs_;
+	Dealer_Game _dg{true};
 
-	friend class Dealer_game;
 };
 
 class Dealer_comm
@@ -78,7 +78,6 @@ class Dealer_comm
 	tcp::acceptor acceptor_;
 	chat_room room_;
 
-	friend class Dealer_game;
 };
 
 	

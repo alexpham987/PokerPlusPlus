@@ -3,7 +3,7 @@
 Chip::Chip(Color color) : _color{color}
 {
 	if(color < 0 || color > MAX_COLOR)
-		throw std::runtime_error("Color : Out of Range!");
+		throw std::runtime_error("Color Out of Range!");
 	
 	if(color == GREEN)
 		_value = 5;
@@ -12,7 +12,7 @@ Chip::Chip(Color color) : _color{color}
 	else
 		_value = 25;
 
-	chipimage = Gtk::manage(new Gtk::Image{this->chip_to_filename()});	
+	//chipimage = Gtk::manage(new Gtk::Image{this->chip_to_filename()});	
 }
 	
 Color Chip::color() const {return _color;}

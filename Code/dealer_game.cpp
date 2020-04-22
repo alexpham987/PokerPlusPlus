@@ -5,17 +5,30 @@ Dealer_Game::Dealer_Game(bool playerResult) : _playerResult{playerResult}
 
 void Dealer_Game::shuffleCards()
 {
-	deck.shuffle();
-	deck.shuffle();
-	deck.shuffle();
+	_deck.shuffle();
+	_deck.shuffle();
+	_deck.shuffle();
 }
-void Dealer_Game::dealCards(chat_room& c)
+
+chat_message Dealer_Game::dealCards()
 {
-	std::set<chat_participant_ptr> participants = c.getParticipants();
-	for (auto participant: participants) {
-		for(int i = 0; i < 5; i++) 
-     		std::cout << "participant->deliverCards(deck.deal());" << std::endl;
+	nlohmann::json to_player;
+	chat_message uuid;
+	std::string json_str;
+
+	for(int i = 0; i < 5; i++) {
+		std::string in = std::to_string(i);
+		Card c = _deck.deal();
+		to_player[in] = c.card_to_filename();
 	}
+
+  	json_str = to_player.dump();
+
+  	uuid.body_length(std::strlen(json_str.c_str()));
+ 	std::memcpy(uuid.body(), json_str.c_str(), uuid.body_length());
+  	uuid.encode_header();
+
+	return uuid;
 
 }
 void Dealer_Game::dealChips()

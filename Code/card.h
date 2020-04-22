@@ -12,7 +12,7 @@
 enum Suit {C,D,H,S};
 
 const int MAX_SUIT = 4;
-const int MIN_NUM = 2;
+const int MIN_NUM = 1;
 const int MAX_NUM = 13;
 
 class Card {

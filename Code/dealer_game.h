@@ -4,7 +4,8 @@
 #include "chip.h"
 #include "card.h"
 #include "deck.h"
-#include "dealer_comm.h"
+#include "json.hpp"
+#include "chat_message.hpp"
 #include <vector>
 #include <string>
 #include <deque>
@@ -14,7 +15,7 @@ class Dealer_Game
   public:
     Dealer_Game(bool playerResult);
     void shuffleCards();
-    void dealCards(chat_room& c);
+    chat_message dealCards();
     void dealChips();
     bool gameResult();
     void exchangeCards(int amountOfCards);
@@ -22,7 +23,7 @@ class Dealer_Game
 
   private:
     bool _playerResult;
-    Deck deck;
+    Deck _deck;
     std::vector<Chip> chips;
 };
 

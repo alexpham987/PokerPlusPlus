@@ -8,6 +8,9 @@ using asio::ip::tcp;
   {
 	std::cout << "participant joined" << std::endl;
     participants_.insert(participant);
+	//chat_message cards = _dg.dealCards();
+	//participant->deliver(cards);
+
     for (auto msg: recent_msgs_)
       participant->deliver(msg);
   }
@@ -89,6 +92,13 @@ using asio::ip::tcp;
         {
           if (!ec)
           {
+            nlohmann::json info = nlohmann::json::parse(read_msg_.body());
+			chat_message msg;
+			if(info["event"] == "join")
+			{
+				std::memcpy(read_msg_.body(), "player joined", read_msg_.body_length());
+  				read_msg_.encode_header();
+			}
             room_.deliver(read_msg_);
             do_read_header();
           }
