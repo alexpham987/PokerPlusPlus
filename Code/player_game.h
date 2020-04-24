@@ -10,13 +10,13 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
-
 class Player_Game
 {
 
   public:
    Player_Game();
    void setName(std::string name);
+   std::vector<std::string> setHand(nlohmann::json cards);
    chat_message move_j(std::string play, int cards_requested, int current_bet) const;
    chat_message exchange_j(std::string play, int cards_requested, std::vector<int> cards);
 

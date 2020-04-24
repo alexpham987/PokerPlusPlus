@@ -17,6 +17,7 @@ class Hand
    void modify_hand (std::vector<int> cards);
    int calc_value();
    int find_high_card();
+   void addCard(Card c);
 
   private:
    int hand_value;            //value of hand

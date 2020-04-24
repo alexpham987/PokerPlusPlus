@@ -22,6 +22,8 @@ Hand::Hand ()
 Hand::~Hand()
 {}
 
+void Hand::addCard(Card c) { _hand.push_back(c); }
+
 void Hand::modify_hand (std::vector<int> mod_cards)
 {
   for(auto i : mod_cards)

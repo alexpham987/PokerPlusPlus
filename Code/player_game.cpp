@@ -12,9 +12,37 @@ Player_Game::Player_Game()
 
 void Player_Game::setName(std::string name) { _name = name; }
 
-void Player_Game::setHand(nlohmann::json cards) 
+std::vector<std::string> Player_Game::setHand(nlohmann::json cards) 
 {
-	
+	std::vector<std::string> files;
+	int num;
+	std::string s;
+	Suit suit;
+	for(int i = 0; i < 5; i++) 	
+	{
+		std::stringstream ss;
+		std::string in = std::to_string(i);
+		std::string cStr = cards[in];
+		ss << cStr;
+		ss >> num;
+		ss >> s;
+		if(s == "S")
+			suit = S;
+		else if(s == "C")
+			suit = C;
+		else if(s == "D")
+			suit = D;
+		else
+			suit = H;
+
+		Card c(num, suit);
+		_hand.addCard(c);
+		files.push_back(c.card_to_filename());	
+	}
+
+	return files;
+}
+		
 	
 //Changed this function a little to make it easier to use in mainwin
 chat_message Player_Game::move_j(std::string play, int cards_requested, int current_bet) const

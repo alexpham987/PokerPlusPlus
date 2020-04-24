@@ -56,6 +56,10 @@ class Mainwin : public Gtk::Window
       	Gtk::Label* chip2_label; 
       	Gtk::Label* chip3_label;
 	Gtk::Image* card_1;
+	Gtk::Image* card_2;
+	Gtk::Image* card_3;
+	Gtk::Image* card_4;
+	Gtk::Image* card_5;
 	Glib::RefPtr<Gtk::Builder> builder;
 
 private:

@@ -28,6 +28,10 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	//exchange_button->set_sensitive(true);
 	builder->get_widget("card_box", card_box);
 	builder->get_widget("card_1", card_1);
+	builder->get_widget("card_2", card_2);
+	builder->get_widget("card_3", card_3);
+	builder->get_widget("card_4", card_4);
+	builder->get_widget("card_5", card_5);
 
 
 	menuitem_about->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_about_click));
@@ -87,9 +91,12 @@ void Mainwin::setLabel(std::string text)
 
 void Mainwin::setCards(nlohmann::json cards)
 {
-	Card c(2,C);
-	Card c1(3,D);
-	card_1->set(c.card_to_filename());
+	std::vector<std::string> f = _pg.setHand(cards);
+	card_1->set(f[1]);
+	card_2->set(f[2]);
+	card_3->set(f[3]);
+	card_4->set(f[4]);
+	card_5->set(f[5]);
 }
 	
 
