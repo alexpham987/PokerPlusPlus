@@ -92,11 +92,11 @@ void Mainwin::setLabel(std::string text)
 void Mainwin::setCards(nlohmann::json cards)
 {
 	std::vector<std::string> f = _pg.setHand(cards);
-	card_1->set(f[1]);
-	card_2->set(f[2]);
-	card_3->set(f[3]);
-	card_4->set(f[4]);
-	card_5->set(f[5]);
+	card_1->set(f[0]);
+	card_2->set(f[1]);
+	card_3->set(f[2]);
+	card_4->set(f[3]);
+	card_5->set(f[4]);
 }
 	
 

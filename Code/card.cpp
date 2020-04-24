@@ -49,7 +49,14 @@ std::string Card::card_to_string() {
 std::string Card::card_to_filename() {
 	std::stringstream ss;
 	ss << "Cards/";
-	ss << _num;
+	if(_num == 13)
+		ss << "K";
+	else if(_num == 12)
+		ss << "Q";
+	else if(_num == 11) 
+		ss << "J";
+	else
+		ss << _num;
 
 	std::map<Suit, std::string> suit_string = 
 	{
