@@ -16,9 +16,8 @@ class Dealer_Game
     Dealer_Game(bool playerResult);
     void shuffleCards();
     chat_message dealCards();
-    void dealChips();
     bool gameResult();
-    void exchangeCards(int amountOfCards);
+    chat_message exchangeCards(int amountOfCards);
     void revealHand();
 
   private:

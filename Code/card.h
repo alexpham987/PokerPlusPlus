@@ -26,6 +26,9 @@ class Card {
 	int compareCard(Card C);
 	std::string card_to_string();
 	std::string card_to_filename();
+#ifndef SERVER
+	Gtk::Image* Image();
+#endif
 	
   private:
 	int _num;

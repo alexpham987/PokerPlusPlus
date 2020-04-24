@@ -12,6 +12,13 @@ Card::Card(int num, Suit suit) : _num{num}, _suit{suit}
 	cardimage = Gtk::manage(new Gtk::Image{this->card_to_filename()});
 #endif
 }
+
+#ifndef SERVER
+
+Gtk::Image* Card::Image() {
+	return cardimage;
+}
+#endif
 	
 int Card::num() const {return _num;}
 

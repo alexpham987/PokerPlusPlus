@@ -3,6 +3,11 @@
 Dealer_Game::Dealer_Game(bool playerResult) : _playerResult{playerResult}
 {}
 
+
+//void Dealer_Game::startGame()
+//{
+	
+	
 void Dealer_Game::shuffleCards()
 {
 	_deck.shuffle();
@@ -13,31 +18,51 @@ void Dealer_Game::shuffleCards()
 chat_message Dealer_Game::dealCards()
 {
 	nlohmann::json to_player;
-	chat_message uuid;
+	chat_message cards;
 	std::string json_str;
+	to_player["event"] = "Deal";
 
 	for(int i = 0; i < 5; i++) {
 		std::string in = std::to_string(i);
 		Card c = _deck.deal();
-		to_player[in] = c.card_to_filename();
+		to_player[in] = c.card_to_string();
 	}
 
   	json_str = to_player.dump();
 
-  	uuid.body_length(std::strlen(json_str.c_str()));
- 	std::memcpy(uuid.body(), json_str.c_str(), uuid.body_length());
-  	uuid.encode_header();
+  	cards.body_length(std::strlen(json_str.c_str()));
+ 	std::memcpy(cards.body(), json_str.c_str(), cards.body_length());
+  	cards.encode_header();
 
-	return uuid;
+	return cards;
 
 }
-void Dealer_Game::dealChips()
-{}
+
 bool Dealer_Game::gameResult()
 {
   return false;
 }
-void Dealer_Game::exchangeCards(int amountOfCards)
-{}
+
+chat_message Dealer_Game::exchangeCards(int amountOfCards)
+{
+	nlohmann::json to_player;
+	chat_message cards;
+	std::string json_str;
+
+	for(int i = 0; i < amountOfCards; i++) 
+	{
+		std::string in = std::to_string(i);
+		Card c = _deck.deal();
+		to_player[in] = c.card_to_string();
+	}
+
+  	json_str = to_player.dump();
+
+  	cards.body_length(std::strlen(json_str.c_str()));
+ 	std::memcpy(cards.body(), json_str.c_str(), cards.body_length());
+  	cards.encode_header();
+
+	return cards;
+}
 void Dealer_Game::revealHand()
 {}

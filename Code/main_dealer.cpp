@@ -1,7 +1,5 @@
 #include "dealer_comm.h"
 
-using asio::ip::tcp;
-
 int main(int argc, char* argv[])
 {
 	try
@@ -22,13 +20,12 @@ int main(int argc, char* argv[])
 		}
 
 		io_context.run();
+
 	}
 	catch (std::exception& e)
 	{
 		std::cerr << "Exception: " << e.what() << "\n";
 	}
-
-	
 
 	return 0;
 }

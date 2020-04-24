@@ -8,11 +8,8 @@ using asio::ip::tcp;
   {
 	std::cout << "participant joined" << std::endl;
     participants_.insert(participant);
-	//chat_message cards = _dg.dealCards();
-	//participant->deliver(cards);
-
     for (auto msg: recent_msgs_)
-      participant->deliver(msg);
+      participant->deliver(msg);		
   }
 
   void chat_room::leave(chat_participant_ptr participant)
@@ -30,7 +27,7 @@ using asio::ip::tcp;
       participant->deliver(msg);
   }
 
-	std::set<chat_participant_ptr> chat_room::getParticipants() 
+	std::set<chat_participant_ptr> chat_room::participants() 
 	{
 		return participants_;
 	}
@@ -96,10 +93,12 @@ using asio::ip::tcp;
 			chat_message msg;
 			if(info["event"] == "join")
 			{
-				std::memcpy(read_msg_.body(), "player joined", read_msg_.body_length());
-  				read_msg_.encode_header();
+				chat_message cards = _dg.dealCards();
+				room_.deliver(cards);
 			}
+			else {
             room_.deliver(read_msg_);
+			}
             do_read_header();
           }
           else

@@ -235,7 +235,7 @@
               <object class="GtkImage" id="card_1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="pixbuf">Cards/2D.jpg</property>
+                <property name="stock">gtk-add</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -247,7 +247,7 @@
               <object class="GtkImage" id="card_2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="pixbuf">Cards/2H.jpg</property>
+                <property name="stock">gtk-add</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -259,7 +259,7 @@
               <object class="GtkImage" id="card_3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="pixbuf">Cards/2S.jpg</property>
+                <property name="stock">gtk-add</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -271,7 +271,7 @@
               <object class="GtkImage" id="card_4">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="pixbuf">Cards/2C.jpg</property>
+                <property name="stock">gtk-add</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -283,7 +283,7 @@
               <object class="GtkImage" id="card_5">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="pixbuf">Cards/3C.jpg</property>
+                <property name="stock">gtk-add</property>
               </object>
               <packing>
                 <property name="expand">True</property>

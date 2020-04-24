@@ -26,6 +26,8 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	//Excange button will need to be toggled ON during exchange cards round
 	builder->get_widget("exchange_button", exchange_button);
 	//exchange_button->set_sensitive(true);
+	builder->get_widget("card_box", card_box);
+
 
 	menuitem_about->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_about_click));
 
@@ -62,8 +64,6 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	}
 	dialog->close();
 	delete dialog;
-
-	msg->set_label(" ");
 }
 
 Mainwin::~Mainwin() {}
@@ -75,12 +75,22 @@ void Mainwin::setPlayerGame(Player_Game pgame) {
 
 void Mainwin::setPlayerComm(player_comm* pcomm) {
 	_pc = pcomm;
+	chat_message join = _pg.move_j("join", 0, 0);
+	_pc->write(join);
 }
 
 void Mainwin::setLabel(std::string text) 
 {
 	msg->set_label(text);
 }
+
+void Mainwin::setCards(nlohmann::json cards)
+{
+	Card c(2,C);
+	Card c1(3,D);
+	//card_box->append(c.
+}
+	
 
 void Mainwin::on_quit_click() {
 	/* Alert the dealer that a player/spectator has left the game */

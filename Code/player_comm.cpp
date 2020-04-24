@@ -114,22 +114,28 @@ void player_comm::setMainwin(Mainwin* win) { _win = win; }
 void player_comm::updateLabel(nlohmann::json info) 
 {
 	std::string lab;
-	std::string name = info["name"];
-	std::string event = info["event"];
-	lab = name+"'s move:  ";
 
-	if(event == "bet" || event == "raise" || event == "call") {
-		int bet = info["current_bet"];
-		std::string bet_str = std::to_string(bet);
-		lab += event+" $"+bet_str;
-	}
-	else if(event == "request_cards") {
-		int c = info["cards_requested"];
-		std::string c_str = std::to_string(c);
-		lab += "exchanged "+c_str+" cards";
-	}
-	else {
-		lab += event;
+	if(info["event"] == "Deal")
+		lab = "Cards Dealt!";
+	else
+	{
+		std::string name = info["name"];
+		std::string event = info["event"];
+		lab = name+"'s move:  ";
+
+		if(event == "bet" || event == "raise" || event == "call") {
+			int bet = info["current_bet"];
+			std::string bet_str = std::to_string(bet);
+			lab += event+" $"+bet_str;
+		}
+		else if(event == "request_cards") {
+			int c = info["cards_requested"];
+			std::string c_str = std::to_string(c);
+			lab += "exchanged "+c_str+" cards";
+		}
+		else {
+			lab += event;
+		}
 	}
 	_win->setLabel(lab);
 	

@@ -24,6 +24,7 @@ class Mainwin : public Gtk::Window
 	void setPlayerGame(Player_Game pgame);
 	void setPlayerComm(player_comm* pcomm);
 	void setLabel(std::string text);
+	void setCards(nlohmann::json cards);
 
     protected:        
         void on_quit_click();  
@@ -50,6 +51,7 @@ class Mainwin : public Gtk::Window
 	Gtk::Entry* bet_entry;
 	Gtk::Button* exchange_button;
 	Gtk::Fixed *fixed;
+	Gtk::Box *card_box;
      	Gtk::Label* chip1_label; 
       	Gtk::Label* chip2_label; 
       	Gtk::Label* chip3_label;

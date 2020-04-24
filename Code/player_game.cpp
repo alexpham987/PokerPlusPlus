@@ -12,7 +12,6 @@ Player_Game::Player_Game()
 
 void Player_Game::setName(std::string name) { _name = name; }
 	
-
 //Changed this function a little to make it easier to use in mainwin
 chat_message Player_Game::move_j(std::string play, int cards_requested, int current_bet) const
 {

@@ -8,6 +8,7 @@
 #include <memory>
 #include <set>
 #include <utility>
+#include <chrono>
 #include "asio.hpp"
 #include "chat_message.hpp"
 #include "card.h"
@@ -36,13 +37,14 @@ class chat_room
 	void join(chat_participant_ptr participant);
 	void leave(chat_participant_ptr participant);
 	void deliver(const chat_message& msg);
-	void deliverCards(const Card card);
-	std::set<chat_participant_ptr> getParticipants();
+	std::set<chat_participant_ptr> participants();
+	void startGame();
 
   private:	
 	std::set<chat_participant_ptr> participants_;
 	enum { max_recent_msgs = 100 };
 	chat_message_queue recent_msgs_;
+	Dealer_Game _dg{true};
 };
 
 
