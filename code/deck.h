@@ -5,8 +5,8 @@
 #include <vector>
 #include <stdexcept>
 
-class Deck {
-
+class Deck
+{
 	friend class Dealer_Game;
 
 	public:
@@ -16,7 +16,7 @@ class Deck {
 	  bool deck_empty();
 
 	private:
-	  std::vector<Card> _deck;
+	  std::vector<Card> _deck; //attribute that represents the deck of cards
 
 };
 

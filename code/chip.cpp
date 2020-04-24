@@ -1,10 +1,12 @@
 #include "chip.h"
 
+//constructor initializes _color with the passed in parameter
 Chip::Chip(Color color) : _color{color}
 {
+	//error checking
 	if(color < 0 || color > MAX_COLOR)
-		throw std::runtime_error("Color : Out of Range!");
-	
+		throw std::runtime_error("Color Out of Range!");
+	//initializes _value based on the color
 	if(color == GREEN)
 		_value = 5;
 	else if(color == RED)
@@ -12,19 +14,31 @@ Chip::Chip(Color color) : _color{color}
 	else
 		_value = 25;
 
-	chipimage = Gtk::manage(new Gtk::Image{this->chip_to_filename()});	
+//links the chip image to the gtk window
+#ifndef SERVER
+	chipimage = Gtk::manage(new Gtk::Image{this->chip_to_filename()});
+#endif
 }
-	
-Color Chip::color() const {return _color;}
 
-int Chip::value() const {return _value;}
+//method that returns the _color attribute
+Color Chip::color() const
+{
+	return _color;
+}
 
+//method that returns the _value attribute
+int Chip::value() const
+{
+	return _value;
+}
+
+//method that converts the chip to the correct filename
 std::string Chip::chip_to_filename() {
 	std::stringstream ss;
 
 	ss << "Chips/chip_";
-	
-	std::map<Color, std::string> color_string = 
+
+	std::map<Color, std::string> color_string =
 	{
 		{Color::GREEN, "green"},
 		{Color::RED, "red"},
@@ -35,5 +49,3 @@ std::string Chip::chip_to_filename() {
 
 	return ss.str();
 }
-
-

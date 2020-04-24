@@ -13,8 +13,8 @@ class Round
     void changeRoundType(std::string newRoundType);
 
   private:
-    int _roundNumber;
-    std::string _roundType;
+    int _roundNumber; //attribute that represents the current round number
+    std::string _roundType; //attribute that represents the type of round
 };
 
 #endif

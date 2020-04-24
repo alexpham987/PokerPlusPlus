@@ -9,7 +9,7 @@ using asio::ip::tcp;
 	std::cout << "participant joined" << std::endl;
     participants_.insert(participant);
     for (auto msg: recent_msgs_)
-      participant->deliver(msg);
+      participant->deliver(msg);		
   }
 
   void chat_room::leave(chat_participant_ptr participant)
@@ -27,7 +27,7 @@ using asio::ip::tcp;
       participant->deliver(msg);
   }
 
-	std::set<chat_participant_ptr> chat_room::getParticipants()
+	std::set<chat_participant_ptr> chat_room::participants() 
 	{
 		return participants_;
 	}
@@ -66,10 +66,10 @@ using asio::ip::tcp;
         {
           if (!ec && read_msg_.decode_header())
           {
-            for(unsigned int i = 0; i < chat_message::max_body_length; i++)
-            {
-              read_msg_.body()[i] = '\0';
-            }
+			for(unsigned int i = 0; i < chat_message::max_body_length; i++) 
+			{
+				read_msg_.body()[i] = '\0';
+			}
             do_read_body();
           }
           else
@@ -89,7 +89,16 @@ using asio::ip::tcp;
         {
           if (!ec)
           {
+            nlohmann::json info = nlohmann::json::parse(read_msg_.body());
+			chat_message msg;
+			if(info["event"] == "join")
+			{
+				chat_message cards = _dg.dealCards();
+				room_.deliver(cards);
+			}
+			else {
             room_.deliver(read_msg_);
+			}
             do_read_header();
           }
           else
@@ -146,3 +155,4 @@ using asio::ip::tcp;
           do_accept();
         });
   }
+

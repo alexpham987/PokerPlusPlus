@@ -2,28 +2,28 @@
 #define STACK_H
 
 #include <vector>
+#include <assert.h>
 #include "chip.h"
 
-/*#define initial_total 100
-#define red_multiplier 1
-#define green_multiplier 5
-#define blue_multiplier 25*/
+//defines used to make it more clear with which color stack we are dealing with and defines the intial total amount of chips in dollars
+#define RED_MULTIPLIER 1
+#define GREEN_MULTIPLIER 5
+#define BLUE_MULTIPLIER 25
+#define INITIAL_TOTAL 100
 
 class Stack
 {
-  friend class Dealer;
-  friend class Player_Game;
-
   public:
     Stack();
-    void add_chips(int red, int green, int blue);
-    void remove_chips(int red, int green, int blue);
+    void add_chips(int green, int red, int blue);
+    void remove_chips(int green, int red, int blue);
     int get_total();
 
   private:
-    int _total;
-    //std::vector<Chip> _stack;
-    std::vector<std::vector<Chip>> _stack;
+    int _total; //attribute that represents the current total amount of chips in dollars
+    std::vector<Chip> _stack_green; //attribute that represents the stack of green chips
+    std::vector<Chip> _stack_red; //attribute that represents the stack of red chips
+    std::vector<Chip> _stack_blue; //attribute that represents the stack of blue chips
 };
 
 

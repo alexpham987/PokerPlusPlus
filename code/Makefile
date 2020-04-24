@@ -1,5 +1,5 @@
 #compiler options
-CXXFLAGS+= -DASIO_STANDALONE -Wall -std=c++11 -lstdc++fs -I./include -I./asio-1.12.2/include -g
+CXXFLAGS+= -DASIO_STANDALONE -Wall -std=c++11 -I./include -I./asio-1.12.2/include -g
 
 #source files
 SOURCES=$(wildcard *.cpp)
@@ -15,7 +15,7 @@ MOBJECTSD=$(filter-out main_player.o,$(OBJECTS))
 TOBJECTS=$(filter-out main.o,$(OBJECTS))
 
 #included libraries
-INCLUDE=`/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
+INCLUDE=`/usr/bin/pkg-config gtkmm-3.0 --cflags --libs` 
 
 #executable filename
 EXECUTABLEP=pokerplayer
@@ -28,10 +28,16 @@ all: $(EXECUTABLEP) $(EXECUTABLED)
 #$@ - is the result name (in this case =$(EXECUTABLE) )
 
 $(EXECUTABLEP): $(MOBJECTSP)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE) 
 
-$(EXECUTABLED): $(MOBJECTSD)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
+#$(EXECUTABLED): $(MOBJECTSD)
+#	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
+
+
+$(EXECUTABLED):dealer_game.cpp round.cpp chip.cpp hand.cpp deck.cpp \
+               stack.cpp main_dealer.cpp  \
+               pot.cpp card.cpp dealer_comm.cpp
+	$(CXX) $(CXXFLAGS) -DSERVER $^ -o $@ -lpthread
 
 test: CXXFLAGS+= -g
 test: $(TOBJECTS)
@@ -44,4 +50,6 @@ debug: $(EXECUTABLE)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-	-rm -f $(EXECUTABLE) test $(OBJECTS)
+	-rm -f $(EXECUTABLEP) test $(OBJECTS) $(EXECUTABLED)
+
+

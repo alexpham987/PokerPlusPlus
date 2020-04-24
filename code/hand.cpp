@@ -1,32 +1,35 @@
-//
-//
-// class for the cards at hand
-//
-//
-
 #include "hand.h"
 
+//constructor
+Hand::Hand ()
+{}
+
+//destructor
+Hand::~Hand()
+{}
+
+//method that compares the suit of two cards
 bool comp_suit(const Card & a, const Card & b)
 {
 	return (a.suit() < b.suit());
 }
+
+//method that compares the value of two cards
 bool comp_value(const Card & a, const Card & b)
 {
 	return (a.num() < b.num());
 }
 
-Hand::Hand ()
+//method that modifies the hand
+void Hand::modify_hand (std::vector<int> mod_cards)
 {
+  for(auto i : mod_cards)
+	{
+		_hand.erase(_hand.begin() + i);
+	}
 }
 
-Hand::~Hand()
-{}
-
-void Hand::modify_hand (/*std::vector <Card> mod_hand*/)
-{
- // this -> _hand = mod_hand;
-}
-
+//method that calculates the total value of a hand
 int Hand::calc_value ()
 {
   int value = -1;
@@ -52,12 +55,12 @@ int Hand::calc_value ()
       if( _hand[4].num() == 13) //if last card of straight flush is ace, we have a royal flush
       {
         value = 1;  //Royal Flush
-	return value;
+				return value;
       }
       else //otherwise its a regular straight flush
       {
         value = 2;  //Straight Flush
-	return value;
+				return value;
       }
     }
   }

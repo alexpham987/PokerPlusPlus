@@ -1,147 +1,106 @@
 #include "stack.h"
 
-Stack::Stack() //:_total{initial_total} 25, 5, 2
+//constructor initializes _total to INITIAL_TOTAL
+Stack::Stack() :_total{INITIAL_TOTAL}
 {
-  for(int i = 0; i < 3; i++)
+  _total = 0;
+//for loop to initialize total chips to 100 dollars worth (25 red chips, 5 green chips, 2 blue chips)
+  for(int i = 0; i < 25; i++)
   {
-    if(i == 0)
+    _stack_green.push_back(Chip(RED));
+    _total += RED_MULTIPLIER;
+    if(i<5)
     {
-      for(int j = 0; j < 25; j++)
+      _stack_red.push_back(Chip(GREEN));
+      _total += GREEN_MULTIPLIER;
+    }
+    if(i<2)
+    {
+      _stack_blue.push_back(Chip(BLUE));
+      _total += BLUE_MULTIPLIER;
+    }
+  }
+
+//if the initialized total is greater than what was initialized above, more chips need to be added below
+  if(INITIAL_TOTAL > _total)
+  {
+    int initial = INITIAL_TOTAL;
+    int temp = initial / BLUE_MULTIPLIER;
+    if(temp > 0)
+    {
+      for(int i = 0; i < temp; i++)
       {
-        _stack[i].push_back(RED);
-        _total += 1;
+        _stack_blue.push_back(Chip(BLUE));
+        _total += BLUE_MULTIPLIER;
+        initial -= BLUE_MULTIPLIER;
       }
     }
-    else if(i == 1)
+    temp = initial / GREEN_MULTIPLIER;
+    if(temp > 0)
     {
-      for(int j = 0; j < 5; j++)
+      for(int i = 0; i < temp; i++)
       {
-        _stack[i].push_back(GREEN);
-        _total += 5;
+        _stack_blue.push_back(Chip(RED));
+        _total += GREEN_MULTIPLIER;
+        initial -= GREEN_MULTIPLIER;
       }
     }
-    else
+    temp = initial / RED_MULTIPLIER;  //for clarity, don't really need / RED_MULTIPLIER
+    if(temp > 0)
     {
-      for(int j = 0; j < 2; j++)
+      for(int i = 0; i < temp; i++)
       {
-        _stack[i].push_back(BLUE);
-        _total += 25;
+        _stack_blue.push_back(Chip(RED));
+        _total += RED_MULTIPLIER;
+        initial -= RED_MULTIPLIER;
       }
     }
+    assert(initial == 0);
   }
 }
 
-void Stack::add_chips(int red, int green, int blue)
+//method used to add chips to the vector that is requested
+void Stack::add_chips(int green, int red, int blue)
 {
-  for(int i = 0; i < 3; i++)
+  for(int i = 0; i < green; i++)
   {
-    if(i == 0)
-    {
-      for(int j = 0; j < red; j++)
-      {
-        _stack[i].push_back(RED);
-        _total += 1;
-      }
-    }
-    else if(i == 1)
-    {
-      for(int j = 0; j < green; j++)
-      {
-        _stack[i].push_back(GREEN);
-        _total += 5;
-      }
-    }
-    else
-    {
-      for(int j = 0; j < blue; j++)
-      {
-        _stack[i].push_back(BLUE);
-        _total += 25;
-      }
-    }
+    _stack_green.push_back(Chip(GREEN));
+    _total += GREEN_MULTIPLIER;
+  }
+  for(int i = 0; i < red; i++)
+  {
+    _stack_red.push_back(Chip(RED));
+    _total += RED_MULTIPLIER;
+  }
+  for(int i = 0; i < blue; i++)
+  {
+    _stack_blue.push_back(Chip(BLUE));
+    _total += BLUE_MULTIPLIER;
   }
 }
 
-void Stack::remove_chips(int red, int green, int blue)
-{
-  for(int i = 0; i < 3; i++)
-  {
-    if(i == 0)
-    {
-      for(int j = 0; j < red; j++)
-      {
-        _stack[i].pop_back();
-        _total -= 1;
-      }
-    }
-    else if(i == 1)
-    {
-      for(int j = 0; j < green; j++)
-      {
-        _stack[i].pop_back();
-        _total -= 1;
-      }
-    }
-    else
-    {
-      for(int j = 0; j < blue; j++)
-      {
-        _stack[i].pop_back();
-        _total -= 1;
-      }
-    }
-  }
-}
-
-int Stack::get_total()
-{
-  return _total;
-}
-
-/*void Stack::add_chips(int green, int red, int blue)
-{
-  if(green > 0)
-  {
-    _stack[0] = _stack[0] + green;
-  }
-  if(red > 0)
-  {
-    _stack[1] = _stack[1] + red;
-  }
-  if(blue > 0)
-  {
-    _stack[1] = _stack[1] + red;
-  }
-
-  _total = _total + (green*green_multiplier);
-
-  _total = _total + (red*red_multiplier);
-
-  _total = _total + (blue*blue_multiplier);
-}
-
+//method used to remove chips from the vector that is requested
 void Stack::remove_chips(int green, int red, int blue)
 {
-  if(green > 0)
+  for(int i = 0; i < green; i++)
   {
-    _stack[0] = _stack[0] - green;
+    _stack_green.pop_back();
+    _total -= GREEN_MULTIPLIER;
   }
-  if(red > 0)
+  for(int i = 0; i < red; i++)
   {
-    _stack[1] = _stack[1] - red;
+    _stack_red.pop_back();
+    _total -= RED_MULTIPLIER;
   }
-  if(blue > 0)
+  for(int i = 0; i < blue; i++)
   {
-    _stack[1] = _stack[1] - red;
+    _stack_blue.pop_back();
+    _total -= BLUE_MULTIPLIER;
   }
-  _total = _total - (green*green_multiplier);
-
-  _total = _total - (red*red_multiplier);
-
-  _total = _total - (blue*blue_multiplier);
 }
 
+//method used to get the _total attribute
 int Stack::get_total()
 {
   return _total;
-}*/
+}

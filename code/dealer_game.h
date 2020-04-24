@@ -4,32 +4,26 @@
 #include "chip.h"
 #include "card.h"
 #include "deck.h"
-#include "stack.h"
 #include "json.hpp"
-#include "algorithm"
-#include "random"
+#include "chat_message.hpp"
 #include <vector>
 #include <string>
+#include <deque>
 
 class Dealer_Game
 {
-  //friend class Deck;
-  //friend class Stack;
-
   public:
-    Dealer_Game(bool playerResult, Deck d, Stack s);
+    Dealer_Game(bool playerResult);
     void shuffleCards();
-    void dealCards();
-    void dealChips();
+    chat_message dealCards();
     bool gameResult();
-    void exchangeCards(int amountOfCards);
+    chat_message exchangeCards(int amountOfCards);
     void revealHand();
 
   private:
-    bool _playerResult;
-    std::random_device random;
-    Deck _d;
-    Stack _s;
+    bool _playerResult; //attribute that represents whether a player has won or lost
+    Deck _deck; //attribute that represents the deck of cards
+    std::vector<Chip> chips; //attribute that represents the stack of chips
 };
 
 #endif

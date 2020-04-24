@@ -7,13 +7,8 @@
 
 using asio::ip::tcp;
 
+//main function for the player's side of the game
 int main(int argc, char *argv[]) {
-
-	if(argc != 3)
-	{
-		std::cout << "Proper Usage: ./pokerplayer 127.0.0.1 9000\n";
-		exit(1);
-	}
 
 	asio::io_context io_context;
 
@@ -23,18 +18,22 @@ int main(int argc, char *argv[]) {
   assert(p);
   std::thread t([&io_context](){ io_context.run(); });
 
-	Player_Game pgame(p);
-
 	Gtk::Main kit(argc, argv);
 	Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file("test.glade");
 
 	Mainwin *win = 0;
 	builder->get_widget_derived("Mainwin", win);
-	win->setPlayerGame(&pgame);
+
+	Player_Game pg;
+	p->setMainwin(win);
+
+	win->setPlayerGame(pg);
+	win->setPlayerComm(p);
 
 	kit.run(*win);
 
-   	p->close();
-   	t.join();
+  p->close();
+  t.join();
+
 	return 0;
 }

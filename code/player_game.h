@@ -4,29 +4,25 @@
 #include "hand.h"
 #include "stack.h"
 #include "json.hpp"
-#include "player_comm.h"
-#include "dealer_game.h"
+#include "chat_message.hpp"
+#include <vector>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
-
 class Player_Game
 {
-  friend class player_comm;
-  friend class Dealer_game;
-  
   public:
-   Player_Game(player_comm* pc);
+   Player_Game();
    void setName(std::string name);
-   nlohmann::json move_j(std::string play, int cards_requested, int current_bet) const; // method to be used by dealer to find out player move
+   chat_message move_j(std::string play, int cards_requested, int current_bet) const;
+   chat_message exchange_j(std::string play, int cards_requested, std::vector<int> cards);
 
   private:
-   std::string _name;
-   boost::uuids::uuid _id;
-   Stack _stack;
-   Hand _hand;
-   player_comm* _pc;
+   std::string _name; //attribute that represents the player's name
+   boost::uuids::uuid _id; //attribute that represents the player id
+   Stack _stack; //attribute that represents the stack of chips
+   Hand _hand; //attribute that represents the player's hand
 };
 
 #endif
