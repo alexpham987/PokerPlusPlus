@@ -7,6 +7,7 @@ Dealer_Game::Dealer_Game(bool playerResult) : _playerResult{playerResult}
 //void Dealer_Game::startGame()
 //{
 	
+void Dealer_Game::addMoney(int amount) { _pot.addToPot(amount); }
 	
 void Dealer_Game::shuffleCards()
 {

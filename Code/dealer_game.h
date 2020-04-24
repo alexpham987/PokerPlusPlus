@@ -1,8 +1,7 @@
 #ifndef DEALER_GAME_H
 #define DEALER_GAME_H
 
-#include "chip.h"
-#include "card.h"
+#include "pot.h"
 #include "deck.h"
 #include "json.hpp"
 #include "chat_message.hpp"
@@ -19,11 +18,12 @@ class Dealer_Game
     bool gameResult();
     chat_message exchangeCards(int amountOfCards);
     void revealHand();
+    void addMoney(int amount);
 
   private:
     bool _playerResult;
     Deck _deck;
-    std::vector<Chip> chips;
+    Pot _pot{0};
 };
 
 #endif

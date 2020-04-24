@@ -96,6 +96,11 @@ using asio::ip::tcp;
 				chat_message cards = _dg.dealCards();
 				room_.deliver(cards);
 			}
+			if(info["event"] == "ante")
+			{
+				_dg.addMoney(1);
+				std::cout << "chip added" << std::endl;
+			}
 			else {
             room_.deliver(read_msg_);
 			}
