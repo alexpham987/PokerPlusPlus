@@ -139,7 +139,17 @@ using asio::ip::tcp;
     : acceptor_(io_context, endpoint)
   {
     do_accept();
+	startGame();
   }
+
+  void Dealer_comm::startGame() 
+{
+	std::cout << "starting game " << std::endl;
+
+	//while((room_.participants()).size() < 2) {}
+
+	std::cout << "ready to play" << std::endl;
+}
 
   void Dealer_comm::do_accept()
   {

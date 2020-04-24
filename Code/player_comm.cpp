@@ -76,6 +76,7 @@ void player_comm::write(const chat_message& msg)
             std::memcpy ( &outline[1], read_msg_.body(), read_msg_.body_length() );
             nlohmann::json info = nlohmann::json::parse(read_msg_.body());
 			this->updateLabel(info);
+			_win->setCards(info);
             std::cout.write(read_msg_.body(), read_msg_.body_length());
             std::cout << "\n";
             do_read_header();

@@ -7,9 +7,7 @@
 #include <sstream>
 #include <map>
 #include <iostream>
-#ifndef SERVER
-#include <gtkmm.h>
-#endif
+
 
 enum Suit {C,D,H,S};
 
@@ -26,16 +24,11 @@ class Card {
 	int compareCard(Card C);
 	std::string card_to_string();
 	std::string card_to_filename();
-#ifndef SERVER
-	Gtk::Image* Image();
-#endif
 	
   private:
 	int _num;
 	Suit _suit;
-#ifndef SERVER
-	Gtk::Image *cardimage;
-#endif
+
 };
 
 #endif

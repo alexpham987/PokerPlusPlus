@@ -74,6 +74,7 @@ class Dealer_comm
   public:
 	Dealer_comm(asio::io_context& io_context,
 	    const tcp::endpoint& endpoint);
+	void startGame();
 
   private:
 	void do_accept();
