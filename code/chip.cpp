@@ -13,11 +13,6 @@ Chip::Chip(Color color) : _color{color}
 		_value = 1;
 	else
 		_value = 25;
-
-//links the chip image to the gtk window
-#ifndef SERVER
-	chipimage = Gtk::manage(new Gtk::Image{this->chip_to_filename()});
-#endif
 }
 
 //method that returns the _color attribute
@@ -33,7 +28,8 @@ int Chip::value() const
 }
 
 //method that converts the chip to the correct filename
-std::string Chip::chip_to_filename() {
+std::string Chip::chip_to_filename()
+{
 	std::stringstream ss;
 
 	ss << "Chips/chip_";

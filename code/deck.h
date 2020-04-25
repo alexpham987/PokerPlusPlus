@@ -4,20 +4,19 @@
 #include "card.h"
 #include <vector>
 #include <stdexcept>
+#include <algorithm>
 
 class Deck
 {
-	friend class Dealer_Game;
-
 	public:
 	  Deck();
 	  Card deal();
+	  void shuffle();
 	  int remaining_cards();
 	  bool deck_empty();
 
 	private:
-	  std::vector<Card> _deck; //attribute that represents the deck of cards
-
+	  std::vector<Card> _deck;  //attribute that represents the deck of cards
 };
 
 #endif

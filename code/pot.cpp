@@ -13,5 +13,5 @@ int Pot::getCurrentPot()
 //method that adds to the value of the potValue attribute
 void Pot::addToPot(int amountToAdd)
 {
-  potValue = potValue + amountToAdd;
+  potValue += amountToAdd;
 }

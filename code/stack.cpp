@@ -4,7 +4,7 @@
 Stack::Stack() :_total{INITIAL_TOTAL}
 {
   _total = 0;
-//for loop to initialize total chips to 100 dollars worth (25 red chips, 5 green chips, 2 blue chips)
+  //for loop to initialize total chips to 100 dollars worth (25 red chips, 5 green chips, 2 blue chips)
   for(int i = 0; i < 25; i++)
   {
     _stack_green.push_back(Chip(RED));
@@ -21,7 +21,7 @@ Stack::Stack() :_total{INITIAL_TOTAL}
     }
   }
 
-//if the initialized total is greater than what was initialized above, more chips need to be added below
+  //if the initialized total is greater than what was initialized above, more chips need to be added below
   if(INITIAL_TOTAL > _total)
   {
     int initial = INITIAL_TOTAL;

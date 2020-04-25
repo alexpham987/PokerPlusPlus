@@ -8,8 +8,8 @@ void chat_room::join(chat_participant_ptr participant)
 {
 	std::cout << "participant joined" << std::endl;
   participants_.insert(participant);
-  for (auto msg: recent_msgs_)
-    participant->deliver(msg);
+  //for (auto msg: recent_msgs_)
+    //participant->deliver(msg);
 }
 
 void chat_room::leave(chat_participant_ptr participant)
@@ -32,12 +32,16 @@ std::set<chat_participant_ptr> chat_room::participants()
 	return participants_;
 }
 
+void chat_room::setDeck(Deck deck)
+{
+  _deck = deck;
+}
+
 //Class chat_session
 
-chat_session::chat_session(tcp::socket socket, chat_room& room)
-  :socket_(std::move(socket)),
-  room_(room)
+chat_session::chat_session(tcp::socket socket, chat_room& room) : socket_(std::move(socket)), room_(room)
 {
+	room_.setDeck(_deck);
 }
 
 void chat_session::start()
@@ -65,10 +69,10 @@ void chat_session::do_read_header()
     {
       if (!ec && read_msg_.decode_header())
       {
-			  for(unsigned int i = 0; i < chat_message::max_body_length; i++)
-			  {
-				  read_msg_.body()[i] = '\0';
-			  }
+		    for(unsigned int i = 0; i < chat_message::max_body_length; i++)
+	 	    {
+			    read_msg_.body()[i] = '\0';
+		    }
         do_read_body();
       }
       else
@@ -86,25 +90,45 @@ void chat_session::do_read_body()
     asio::buffer(read_msg_.body(), read_msg_.body_length()),
     [this, self](std::error_code ec, std::size_t /*length*/)
     {
-      if(!ec)
+      if (!ec)
       {
         nlohmann::json info = nlohmann::json::parse(read_msg_.body());
 			  chat_message msg;
 			  if(info["event"] == "join")
 			  {
-				  chat_message cards = _dg.dealCards();
+				  chat_message cards = _dg.dealCards(5);
+				  room_.deliver(cards);
+			  }
+			  else if(info["event"] == "ante")
+			  {
+				  _dg.addMoney(1);
+				  std::cout << "chip added" << std::endl;
+          room_.deliver(read_msg_);
+			  }
+			  else if(info["event"] == "bet")
+			  {
+				  int amount = info["bet"];
+				  _dg.addMoney(amount);
+				  std::cout << "chip added" << std::endl;
+          room_.deliver(read_msg_);
+			  }
+			  else if(info["event"] == "request_cards")
+			  {
+				  std::cout << "getting cards" << std::endl;
+				  int num = info["cards_requested"];
+				  chat_message cards = _dg.dealCards(num);
 				  room_.deliver(cards);
 			  }
 			  else
         {
           room_.deliver(read_msg_);
 			  }
-            do_read_header();
-      }
-      else
-      {
-        room_.leave(shared_from_this());
-      }
+        do_read_header();
+        }
+        else
+        {
+          room_.leave(shared_from_this());
+        }
     });
 }
 
@@ -131,24 +155,30 @@ void chat_session::do_write()
       });
 }
 
+
 //Class Dealer_comm
 
-Dealer_comm::Dealer_comm(asio::io_context& io_context,
-  const tcp::endpoint& endpoint)
-  :acceptor_(io_context, endpoint)
+Dealer_comm::Dealer_comm(asio::io_context& io_context, const tcp::endpoint& endpoint) : acceptor_(io_context, endpoint)
 {
   do_accept();
+	startGame();
+}
+
+void Dealer_comm::startGame()
+{
+	//std::this_thread::sleep_for(std::chrono::seconds(20));
 }
 
 void Dealer_comm::do_accept()
 {
   acceptor_.async_accept(
-  [this](std::error_code ec, tcp::socket socket)
-  {
-    if (!ec)
+    [this](std::error_code ec, tcp::socket socket)
     {
-      std::make_shared<chat_session>(std::move(socket), room_)->start();
-    }
-    do_accept();
-  });
+      if (!ec)
+      {
+        std::make_shared<chat_session>(std::move(socket), room_)->start();
+      }
+
+      do_accept();
+    });
 }

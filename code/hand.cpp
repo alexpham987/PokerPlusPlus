@@ -1,5 +1,17 @@
 #include "hand.h"
 
+//method that compares the suit of two cards
+bool comp_suit(const Card & a, const Card & b)
+{
+	return (a.suit() < b.suit());
+}
+
+//method that compares the value of two cards
+bool comp_value(const Card & a, const Card & b)
+{
+	return (a.num() < b.num());
+}
+
 //constructor
 Hand::Hand()
 {}
@@ -11,25 +23,13 @@ Hand::~Hand()
 //method that adds a card to the hand
 void Hand::addCard(Card c)
 {
-  _hand.push_back(c);
+	_hand.push_back(c);
 }
 
 //method that returns the hand itself
 std::vector<Card> Hand::getHand()
 {
 	return _hand;
-}
-
-//method that compares the suit of two cards
-bool comp_suit(const Card & a, const Card & b)
-{
-	return (a.suit() < b.suit());
-}
-
-//method that compares the value of two cards
-bool comp_value(const Card & a, const Card & b)
-{
-	return (a.num() < b.num());
 }
 
 //method that modifies the hand
@@ -53,26 +53,21 @@ int Hand::calc_value ()
     for(int i = 0; i < 3; i++) //check for straight flush
     {
       if( _hand[i].num() == (_hand[i+1].num() - 1) )
-      {
         continue;
-      }
       else if(_hand[i].num() == 13 && _hand[i+1].num() == 2)
-      {
         continue;
-      }
       else
-      {
         goto next; //not straight flush, just regular flush
-      }
+
       if( _hand[4].num() == 13) //if last card of straight flush is ace, we have a royal flush
       {
         value = 1;  //Royal Flush
-				return value;
+	      return value;
       }
       else //otherwise its a regular straight flush
       {
         value = 2;  //Straight Flush
-				return value;
+	      return value;
       }
     }
   }
@@ -112,7 +107,7 @@ int Hand::calc_value ()
     return value;
   }
 
-  if( _hand[0].num() == _hand[1].num()  || _hand[1].num() == _hand[2].num() || _hand[2].num() == _hand[3].num() ||
+  if( _hand[0].num() == _hand[1].num() || _hand[1].num() == _hand[2].num() || _hand[2].num() == _hand[3].num() ||
       _hand[3].num() == _hand[4].num() )
       // Check for One Pair, xxyza, xyyza, xyzza, or xyzaa
   {
@@ -122,5 +117,4 @@ int Hand::calc_value ()
 
   value = 10;  // Nothing, Zilch, Nada, better stay in school
   return value;
-
 }

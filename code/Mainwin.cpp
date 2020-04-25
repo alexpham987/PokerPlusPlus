@@ -6,10 +6,10 @@
 Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder{refGlade}
 {
 	//title of the game
-	set_title("Poker ++");
+  set_title("Poker ++");
 
   //all of the things that you see on the gtk window for the poker game need to be set-up
-	builder->get_widget("fixed", fixed);
+  builder->get_widget("fixed", fixed);
 	builder->get_widget("fold_button", fold_button);
 	builder->get_widget("check_button", check_button);
 	builder->get_widget("bet_button", bet_button);
@@ -18,9 +18,9 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	builder->get_widget("msg", msg);
 	builder->get_widget("bet_label", bet_label);
 	builder->get_widget("playername_label", playername_label);
-	builder->get_widget("chip1_label", chip1_label);
-	builder->get_widget("chip2_label", chip2_label);
-	builder->get_widget("chip3_label", chip3_label);
+	builder->get_widget("chip1_label", chip1_label); //added chip1_label
+	builder->get_widget("chip2_label", chip2_label); //added chip2_label
+	builder->get_widget("chip3_label", chip3_label); //added chip3_label
 	builder->get_widget("MenuBar", MenuBar);
 	builder->get_widget("menuitem_help", menuitem_help);
 	builder->get_widget("menuitem_about", menuitem_about);
@@ -30,6 +30,11 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	builder->get_widget("exchange_button", exchange_button);
 	//exchange_button->set_sensitive(true);
 	builder->get_widget("card_box", card_box);
+	builder->get_widget("card_1", card_1);
+	builder->get_widget("card_2", card_2);
+	builder->get_widget("card_3", card_3);
+	builder->get_widget("card_4", card_4);
+	builder->get_widget("card_5", card_5);
 
   //deals with clicking the buttons on the gtk window
 	menuitem_about->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_about_click));
@@ -67,8 +72,11 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 		_player_name = e_name.get_text();
 		playername_label->set_label(_player_name);
 	}
+
 	dialog->close();
 	delete dialog;
+
+	current_bet = 0;
 }
 
 //destructor for the Mainwin class
@@ -102,10 +110,11 @@ void Mainwin::setCards(nlohmann::json cards, int num)
 {
 	std::vector<std::string> f = _pg.setHand(cards, num);
 	card_1->set(f[0]);
-	card_2->set(f[0]);
-	card_3->set(f[0]);
-	card_4->set(f[0]);
-	card_5->set(f[0]);
+	card_2->set(f[1]);
+	card_3->set(f[2]);
+	card_4->set(f[3]);
+	card_5->set(f[4]);
+
 }
 
 //method that closes the game when quit is clicked
@@ -145,15 +154,37 @@ void Mainwin::on_bet_click()
 {
 	std::cout << "bet button pressed" << std::endl;
 	int bet_amount;
+	chat_message info;
 
-	try {
+	try
+	{
 		bet_amount = std::stoi(bet_entry->get_text());
-	} catch(std::exception e) {
+	}
+	catch(std::exception e)
+	{
 		bet_entry->set_text("### Invalid ###");
 		return;
 	}
 
-	chat_message info = _pg.move_j("bet", 0, bet_amount);
+	if(current_bet == 0)
+	{
+		current_bet = bet_amount;
+		info = _pg.move_j("bet", 0, bet_amount);
+	}
+	else if(bet_amount > current_bet)
+	{
+		current_bet = bet_amount;
+		info = _pg.move_j("raise", 0, bet_amount);
+	}
+	else if(bet_amount == current_bet)
+	{
+		info = _pg.move_j("call", 0, bet_amount);
+	}
+	else
+	{
+		bet_entry->set_text("Too low!!");
+		return;
+	}
 	_pc->write(info);
 }
 
@@ -164,16 +195,26 @@ void Mainwin::on_fold_click()
 
 	chat_message info = _pg.move_j("fold", 0, 0);
 	_pc->write(info);
+
+	card_1->clear();
+	card_2->clear();
+	card_3->clear();
+	card_4->clear();
+	card_5->clear();
 }
+
 
 //method that deals with when ante is clicked
 void Mainwin::on_ante_click()
 {
 	std::cout << "ante button clicked" << std::endl;
-		int ante_amount;
-	try {
+	int ante_amount;
+	try
+	{
 		ante_amount = std::stoi(bet_entry->get_text());
-	} catch(std::exception e) {
+	}
+	catch(std::exception e)
+	{
 		bet_entry->set_text("### Invalid ###");
 		return;
 	}
@@ -221,9 +262,9 @@ void Mainwin::on_exchange_click()
 		cards.push_back(num);
 
 		if(num == 1)
-		  card_1->clear();
+			card_1->clear();
 		if(num == 2)
-		  card_2->clear();
+			card_2->clear();
 		if(num == 3)
 			card_3->clear();
 		if(num == 4)

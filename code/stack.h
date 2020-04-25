@@ -11,6 +11,7 @@
 #define BLUE_MULTIPLIER 25
 #define INITIAL_TOTAL 100
 
+
 class Stack
 {
   public:

@@ -3,26 +3,13 @@
 //constructor initializes the attributes to the passed in parameters
 Card::Card(int num, Suit suit) : _num{num}, _suit{suit}
 {
-//error checking for each card created
+	//error checking for each card created
 	if(num < MIN_NUM || num > MAX_NUM)
 		throw std::runtime_error("Number Out of Range!");
 
 	if(suit < 0 || suit > MAX_SUIT)
 		throw std::runtime_error("Suit Out of Range!");
-
-//links the card image to the gtk window
-#ifndef SERVER
-	cardimage = Gtk::manage(new Gtk::Image{this->card_to_filename()});
-#endif
 }
-
-//returns the actual card image used by the gtk window
-#ifndef SERVER
-
-Gtk::Image* Card::Image() {
-	return cardimage;
-}
-#endif
 
 //method that returns the value of the _num attribute
 int Card::num() const
@@ -45,9 +32,12 @@ int Card::compareCard(Card C)
 	else
 		num = _num;
 
-	if(num < C.num()) return -1;
-	else if(num > C.num()) return 1;
-	else return 0;
+	if(num < C.num())
+	  return -1;
+	else if(num > C.num())
+	  return 1;
+	else
+	  return 0;
 
 	return 0;
 }
@@ -57,41 +47,15 @@ std::string Card::card_to_string()
 {
 	std::stringstream ss;
 
-	switch (_num) {
-		case 1: ss << "Ace of ";
-			break;
-		case 2: ss << "Two of ";
-			break;
-		case 3: ss << "Three of ";
-			break;
-		case 4: ss << "Four of ";
-			break;
-		case 5: ss << "Five of ";
-			break;
-		case 6: ss << "Five of ";
-			break;
-		case 7: ss << "Seven of ";
-			break;
-		case 8: ss << "Eight of ";
-			break;
-		case 9: ss << "Nine of ";
-			break;
-		case 10: ss << "Ten of ";
-			break;
-		case 11: ss << "Jack of ";
-			break;
-		case 12: ss << "Queen of ";
-			break;
-		case 13: ss << "King of";
-			break;
-	}
+	ss << std::to_string(_num);
+	ss << " ";
 
 	std::map<Suit, std::string> suit_string =
 	{
-		{Suit::C, "Clovers"},
-		{Suit::D, "Diamonds"},
-		{Suit::H, "Hearts"},
-		{Suit::S, "Spades"}
+		{Suit::C, "C"},
+		{Suit::D, "D"},
+		{Suit::H, "H"},
+		{Suit::S, "S"}
 	};
 	ss << suit_string[_suit];
 
@@ -103,7 +67,14 @@ std::string Card::card_to_filename()
 {
 	std::stringstream ss;
 	ss << "Cards/";
-	ss << _num;
+	if(_num == 13)
+		ss << "K";
+	else if(_num == 12)
+		ss << "Q";
+	else if(_num == 11)
+		ss << "J";
+	else
+		ss << _num;
 
 	std::map<Suit, std::string> suit_string =
 	{

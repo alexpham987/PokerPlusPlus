@@ -8,8 +8,8 @@
 using asio::ip::tcp;
 
 //main function for the player's side of the game
-int main(int argc, char *argv[]) {
-
+int main(int argc, char *argv[])
+{
 	asio::io_context io_context;
 
   tcp::resolver resolver(io_context);

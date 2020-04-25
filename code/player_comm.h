@@ -17,8 +17,8 @@ class Mainwin;
 using asio::ip::tcp;
 typedef std::deque<chat_message> chat_message_queue;
 
-class player_comm {
-
+class player_comm
+{
 	public:
 		player_comm(asio::io_context& io_context, const tcp::resolver::results_type& endpoints);
 		void write(const chat_message& msg);

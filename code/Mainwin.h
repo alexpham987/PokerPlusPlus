@@ -20,10 +20,10 @@ class Mainwin : public Gtk::Window
   public:
     Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& reGlade);
     virtual ~Mainwin();
-	  void setPlayerGame(Player_Game pgame);
-	  void setPlayerComm(player_comm* pcomm);
-	  void setLabel(std::string text);
-	  void setCards(nlohmann::json cards, int num);
+		void setPlayerGame(Player_Game pgame);
+		void setPlayerComm(player_comm* pcomm);
+		void setLabel(std::string text);
+		void setCards(nlohmann::json cards, int num);
 
   protected:
     void on_quit_click();
@@ -35,7 +35,7 @@ class Mainwin : public Gtk::Window
 	  void on_about_click();
 
   private:
-	  Gtk::MenuBar* MenuBar; //attribute that represents the menu bar on the gtk window
+    Gtk::MenuBar* MenuBar; //attribute that represents the menu bar on the gtk window
 	  Gtk::MenuItem* menuitem_help; //attribute that represents help on the menu bar
 	  Gtk::MenuItem* menuitem_about; //attribute that represents about on the menu bar
 	  Gtk::MenuItem* menuitem_file; //attribute that represents file on the menu bar
@@ -62,8 +62,10 @@ class Mainwin : public Gtk::Window
 	  Glib::RefPtr<Gtk::Builder> builder; //attribute that represents the vector of gtk builders
 
   private:
-	  std::string _player_name;//attribute that represents the player's name
-	  Player_Game _pg;//attribute that represents the communication between the gtk window and player_game class
-	  player_comm* _pc;//attribute that represents the communication between the gtk window and player_comm class
+	  std::string _player_name;
+	  Player_Game _pg;
+	  player_comm* _pc;
+	  int current_bet;
 };
+
 #endif
