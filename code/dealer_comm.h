@@ -40,7 +40,7 @@ class chat_room
 	std::set<chat_participant_ptr> participants();
 	void startGame();
 
-  private:	
+  private:
 	std::set<chat_participant_ptr> participants_;
 	enum { max_recent_msgs = 100 };
 	chat_message_queue recent_msgs_;
@@ -48,8 +48,8 @@ class chat_room
 };
 
 
-class chat_session 
-	: public chat_participant, 
+class chat_session
+	: public chat_participant,
 	  public std::enable_shared_from_this<chat_session>
 {
   public:
@@ -66,23 +66,18 @@ class chat_session
 	chat_message read_msg_;
 	chat_message_queue write_msgs_;
 	Dealer_Game _dg{true};
-
 };
 
 class Dealer_comm
 {
   public:
 	Dealer_comm(asio::io_context& io_context,
-	    const tcp::endpoint& endpoint);
+	const tcp::endpoint& endpoint);
 
   private:
 	void do_accept();
 	tcp::acceptor acceptor_;
 	chat_room room_;
-
 };
 
-	
-
-	
 #endif

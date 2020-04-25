@@ -1,12 +1,24 @@
 #include "hand.h"
 
 //constructor
-Hand::Hand ()
+Hand::Hand()
 {}
 
 //destructor
 Hand::~Hand()
 {}
+
+//method that adds a card to the hand
+void Hand::addCard(Card c)
+{
+  _hand.push_back(c);
+}
+
+//method that returns the hand itself
+std::vector<Card> Hand::getHand()
+{
+	return _hand;
+}
 
 //method that compares the suit of two cards
 bool comp_suit(const Card & a, const Card & b)
@@ -67,7 +79,7 @@ int Hand::calc_value ()
 
   next:std::sort(_hand.begin(), _hand.end(), comp_value); //sort by card value
   if( (_hand[0].num() == _hand[1].num() && _hand[1].num() == _hand[2].num() && _hand[2].num() == _hand[3].num() ) ||
-      (_hand[1].num() == _hand[2].num() && _hand[2].num() == _hand[3].num() && _hand[3].num() == _hand[4].num() )   )
+      (_hand[1].num() == _hand[2].num() && _hand[2].num() == _hand[3].num() && _hand[3].num() == _hand[4].num() )  )
       // Check for Four of a Kind, either xyyyy or xxxxy
   {
     value = 3; // Four of a Kind
@@ -75,7 +87,7 @@ int Hand::calc_value ()
   }
 
   if( (_hand[0].num() == _hand[1].num() && _hand[1].num() == _hand[2].num() && _hand[3].num() == _hand[4].num() ) ||
-      (_hand[0].num() == _hand[1].num() && _hand[2].num() == _hand[3].num() && _hand[3].num() == _hand[4].num() )   )
+      (_hand[0].num() == _hand[1].num() && _hand[2].num() == _hand[3].num() && _hand[3].num() == _hand[4].num() )  )
       // Check for full house, either xxyyy or xxxyy
   {
     value = 4; // Full House
@@ -84,7 +96,7 @@ int Hand::calc_value ()
 
   if( ( _hand[0].num() == _hand[1].num() && _hand[1].num() == _hand[2].num() ) ||
       ( _hand[1].num() == _hand[2].num() && _hand[2].num() == _hand[3].num() ) ||
-      ( _hand[2].num() == _hand[3].num() && _hand[3].num() == _hand[4].num() )   )
+      ( _hand[2].num() == _hand[3].num() && _hand[3].num() == _hand[4].num() )  )
       // Check for Three of a Kind, xxxyx, yxxxz, or yzxxx
   {
     value = 7; // Three of a Kind
@@ -93,7 +105,7 @@ int Hand::calc_value ()
 
   if( ( _hand[0].num() == _hand[1].num() && _hand[2].num() == _hand[3].num() ) ||
       ( _hand[0].num() == _hand[1].num() && _hand[3].num() == _hand[4].num() ) ||
-      ( _hand[1].num() == _hand[2].num() && _hand[3].num() == _hand[4].num() )   )
+      ( _hand[1].num() == _hand[2].num() && _hand[3].num() == _hand[4].num() )  )
       // Check for Two Pairs, xxyyz, xxyzz, or xyyzz
   {
     value = 8; // Two Pairs

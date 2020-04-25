@@ -1,7 +1,6 @@
 #ifndef HAND_H
 #define HAND_H
 
-//#include <vector>
 #include <algorithm>
 #include <vector>
 #include "card.h"
@@ -16,10 +15,12 @@ class Hand
    void modify_hand (std::vector<int> cards);
    int calc_value();
    int find_high_card();
+   void addCard(Card c);
+   std::vector<Card> getHand();
 
   private:
-   int hand_value; //attribute that represents
-   std::vector <Card> _hand; //attribute that represents
+   int hand_value; //attribute that represents the value of a hand
+   std::vector<Card> _hand; //attribute that represents the hand itself
 };
 
 #endif

@@ -28,3 +28,9 @@ player_game.h
 
 dealer_game.cpp
 dealer_game.h
+
+Mainwin.cpp
+Mainwin.h
+
+player_comm.cpp
+player_comm.h

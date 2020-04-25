@@ -2,10 +2,13 @@
 #include <dirent.h>
 #include <fstream>
 
-Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder{refGlade} {
+//constructor for the Mainwin class (it has code for the gtk window)
+Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder{refGlade}
+{
+	//title of the game
 	set_title("Poker ++");
 
-
+  //all of the things that you see on the gtk window for the poker game need to be set-up
 	builder->get_widget("fixed", fixed);
 	builder->get_widget("fold_button", fold_button);
 	builder->get_widget("check_button", check_button);
@@ -15,9 +18,9 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	builder->get_widget("msg", msg);
 	builder->get_widget("bet_label", bet_label);
 	builder->get_widget("playername_label", playername_label);
-	builder->get_widget("chip1_label", chip1_label); //added chip1_label
-	builder->get_widget("chip2_label", chip2_label); //added chip2_label
-	builder->get_widget("chip3_label", chip3_label); //added chip3_label
+	builder->get_widget("chip1_label", chip1_label);
+	builder->get_widget("chip2_label", chip2_label);
+	builder->get_widget("chip3_label", chip3_label);
 	builder->get_widget("MenuBar", MenuBar);
 	builder->get_widget("menuitem_help", menuitem_help);
 	builder->get_widget("menuitem_about", menuitem_about);
@@ -28,7 +31,7 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	//exchange_button->set_sensitive(true);
 	builder->get_widget("card_box", card_box);
 
-
+  //deals with clicking the buttons on the gtk window
 	menuitem_about->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_about_click));
 
 	menuitem_quit->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_quit_click));
@@ -43,6 +46,7 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 
 	exchange_button->signal_clicked().connect(sigc::mem_fun(*this, &Mainwin::on_exchange_click));
 
+  //creates the initial dialog box to enter a player's name and handles all of the things that need it to function properly
 	Gtk::Dialog *dialog = new Gtk::Dialog();
 	dialog->set_transient_for(*this);
 	dialog->set_title("Enter Name");
@@ -57,7 +61,8 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	dialog->show_all();
 	int result = 1;
 
-	while(result) {
+	while(result)
+	{
 		result = dialog->run();
 		_player_name = e_name.get_text();
 		playername_label->set_label(_player_name);
@@ -66,51 +71,68 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	delete dialog;
 }
 
-Mainwin::~Mainwin() {}
+//destructor for the Mainwin class
+Mainwin::~Mainwin()
+{}
 
-void Mainwin::setPlayerGame(Player_Game pgame) { 
-	_pg = pgame; 
+//method that links the player_game class and the gtk window together and sets the player's name
+void Mainwin::setPlayerGame(Player_Game pgame)
+{
+	_pg = pgame;
 	_pg.setName(_player_name);
 }
 
-void Mainwin::setPlayerComm(player_comm* pcomm) {
+//method that links the player_comm class and gtk window together
+void Mainwin::setPlayerComm(player_comm* pcomm)
+{
 	_pc = pcomm;
+	//sets initial conditions for a starting player
 	chat_message join = _pg.move_j("join", 0, 0);
 	_pc->write(join);
 }
 
-void Mainwin::setLabel(std::string text) 
+//method that sets the label for the gtk window
+void Mainwin::setLabel(std::string text)
 {
 	msg->set_label(text);
 }
 
-void Mainwin::setCards(nlohmann::json cards)
+//method that sets the cards in the player's hand
+void Mainwin::setCards(nlohmann::json cards, int num)
 {
-	Card c(2,C);
-	Card c1(3,D);
-	//card_box->append(c.
+	std::vector<std::string> f = _pg.setHand(cards, num);
+	card_1->set(f[0]);
+	card_2->set(f[0]);
+	card_3->set(f[0]);
+	card_4->set(f[0]);
+	card_5->set(f[0]);
 }
-	
 
-void Mainwin::on_quit_click() {
+//method that closes the game when quit is clicked
+void Mainwin::on_quit_click()
+{
 	/* Alert the dealer that a player/spectator has left the game */
 	close();
 }
 
-void Mainwin::on_about_click() { 
+//method that shows the game information when about is clicked
+void Mainwin::on_about_click()
+{
 	std::cout << "about pressed" << std::endl;
-	Gtk::AboutDialog dialog{};    
-	dialog.set_transient_for(*this);    
-	dialog.set_program_name("Poker++");    
-	dialog.set_version("Version 1.1.0");    
-	dialog.set_copyright("Copyright 2020");    
-	dialog.set_license_type(Gtk::License::LICENSE_GPL_3_0);    
-	std::vector< Glib::ustring > authors = {"Bailey Brown \nAlex Pham \nMarcos Juarez"};    
-	dialog.set_authors(authors);    
+	Gtk::AboutDialog dialog{};
+	dialog.set_transient_for(*this);
+	dialog.set_program_name("Poker++");
+	dialog.set_version("Version 1.1.0");
+	dialog.set_copyright("Copyright 2020");
+	dialog.set_license_type(Gtk::License::LICENSE_GPL_3_0);
+	std::vector< Glib::ustring > authors = {"Bailey Brown \nAlex Pham \nMarcos Juarez"};
+	dialog.set_authors(authors);
 	dialog.run();
-} 
+}
 
-void Mainwin::on_check_click() {
+//method that deals with when check is clicked
+void Mainwin::on_check_click()
+{
 	std::cout << "check button clicked" << std::endl;
 	//check if any player has bet yet
 
@@ -118,7 +140,9 @@ void Mainwin::on_check_click() {
 	_pc->write(info);
 }
 
-void Mainwin::on_bet_click() {
+//method that deals with when bet is clicked
+void Mainwin::on_bet_click()
+{
 	std::cout << "bet button pressed" << std::endl;
 	int bet_amount;
 
@@ -128,21 +152,23 @@ void Mainwin::on_bet_click() {
 		bet_entry->set_text("### Invalid ###");
 		return;
 	}
-	
+
 	chat_message info = _pg.move_j("bet", 0, bet_amount);
 	_pc->write(info);
-
 }
 
-void Mainwin::on_fold_click() {
+//method that deals with when fold is clicked
+void Mainwin::on_fold_click()
+{
 	std::cout << "fold button pressed" << std::endl;
 
 	chat_message info = _pg.move_j("fold", 0, 0);
-	_pc->write(info);	
+	_pc->write(info);
 }
 
-	
-void Mainwin::on_ante_click() {
+//method that deals with when ante is clicked
+void Mainwin::on_ante_click()
+{
 	std::cout << "ante button clicked" << std::endl;
 		int ante_amount;
 	try {
@@ -156,9 +182,12 @@ void Mainwin::on_ante_click() {
 	_pc->write(info);
 }
 
-void Mainwin::on_exchange_click() {
+//method that deals with when exchange is clicked
+void Mainwin::on_exchange_click()
+{
 	std::cout << "exchange button pressed" << std::endl;
 
+  //creates a gtk dialog box to see the number of cards that are being exchanged and deals with all of the things that need it to function properly
 	Gtk::Dialog *dialog = new Gtk::Dialog();
 	dialog->set_transient_for(*this);
 	dialog->set_title("Enter Card #s (1-5)");
@@ -174,23 +203,35 @@ void Mainwin::on_exchange_click() {
 	int result = 1;
 	std::string exchange_cards;
 
-	while(result) {
+	while(result)
+	{
 		result = dialog->run();
 		exchange_cards = e_cards.get_text();
 		std::cout << exchange_cards << std::endl;
 	}
 	dialog->close();
-	delete dialog;	
+	delete dialog;
 
+  //gets the correct cards and sends then to player_comm
 	std::vector<int> cards;
 	std::stringstream ss(exchange_cards);
 	int num;
 	while(ss >> num)
+	{
 		cards.push_back(num);
+
+		if(num == 1)
+		  card_1->clear();
+		if(num == 2)
+		  card_2->clear();
+		if(num == 3)
+			card_3->clear();
+		if(num == 4)
+			card_4->clear();
+		if(num == 5)
+			card_5->clear();
+	}
 
 	chat_message info = _pg.exchange_j("request_cards", cards.size(), cards);
 	_pc->write(info);
-		
 }
-
-
