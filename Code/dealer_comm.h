@@ -11,7 +11,6 @@
 #include <chrono>
 #include "asio.hpp"
 #include "chat_message.hpp"
-#include "card.h"
 #include "dealer_game.h"
 
 using asio::ip::tcp;
@@ -38,13 +37,14 @@ class chat_room
 	void leave(chat_participant_ptr participant);
 	void deliver(const chat_message& msg);
 	std::set<chat_participant_ptr> participants();
-	void startGame();
+	void setDeck(Deck deck);
 
   private:	
 	std::set<chat_participant_ptr> participants_;
 	enum { max_recent_msgs = 100 };
 	chat_message_queue recent_msgs_;
-	Dealer_Game _dg{true};
+	Deck _deck;
+	Dealer_Game _dg{_deck};
 };
 
 
@@ -65,7 +65,8 @@ class chat_session
 	chat_room& room_;
 	chat_message read_msg_;
 	chat_message_queue write_msgs_;
-	Dealer_Game _dg{true};
+	Deck _deck;
+	Dealer_Game _dg{_deck};
 
 };
 

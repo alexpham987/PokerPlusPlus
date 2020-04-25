@@ -36,15 +36,12 @@ std::vector<std::string> Player_Game::setHand(nlohmann::json cards, int cardNum)
 			suit = H;
 
 		Card c(num, suit);
-		std::cout << c.card_to_string() << std::endl;
 		_hand.addCard(c);	
 	}
-	std::cout << "setting hand" << std::endl;
 
 	std::vector<Card> hand = _hand.getHand();
 	for(auto card : hand) {
 		files.push_back(card.card_to_filename());
-		std::cout << card.card_to_filename() << std::endl;
 	}
 
 	return files;

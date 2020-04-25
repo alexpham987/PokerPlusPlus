@@ -1,6 +1,6 @@
 #include "dealer_game.h"
 
-Dealer_Game::Dealer_Game(bool playerResult) : _playerResult{playerResult}
+Dealer_Game::Dealer_Game(Deck deck) : _deck{deck}
 {}
 
 

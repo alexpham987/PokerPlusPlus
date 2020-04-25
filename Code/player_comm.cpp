@@ -77,6 +77,7 @@ void player_comm::write(const chat_message& msg)
 			this->updateLabel(info);
 			if(info["event"] == "Deal")
 			{
+				std::cout << "dealing" << std::endl;
 				int num = info["cards_requested"];
 				_win->setCards(info, num);
 			}
@@ -121,6 +122,10 @@ void player_comm::updateLabel(nlohmann::json info)
 
 	if(info["event"] == "Deal")
 		lab = "Cards Dealt!";
+
+	else if(info["event"] == "collect_ante")
+		lab = "Please enter ante!";
+
 	else
 	{
 		std::string name = info["name"];

@@ -17,6 +17,7 @@ int main(int argc, char* argv[])
 		{
 			tcp::endpoint endpoint(tcp::v4(), std::atoi(argv[i]));
 			dealers.emplace_back(io_context, endpoint);
+
 		}
 
 		io_context.run();

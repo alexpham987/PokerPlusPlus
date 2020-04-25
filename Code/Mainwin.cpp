@@ -69,6 +69,8 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 	}
 	dialog->close();
 	delete dialog;
+
+	current_bet = 0;
 }
 
 Mainwin::~Mainwin() {}
@@ -130,6 +132,7 @@ void Mainwin::on_check_click() {
 void Mainwin::on_bet_click() {
 	std::cout << "bet button pressed" << std::endl;
 	int bet_amount;
+	chat_message info;
 
 	try {
 		bet_amount = std::stoi(bet_entry->get_text());
@@ -137,8 +140,26 @@ void Mainwin::on_bet_click() {
 		bet_entry->set_text("### Invalid ###");
 		return;
 	}
-	
-	chat_message info = _pg.move_j("bet", 0, bet_amount);
+
+	if(current_bet == 0)
+	{
+		current_bet = bet_amount;
+		info = _pg.move_j("bet", 0, bet_amount);
+	}
+	else if(bet_amount > current_bet)
+	{
+		current_bet = bet_amount;
+		info = _pg.move_j("raise", 0, bet_amount);
+	}
+	else if(bet_amount == current_bet)
+	{
+		info = _pg.move_j("call", 0, bet_amount);
+	}
+	else
+	{
+		bet_entry->set_text("Too low!!");
+		return;
+	}
 	_pc->write(info);
 
 }
@@ -147,7 +168,13 @@ void Mainwin::on_fold_click() {
 	std::cout << "fold button pressed" << std::endl;
 
 	chat_message info = _pg.move_j("fold", 0, 0);
-	_pc->write(info);	
+	_pc->write(info);
+
+	card_1->clear();
+	card_2->clear();
+	card_3->clear();
+	card_4->clear();
+	card_5->clear();	
 }
 
 	

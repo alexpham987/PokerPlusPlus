@@ -8,8 +8,8 @@ using asio::ip::tcp;
   {
 	std::cout << "participant joined" << std::endl;
     participants_.insert(participant);
-    for (auto msg: recent_msgs_)
-      participant->deliver(msg);		
+    //for (auto msg: recent_msgs_)
+      //participant->deliver(msg);		
   }
 
   void chat_room::leave(chat_participant_ptr participant)
@@ -32,6 +32,8 @@ using asio::ip::tcp;
 		return participants_;
 	}
 
+void chat_room::setDeck(Deck deck) { _deck = deck; }
+
 
 //Class chat_session
 
@@ -39,6 +41,7 @@ using asio::ip::tcp;
     : socket_(std::move(socket)),
       room_(room)
   {
+	room_.setDeck(_deck);
   }
 
   void chat_session::start()
@@ -164,12 +167,9 @@ using asio::ip::tcp;
 
   void Dealer_comm::startGame() 
 {
-	std::cout << "starting game " << std::endl;
 
-	//while((room_.participants()).size() < 1) {}
-	//std::this_thread::sleep(std::seconds(10));
+	//std::this_thread::sleep_for(std::chrono::seconds(20));
 
-	std::cout << "ready to play" << std::endl;
 }
 
   void Dealer_comm::do_accept()

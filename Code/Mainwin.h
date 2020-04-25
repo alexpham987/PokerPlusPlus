@@ -1,7 +1,6 @@
 #ifndef __MAINWIN_H
 #define __MAINWIN_H
 
-// include other classes
 #include <gtkmm.h>
 #include <string>
 #include <exception>
@@ -66,6 +65,7 @@ private:
 	std::string _player_name;
 	Player_Game _pg;
 	player_comm* _pc;
+	int current_bet;
 
 };
 #endif

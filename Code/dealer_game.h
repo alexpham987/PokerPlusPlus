@@ -7,12 +7,11 @@
 #include "chat_message.hpp"
 #include <vector>
 #include <string>
-#include <deque>
 
 class Dealer_Game 
 {
   public:
-    Dealer_Game(bool playerResult);
+    Dealer_Game(Deck deck);
     void shuffleCards();
     chat_message dealCards(int num);
     bool gameResult();
