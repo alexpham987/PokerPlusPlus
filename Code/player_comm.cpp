@@ -1,7 +1,5 @@
 #include "player_comm.h"
 
-GtkWidget *fromView  = NULL;  // text from the chat server
-
 player_comm::player_comm(asio::io_context& io_context, const tcp::resolver::results_type& endpoints)
    : io_context_(io_context), socket_(io_context) 
 {
@@ -74,9 +72,14 @@ void player_comm::write(const chat_message& msg)
             outline[0] = '\n';
             outline[read_msg_.body_length() + 1] = '\0';
             std::memcpy ( &outline[1], read_msg_.body(), read_msg_.body_length() );
+			std::cout << "parsing " << read_msg_.body() << std::endl;
             nlohmann::json info = nlohmann::json::parse(read_msg_.body());
 			this->updateLabel(info);
-			_win->setCards(info);
+			if(info["event"] == "Deal")
+			{
+				int num = info["cards_requested"];
+				_win->setCards(info, num);
+			}
             std::cout.write(read_msg_.body(), read_msg_.body_length());
             std::cout << "\n";
             do_read_header();

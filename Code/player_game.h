@@ -12,12 +12,11 @@
 
 class Player_Game
 {
-
   public:
    Player_Game();
    void setName(std::string name);
-   std::vector<std::string> setHand(nlohmann::json cards);
-   chat_message move_j(std::string play, int cards_requested, int current_bet) const;
+   std::vector<std::string> setHand(nlohmann::json cards, int num);
+   chat_message move_j(std::string play, int cards_requested, int current_bet);
    chat_message exchange_j(std::string play, int cards_requested, std::vector<int> cards);
 
   private:

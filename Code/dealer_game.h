@@ -14,7 +14,7 @@ class Dealer_Game
   public:
     Dealer_Game(bool playerResult);
     void shuffleCards();
-    chat_message dealCards();
+    chat_message dealCards(int num);
     bool gameResult();
     chat_message exchangeCards(int amountOfCards);
     void revealHand();

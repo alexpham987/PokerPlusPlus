@@ -89,14 +89,15 @@ void Mainwin::setLabel(std::string text)
 	msg->set_label(text);
 }
 
-void Mainwin::setCards(nlohmann::json cards)
+void Mainwin::setCards(nlohmann::json cards, int num)
 {
-	std::vector<std::string> f = _pg.setHand(cards);
+	std::vector<std::string> f = _pg.setHand(cards, num);
 	card_1->set(f[0]);
 	card_2->set(f[1]);
 	card_3->set(f[2]);
 	card_4->set(f[3]);
 	card_5->set(f[4]);
+
 }
 	
 
@@ -193,8 +194,20 @@ void Mainwin::on_exchange_click() {
 	std::vector<int> cards;
 	std::stringstream ss(exchange_cards);
 	int num;
-	while(ss >> num)
+	while(ss >> num) {
 		cards.push_back(num);
+
+		if(num == 1)
+			card_1->clear();
+		if(num == 2)
+			card_2->clear();
+		if(num == 3)
+			card_3->clear();
+		if(num == 4)
+			card_4->clear();
+		if(num == 5)
+			card_5->clear();
+	}
 
 	chat_message info = _pg.exchange_j("request_cards", cards.size(), cards);
 	_pc->write(info);

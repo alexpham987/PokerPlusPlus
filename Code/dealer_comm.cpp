@@ -93,13 +93,28 @@ using asio::ip::tcp;
 			chat_message msg;
 			if(info["event"] == "join")
 			{
-				chat_message cards = _dg.dealCards();
+				chat_message cards = _dg.dealCards(5);
 				room_.deliver(cards);
 			}
-			if(info["event"] == "ante")
+			else if(info["event"] == "ante")
 			{
 				_dg.addMoney(1);
 				std::cout << "chip added" << std::endl;
+                room_.deliver(read_msg_);
+			}
+			else if(info["event"] == "bet") 
+			{
+				int amount = info["bet"];
+				_dg.addMoney(amount);
+				std::cout << "chip added" << std::endl;
+                room_.deliver(read_msg_);
+			}
+			else if(info["event"] == "request_cards")
+			{
+				std::cout << "getting cards" << std::endl;
+				int num = info["cards_requested"];
+				chat_message cards = _dg.dealCards(num);
+				room_.deliver(cards);
 			}
 			else {
             room_.deliver(read_msg_);
@@ -151,7 +166,8 @@ using asio::ip::tcp;
 {
 	std::cout << "starting game " << std::endl;
 
-	//while((room_.participants()).size() < 2) {}
+	//while((room_.participants()).size() < 1) {}
+	//std::this_thread::sleep(std::seconds(10));
 
 	std::cout << "ready to play" << std::endl;
 }

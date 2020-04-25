@@ -21,10 +21,10 @@ class Mainwin : public Gtk::Window
     public:
         Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& reGlade);
         virtual ~Mainwin();
-	void setPlayerGame(Player_Game pgame);
-	void setPlayerComm(player_comm* pcomm);
-	void setLabel(std::string text);
-	void setCards(nlohmann::json cards);
+		void setPlayerGame(Player_Game pgame);
+		void setPlayerComm(player_comm* pcomm);
+		void setLabel(std::string text);
+		void setCards(nlohmann::json cards, int num);
 
     protected:        
         void on_quit_click();  
@@ -41,7 +41,7 @@ class Mainwin : public Gtk::Window
 	Gtk::MenuItem* menuitem_about; 
 	Gtk::MenuItem* menuitem_file;
 	Gtk::MenuItem* menuitem_quit;                                             
-        Gtk::Label* msg;
+    Gtk::Label* msg;
 	Gtk::Label* playername_label;
 	Gtk::Label* bet_label;
 	Gtk::Button* fold_button;
@@ -52,9 +52,9 @@ class Mainwin : public Gtk::Window
 	Gtk::Button* exchange_button;
 	Gtk::Fixed *fixed;
 	Gtk::Box *card_box;
-     	Gtk::Label* chip1_label; 
-      	Gtk::Label* chip2_label; 
-      	Gtk::Label* chip3_label;
+    Gtk::Label* chip1_label; 
+    Gtk::Label* chip2_label; 
+    Gtk::Label* chip3_label;
 	Gtk::Image* card_1;
 	Gtk::Image* card_2;
 	Gtk::Image* card_3;

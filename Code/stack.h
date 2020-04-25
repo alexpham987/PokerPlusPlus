@@ -2,17 +2,17 @@
 #define STACK_H
 
 #include <vector>
+#include <assert.h>
 #include "chip.h"
 
-#define initial_total 100
-#define red_multiplier 1
-#define green_multiplier 5
-#define blue_multiplier 25
+#define RED_MULTIPLIER 1
+#define GREEN_MULTIPLIER 5
+#define BLUE_MULTIPLIER 25
+#define INITIAL_TOTAL 100
+
 
 class Stack
 {
-  friend class Dealer;
-
   public:
     Stack();
     void add_chips(int green, int red, int blue);
@@ -21,7 +21,9 @@ class Stack
 
   private:
     int _total;
-    std::vector<int> _stack;
+    std::vector<Chip> _stack_green;
+    std::vector<Chip> _stack_red;
+    std::vector<Chip> _stack_blue;
 };
 
 

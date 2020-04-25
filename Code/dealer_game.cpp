@@ -16,18 +16,21 @@ void Dealer_Game::shuffleCards()
 	_deck.shuffle();
 }
 
-chat_message Dealer_Game::dealCards()
+chat_message Dealer_Game::dealCards(int num)
 {
 	nlohmann::json to_player;
 	chat_message cards;
 	std::string json_str;
 	to_player["event"] = "Deal";
 
-	for(int i = 0; i < 5; i++) {
+	for(int i = 1; i <= num; i++)
+	{
 		std::string in = std::to_string(i);
 		Card c = _deck.deal();
 		to_player[in] = c.card_to_string();
 	}
+
+	to_player["cards_requested"] = num;
 
   	json_str = to_player.dump();
 
