@@ -8,7 +8,7 @@
 #include <vector>
 #include <string>
 
-class Dealer_Game 
+class Dealer_Game
 {
   public:
     Dealer_Game(Deck deck);
@@ -20,9 +20,9 @@ class Dealer_Game
     void addMoney(int amount);
 
   private:
-    bool _playerResult;
-    Deck _deck;
-    Pot _pot{0};
+    bool _playerResult; //attribute that represents whether a player has won or lost
+    Deck _deck; //attribute that represents the deck of cards
+    Pot _pot{0}; //attribute that represents the pot for the game
 };
 
 #endif

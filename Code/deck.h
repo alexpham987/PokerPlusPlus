@@ -6,18 +6,17 @@
 #include <stdexcept>
 #include <algorithm>
 
-class Deck {
-	
-	public:
-	  Deck();
-	  Card deal();
-	  void shuffle();
-	  int remaining_cards();
-	  bool deck_empty();
-	
-	private:
-	  std::vector<Card> _deck;
+class Deck
+{
+  public:
+    Deck();
+    Card deal();
+    void shuffle();
+    int remaining_cards();
+    bool deck_empty();
 
+  private:
+    std::vector<Card> _deck;  //attribute that represents the deck of cards
 };
 
 #endif

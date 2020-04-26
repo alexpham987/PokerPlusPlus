@@ -13,18 +13,17 @@
 class Player_Game
 {
   public:
-   Player_Game();
-   void setName(std::string name);
-   std::vector<std::string> setHand(nlohmann::json cards, int num);
-   chat_message move_j(std::string play, int cards_requested, int current_bet);
-   chat_message exchange_j(std::string play, int cards_requested, std::vector<int> cards);
+    Player_Game();
+    void setName(std::string name);
+    std::vector<std::string> setHand(nlohmann::json cards, int cardNum);
+    chat_message move_j(std::string play, int cards_requested, int current_bet);
+    chat_message exchange_j(std::string play, int cards_requested, std::vector<int> cards);
 
   private:
-   std::string _name;
-   boost::uuids::uuid _id;
-   Stack _stack;
-   Hand _hand;
-
+    std::string _name; //attribute that represents the player's name
+    boost::uuids::uuid _id; //attribute that represents the player id
+    Stack _stack; //attribute that represents the stack of chips
+    Hand _hand; //attribute that represents the player's hand
 };
 
 #endif

@@ -9,7 +9,7 @@ class Pot
     void addToPot(int amountToAdd);
 
   private:
-    int potValue;
+    int potValue; //represents the current pot value
 };
 
 #endif
