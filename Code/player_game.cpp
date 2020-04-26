@@ -65,7 +65,7 @@ chat_message Player_Game::move_j(std::string play, int cards_requested, int curr
   to_dealer["uuid"] = this->_id;
   to_dealer["name"] = this->_name;
   to_dealer["event"] = play;        // "stand","hit","fold","raise","join","request_cards"
-  to_dealer["cards_requested"] = cards_requested; // optional, number of cards requested, 1 to 5
+  to_dealer["cards_requested"] = cards_requested; //optional, number of cards requested, 1 to 5
   to_dealer["current_bet"] = current_bet;
 
   json_str = to_dealer.dump();
@@ -73,17 +73,23 @@ chat_message Player_Game::move_j(std::string play, int cards_requested, int curr
   msg.body_length(std::strlen(json_str.c_str()));
   std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
   msg.encode_header();
-
+  
+  if(play == "ante")
+  {
+    _stack.remove_chips(0,1,0);
+  }
+    
   //deals with chips correctly when there is a bet, ante, or raise
-  if(play == "bet" || play == "ante" || play == "raise")
+  if(play == "bet" || play == "call" || play == "raise")
   {
     int blue = current_bet/25;
-    std::cout << blue << std::endl;
     current_bet -= 25*blue;
+
     int green = current_bet/5;
     current_bet -= 5*green;
+
     int red = current_bet;
-    std::cout << current_bet << std::endl;
+
     _stack.remove_chips(green,red,blue);
   }
 
@@ -102,7 +108,7 @@ chat_message Player_Game::exchange_j(std::string play, int cards_requested, std:
   to_dealer["uuid"] = this->_id;
   to_dealer["name"] = this->_name;
   to_dealer["event"] = "request_cards"; // "stand","hit","fold","raise","join","request_cards"
-  to_dealer["cards_requested"] = cards_requested; // optional, number of cards requested, 1 to 5
+  to_dealer["cards_requested"] = cards_requested; //optional, number of cards requested, 1 to 5
   to_dealer["current_bet"] = 0;
 
   json_str = to_dealer.dump();

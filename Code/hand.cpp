@@ -35,9 +35,11 @@ std::vector<Card> Hand::getHand()
 //method that modifies the hand
 void Hand::modify_hand (std::vector<int> mod_cards)
 {
+  int offset = 1;
   for(auto i : mod_cards)
   {
-    _hand.erase(_hand.begin() + i);
+    _hand.erase(_hand.begin() + (i-offset));
+    offset++;
   }
 }
 

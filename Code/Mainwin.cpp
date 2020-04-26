@@ -236,23 +236,33 @@ void Mainwin::on_exchange_click()
   int result = 1;
   std::string exchange_cards;
 
+  std::vector<int> cards;
+
   while(result)
   {
     result = dialog->run();
     exchange_cards = e_cards.get_text();
-    std::cout << exchange_cards << std::endl;
+    std::stringstream ss(exchange_cards);
+    int num;
+    while(ss >> num)
+    {
+      if(num < 1 || num > 5)
+      {
+        e_cards.set_text("###INVALID###");
+        result = 1;
+      }
+      else
+      {
+        cards.push_back(num);
+      }
+    }
   }
   dialog->close();
   delete dialog;
 
   //gets the correct cards and sends then to player_comm
-  std::vector<int> cards;
-  std::stringstream ss(exchange_cards);
-  int num;
-  while(ss >> num)
-  {
-    cards.push_back(num);
-
+  for(auto num : cards)
+  { 
     if(num == 1)
       card_1->clear();
     if(num == 2)
