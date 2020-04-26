@@ -1,7 +1,13 @@
 == README for Poker++ ==
 
+MENUBAR
+--The only buttons that work on the menu bar are
+--File->Quit
+--Help->About
+
 ANTE
 --The ante for every game is $1
+--You still must type 1 in the entry to ante
 --No matter what number is entered in the entry, $1 will be taken and added to pot
 
 BET
@@ -20,6 +26,9 @@ FOLD
 EXCHANGE
 --Exchanging cards is handled by a single entry where cards you want exchanged are entered
 --Cards are numbered 1 through 5, left to right
---You will need to enter the card number of each card you want discarded followed by a space
---For example, if you wanted card 1 and 3 discarded, enter "1 3"
+--You will need to enter the number of each card you want discarded followed by a space
+--For example, if you wanted cards 1 and 3 discarded, enter "1 3"
+
+STAND
+--Stand Pat (choosing to keep your hand) is handled by Stand button
 

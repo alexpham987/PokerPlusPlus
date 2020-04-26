@@ -31,6 +31,7 @@ class Mainwin : public Gtk::Window
     void on_bet_click();
     void on_fold_click();
     void on_ante_click();
+    void on_stand_click();
     void on_exchange_click();
     void on_about_click();
 
@@ -47,6 +48,7 @@ class Mainwin : public Gtk::Window
     Gtk::Button* check_button; //  represents the check button
     Gtk::Button* bet_button; //  represents the bet button
     Gtk::Button* ante_button; //  represents the ante button
+    Gtk::Button* stand_button; // represents stand button
     Gtk::Entry* bet_entry; //  represents the entry box to enter the betting amount
     Gtk::Button* exchange_button; //  represents the exchange cards button
     Gtk::Fixed *fixed; //  represents the background of the gtk window

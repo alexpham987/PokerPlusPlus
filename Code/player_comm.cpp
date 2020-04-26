@@ -136,9 +136,6 @@ void player_comm::updateLabel(nlohmann::json info)
   if(info["event"] == "Deal")
     lab = "Cards Dealt!";
 
-  else if(info["event"] == "collect_ante")
-    lab = "Please enter ante!";
-
   else
   {
     std::string name = info["name"];

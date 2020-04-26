@@ -14,6 +14,7 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
   builder->get_widget("check_button", check_button);
   builder->get_widget("bet_button", bet_button);
   builder->get_widget("ante_button", ante_button);
+  builder->get_widget("stand_button", stand_button);
   builder->get_widget("bet_entry", bet_entry);
   builder->get_widget("msg", msg);
   builder->get_widget("bet_label", bet_label);
@@ -42,6 +43,7 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
   bet_button->signal_clicked().connect(sigc::mem_fun(*this, &Mainwin::on_bet_click));
   ante_button->signal_clicked().connect(sigc::mem_fun(*this, &Mainwin::on_ante_click));
   exchange_button->signal_clicked().connect(sigc::mem_fun(*this, &Mainwin::on_exchange_click));
+  stand_button->signal_clicked().connect(sigc::mem_fun(*this, &Mainwin::on_stand_click));
 
   //creates the initial dialog box to enter a player's name and handles all of the things that need it to function properly
   Gtk::Dialog *dialog = new Gtk::Dialog();
@@ -129,6 +131,13 @@ void Mainwin::on_about_click()
   dialog.run();
 }
 
+//method that deals with the move stand pat (not exchanging cards)
+void Mainwin::on_stand_click()
+{
+  chat_message info = _pg.move_j("stand", 0, 0);
+  _pc->write(info);
+}
+
 //method that deals with when check is clicked
 void Mainwin::on_check_click()
 {
@@ -157,7 +166,7 @@ void Mainwin::on_bet_click()
     return;
   }
 
-  if(current_bet > _pg.getChipAmount())
+  if(bet_amount > _pg.getChipAmount())
   {
     bet_entry->set_text("Not enough money!!");
     return;
