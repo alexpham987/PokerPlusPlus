@@ -1,0 +1,25 @@
+== README for Poker++ ==
+
+ANTE
+--The ante for every game is $1
+--No matter what number is entered in the entry, $1 will be taken and added to pot
+
+BET
+--Bet, Call, and Raise are all handled by the bet button
+--only numbers that are greater than or equal to the current bet can be entered
+
+CHECK
+--The check button only works when no one has bet yet
+--The entry will let you know you can't check if tried
+
+FOLD
+--If you fold, all cards are cleared and game play buttons no longer work
+--You will still recieve label updates for the game
+--Quit and About buttons still work
+
+EXCHANGE
+--Exchanging cards is handled by a single entry where cards you want exchanged are entered
+--Cards are numbered 1 through 5, left to right
+--You will need to enter the card number of each card you want discarded followed by a space
+--For example, if you wanted card 1 and 3 discarded, enter "1 3"
+
