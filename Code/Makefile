@@ -1,5 +1,5 @@
 #compiler options
-CXXFLAGS+= -DASIO_STANDALONE -Wall -std=c++11 -I./include -I./asio-1.12.2/include -g
+CXXFLAGS+= -DASIO_STANDALONE -Wall -std=c++11 -I./include -I./asio-1.12.2/include
 
 #source files
 SOURCES=$(wildcard *.cpp)
@@ -8,11 +8,11 @@ SOURCES=$(wildcard *.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 
 #main link objects
-MOBJECTSP=$(filter-out main_dealer.o,$(OBJECTS))
-MOBJECTSD=$(filter-out main_player.o,$(OBJECTS))
+MOBJECTSP=$(filter-out main_dealer.o, $(OBJECTS))
+MOBJECTSD=$(filter-out main_player.o, $(OBJECTS))
 
 #test link objects
-TOBJECTS=$(filter-out main.o,$(OBJECTS))
+TOBJECTS=$(filter-out main_dealer.o, main_player.o,$(OBJECTS))
 
 #included libraries
 INCLUDE=`/usr/bin/pkg-config gtkmm-3.0 --cflags --libs` 
@@ -30,9 +30,6 @@ all: $(EXECUTABLEP) $(EXECUTABLED)
 $(EXECUTABLEP): $(MOBJECTSP)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE) 
 
-#$(EXECUTABLED): $(MOBJECTSD)
-#	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
-
 
 $(EXECUTABLED):dealer_game.cpp round.cpp chip.cpp hand.cpp deck.cpp \
                stack.cpp main_dealer.cpp  \
@@ -44,7 +41,7 @@ test: $(TOBJECTS)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
 
 debug: CXXFLAGS+= -g
-debug: $(EXECUTABLE)
+debug: $(EXECUTABLEP) $(EXECUTABLED)
 
 %.o: %.cpp *.h
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@

@@ -42,7 +42,7 @@ chat_session::chat_session(tcp::socket socket, chat_room& room)
   : socket_(std::move(socket)),
     room_(room)
 {
-  _dg.setDeck(_deck);
+  //_dg.setDeck(_deck);
 }
 
 //starts game session
