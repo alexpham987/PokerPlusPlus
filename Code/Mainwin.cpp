@@ -157,7 +157,12 @@ void Mainwin::on_bet_click()
     return;
   }
 
-  if(current_bet == 0)
+  if(current_bet > _pg.getChipAmount())
+  {
+    bet_entry->set_text("Not enough money!!");
+    return;
+  }
+  else if(current_bet == 0)
   {
     current_bet = bet_amount;
     info = _pg.move_j("bet", 0, bet_amount);
@@ -176,6 +181,7 @@ void Mainwin::on_bet_click()
     bet_entry->set_text("Too low!!");
     return;
   }
+
   _pc->write(info);
 }
 

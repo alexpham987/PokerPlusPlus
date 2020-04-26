@@ -14,6 +14,12 @@ void Player_Game::setName(std::string name)
   _name = name;
 }
 
+int Player_Game::getChipAmount() 
+{
+  std::cout << _stack.get_total() << std::endl;
+  return _stack.get_total();
+}
+
 //method that sets the player's hand
 std::vector<std::string> Player_Game::setHand(nlohmann::json cards, int cardNum)
 {

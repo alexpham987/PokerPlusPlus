@@ -15,6 +15,7 @@ class Player_Game
   public:
     Player_Game();
     void setName(std::string name);
+    int getChipAmount();
     std::vector<std::string> setHand(nlohmann::json cards, int cardNum);
     chat_message move_j(std::string play, int cards_requested, int current_bet);
     chat_message exchange_j(std::string play, int cards_requested, std::vector<int> cards);
