@@ -14,42 +14,50 @@ void Player_Game::setName(std::string name)
   _name = name;
 }
 
+int Player_Game::getChipAmount() 
+{
+  std::cout << _stack.get_total() << std::endl;
+  return _stack.get_total();
+}
+
 //method that sets the player's hand
 std::vector<std::string> Player_Game::setHand(nlohmann::json cards, int cardNum)
 {
-	std::vector<std::string> files;
-	int num;
-	std::string s;
-	Suit suit;
+  std::vector<std::string> files;
+  int num;
+  std::string s;
+  Suit suit;
+
   //checks for the amount of cards and adds the correct cards
-	for(int i = 1; i <= cardNum; i++)
-	{
-		std::stringstream ss;
-		std::string in = std::to_string(i);
-		std::string cStr = cards[in];
-		ss << cStr;
-		ss >> num;
-		ss >> s;
-		if(s == "S")
-			suit = S;
-		else if(s == "C")
-			suit = C;
-		else if(s == "D")
-			suit = D;
-		else
-			suit = H;
-
-		Card c(num, suit);
-	  _hand.addCard(c);
-	}
-
-	std::vector<Card> hand = _hand.getHand();
-	for(auto card : hand)
+  for(int i = 1; i <= cardNum; i++)
   {
-		files.push_back(card.card_to_filename());
-	}
+    std::stringstream ss;
+    std::string in = std::to_string(i);
+    std::string cStr = cards[in];
+    ss << cStr;
+    ss >> num;
+    ss >> s;
 
-	return files;
+    if(s == "S")
+      suit = S;
+    else if(s == "C")
+      suit = C;
+    else if(s == "D")
+      suit = D;
+    else
+      suit = H;
+
+    Card c(num, suit);
+    _hand.addCard(c);
+  }
+
+  std::vector<Card> hand = _hand.getHand();
+  for(auto card : hand)
+  {
+    files.push_back(card.card_to_filename());
+  }
+
+  return files;
 }
 
 
@@ -57,37 +65,41 @@ std::vector<std::string> Player_Game::setHand(nlohmann::json cards, int cardNum)
 chat_message Player_Game::move_j(std::string play, int cards_requested, int current_bet)
 {
   nlohmann::json to_dealer;
-  chat_message uuid;
+  chat_message msg;
   std::string json_str;
 
   to_dealer["uuid"] = this->_id;
   to_dealer["name"] = this->_name;
   to_dealer["event"] = play;        // "stand","hit","fold","raise","join","request_cards"
-  to_dealer["cards_requested"] = cards_requested;    // optional, number of cards requested, 1 to 5
+  to_dealer["cards_requested"] = cards_requested; //optional, number of cards requested, 1 to 5
   to_dealer["current_bet"] = current_bet;
-  //to_dealer["total_bet"] = this->total_bet;
-  //to_dealer["chat"] = std::string(chat);
 
   json_str = to_dealer.dump();
 
-  uuid.body_length(std::strlen(json_str.c_str()));
-  std::memcpy(uuid.body(), json_str.c_str(), uuid.body_length());
-  uuid.encode_header();
-
+  msg.body_length(std::strlen(json_str.c_str()));
+  std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
+  msg.encode_header();
+  
+  if(play == "ante")
+  {
+    _stack.remove_chips(0,1,0);
+  }
+    
   //deals with chips correctly when there is a bet, ante, or raise
-  if(play == "bet" || play == "ante" || play == "raise")
+  if(play == "bet" || play == "call" || play == "raise")
   {
     int blue = current_bet/25;
-	  std::cout << blue << std::endl;
-	  current_bet -= 25*blue;
+    current_bet -= 25*blue;
+
     int green = current_bet/5;
     current_bet -= 5*green;
+
     int red = current_bet;
-	  std::cout << current_bet << std::endl;
-	  _stack.remove_chips(green,red,blue);
+
+    _stack.remove_chips(green,red,blue);
   }
 
-  return uuid;
+  return msg;
 }
 
 //method that exchanges the cards in a player's hand
@@ -96,22 +108,20 @@ chat_message Player_Game::exchange_j(std::string play, int cards_requested, std:
   _hand.modify_hand(cards);
 
   nlohmann::json to_dealer;
-  chat_message uuid;
+  chat_message msg;
   std::string json_str;
 
   to_dealer["uuid"] = this->_id;
   to_dealer["name"] = this->_name;
-  to_dealer["event"] = "request_cards";        // "stand","hit","fold","raise","join","request_cards"
-  to_dealer["cards_requested"] = cards_requested;    // optional, number of cards requested, 1 to 5
+  to_dealer["event"] = "request_cards"; // "stand","hit","fold","raise","join","request_cards"
+  to_dealer["cards_requested"] = cards_requested; //optional, number of cards requested, 1 to 5
   to_dealer["current_bet"] = 0;
-  //to_dealer["total_bet"] = this->total_bet;
-  //to_dealer["chat"] = std::string(chat);
 
   json_str = to_dealer.dump();
 
-  uuid.body_length(std::strlen(json_str.c_str()));
-  std::memcpy(uuid.body(), json_str.c_str(), uuid.body_length());
-  uuid.encode_header();
+  msg.body_length(std::strlen(json_str.c_str()));
+  std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
+  msg.encode_header();
 
-  return uuid;
+  return msg;
 }

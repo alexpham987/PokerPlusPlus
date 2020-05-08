@@ -3,13 +3,13 @@
 //method that compares the suit of two cards
 bool comp_suit(const Card & a, const Card & b)
 {
-	return (a.suit() < b.suit());
+  return (a.suit() < b.suit());
 }
 
 //method that compares the value of two cards
 bool comp_value(const Card & a, const Card & b)
 {
-	return (a.num() < b.num());
+  return (a.num() < b.num());
 }
 
 //constructor
@@ -23,22 +23,24 @@ Hand::~Hand()
 //method that adds a card to the hand
 void Hand::addCard(Card c)
 {
-	_hand.push_back(c);
+  _hand.push_back(c);
 }
 
 //method that returns the hand itself
 std::vector<Card> Hand::getHand()
 {
-	return _hand;
+  return _hand;
 }
 
 //method that modifies the hand
 void Hand::modify_hand (std::vector<int> mod_cards)
 {
+  int offset = 1;
   for(auto i : mod_cards)
-	{
-		_hand.erase(_hand.begin() + i);
-	}
+  {
+    _hand.erase(_hand.begin() + (i-offset));
+    offset++;
+  }
 }
 
 //method that calculates the total value of a hand

@@ -37,7 +37,7 @@
             <property name="receives_default">True</property>
           </object>
           <packing>
-            <property name="x">130</property>
+            <property name="x">125</property>
             <property name="y">350</property>
           </packing>
         </child>
@@ -63,7 +63,7 @@
             <property name="receives_default">True</property>
           </object>
           <packing>
-            <property name="x">550</property>
+            <property name="x">575</property>
             <property name="y">400</property>
           </packing>
         </child>
@@ -235,7 +235,7 @@
               <object class="GtkImage" id="card_1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="pixbuf">Cards/2D.jpg</property>
+                <property name="stock">gtk-add</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -247,7 +247,7 @@
               <object class="GtkImage" id="card_2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="pixbuf">Cards/2H.jpg</property>
+                <property name="stock">gtk-add</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -259,7 +259,7 @@
               <object class="GtkImage" id="card_3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="pixbuf">Cards/2S.jpg</property>
+                <property name="stock">gtk-add</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -271,7 +271,7 @@
               <object class="GtkImage" id="card_4">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="pixbuf">Cards/2C.jpg</property>
+                <property name="stock">gtk-add</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -283,7 +283,7 @@
               <object class="GtkImage" id="card_5">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="pixbuf">Cards/3C.jpg</property>
+                <property name="stock">gtk-add</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -303,11 +303,11 @@
             <property name="height_request">50</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">" This is a label for current state of the game "</property>
+            <property name="label" translatable="yes">" current State "</property>
           </object>
           <packing>
-            <property name="x">470</property>
-            <property name="y">50</property>
+            <property name="x">660</property>
+            <property name="y">60</property>
           </packing>
         </child>
         <child>
@@ -346,7 +346,7 @@
             <property name="receives_default">True</property>
           </object>
           <packing>
-            <property name="x">665</property>
+            <property name="x">690</property>
             <property name="y">400</property>
           </packing>
         </child>
@@ -448,8 +448,22 @@
             <property name="receives_default">True</property>
           </object>
           <packing>
-            <property name="x">281</property>
+            <property name="x">255</property>
             <property name="y">350</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="stand_button">
+            <property name="label" translatable="yes">Stand</property>
+            <property name="width_request">100</property>
+            <property name="height_request">50</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">380</property>
+            <property name="y">351</property>
           </packing>
         </child>
       </object>

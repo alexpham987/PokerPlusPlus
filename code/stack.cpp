@@ -104,3 +104,4 @@ int Stack::get_total()
 {
   return _total;
 }
+
