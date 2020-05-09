@@ -12,6 +12,8 @@
 #include "asio.hpp"
 #include "chat_message.hpp"
 #include "dealer_game.h"
+#include "deck.h"
+
 
 using asio::ip::tcp;
 
@@ -61,15 +63,13 @@ class chat_session
     chat_room& room_;
     chat_message read_msg_;
     chat_message_queue write_msgs_;
-    Deck _deck;
-    Dealer_Game _dg{_deck};
 };
 
 class Dealer_comm
 {
   public:
     Dealer_comm(asio::io_context& io_context,
-	const tcp::endpoint& endpoint);
+    const tcp::endpoint& endpoint);
     void startGame();
 
   private:

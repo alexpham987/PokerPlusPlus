@@ -4,8 +4,112 @@
 Dealer_Game::Dealer_Game(Deck deck) : _deck{deck}
 {}
 
-//void Dealer_Game::startGame()
-//{
+void Dealer_Game::startGame()
+{
+
+  nlohmann::json move;
+  int index_winner = 0;
+  shuffleCards();
+
+  //****************
+  //    Ante     *
+  //*****************
+  
+  /*****************
+  **    Phase 1   *
+  *****************
+  // deal_cards( players[i].size() );     // deal cards to all players
+   
+  for( int i = 0; i < room_.participants().size(); i++ )
+  {
+    if( /move[event] = raise/ )         // int variable in dealer, 1 if a
+                                          // player raised
+    {
+      // players[i].turn = 3;             // check & exchange button greyed out
+      // move = code to get player move
+    }
+    else                                  // no one has raised yet
+    {
+      // players[i].turn = 2;             // exchange button greyed out
+      // move = code to get player move
+    }
+    if(/ move[event] = fold /)
+    {
+      // players[i].turn = -1;            // player loses
+      continue;
+    }
+    if(/ move[event] = check /)
+    {
+      continue;
+    }
+    if(/ move[event] = raise /)         // player raises bet by current_bet
+    {
+      // players[i]._stack.remove_chips( move[current_bet] );
+      // pot += move[current_bet];
+      // players[i].turn = 0;            // turn over
+    }
+  }
+  ********************
+  *    Draw Phase    *
+  ********************
+ 
+  for( int i = 0; i < room_.participants().size(); i++ )
+  {
+    // players[i].turn = 4;               // only exchange button available
+    // move = code to get player move
+    if(/ move[cards_requested] < 1 || move[cards_requested] > 5 /)
+    {
+      continue;                           // if cards requested is not in range,
+    }                                     // go to next player
+                                          // otherwise exchange cards
+    exchange_cards( /move[cards_requested]/ );
+  }
+  *****************
+  *    Phase 2    *
+  *****************
+  for( int i = 0; i < room_.participants().size(); i++ )
+  {
+    if( /move[event] = raise/ )         // int variable in dealer, 1 if a
+                                          // player raised
+    {
+      // players[i].turn = 3;             // check & exchange button greyed out
+      // move = code to get player move
+    }
+    else                                  // no one has raised yet
+    {
+      // players[i].turn = 2;             // exchange button greyed out
+      // move = code to get player move
+    }
+    if(/ move[event] = fold /)
+    {
+      // players[i].turn = -1;            // player loses
+      continue;
+    }
+    if(/ move[event] = check /)
+    {
+      continue;
+    }
+    if(/ move[event] = raise /)         // player raises bet by current_bet
+    {
+       // players[i]._stack.remove_chips( move[current_bet] );
+       // pot += move[current_bet];
+       // players[i].turn = 0;            // turn over
+    }
+  }
+  *******************
+  *    Game Over    *
+  *******************
+  for( int i = 1; i < room_.participants().size(); i++ )
+  {
+    if( /players[i].stack.total() > players[index_winner].stack.total()/ )
+    {
+      index_winner = i;                   // find the player with most money
+    }
+  }
+  // code to let players know if they won/lost
+  // winner is players[ index_winner ]
+  */
+}
 
 //method that adds money to the pot
 void Dealer_Game::addMoney(int amount)
@@ -74,6 +178,11 @@ chat_message Dealer_Game::exchangeCards(int amountOfCards)
   cards.encode_header();
 
   return cards;
+}
+
+void Dealer_Game::setDeck(Deck deck)
+{
+  _deck = deck;
 }
 
 void Dealer_Game::revealHand()

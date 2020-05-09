@@ -12,12 +12,14 @@ class Dealer_Game
 {
   public:
     Dealer_Game(Deck deck);
+    void startGame();
     void shuffleCards();
     chat_message dealCards(int num);
     bool gameResult();
     chat_message exchangeCards(int amountOfCards);
     void revealHand();
     void addMoney(int amount);
+    void setDeck(Deck deck);
 
   private:
     bool _playerResult; //attribute that represents whether a player has won or lost

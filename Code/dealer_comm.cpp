@@ -2,6 +2,8 @@
 
 using asio::ip::tcp;
 
+Deck _deck;
+Dealer_Game _dg{_deck};
 
 //Class chat_room
 
@@ -48,6 +50,7 @@ chat_session::chat_session(tcp::socket socket, chat_room& room)
 //starts game session
 void chat_session::start()
 {
+  //s_dg.setDeck(_deck);
   room_.join(shared_from_this());
   do_read_header();
 }
@@ -168,13 +171,26 @@ Dealer_comm::Dealer_comm(asio::io_context& io_context,
     const tcp::endpoint& endpoint)
   : acceptor_(io_context, endpoint)
 {
-  do_accept();
-  //startGame();
-}
 
-void Dealer_comm::startGame() 
-{
-  //std::this_thread::sleep_for(std::chrono::seconds(20));
+  do_accept();
+  int i = 0;
+  //while(i < 1) {i = (room_.participants()).size();}
+  std::cout << (room_.participants()).size() << std::endl;
+  std::this_thread::sleep_for(std::chrono::seconds(5));
+  nlohmann::json to_dealer;
+  chat_message msg;
+  std::string json_str;
+
+  to_dealer["event"] = "Start Bet!"; 
+
+  json_str = to_dealer.dump();
+
+  msg.body_length(std::strlen(json_str.c_str()));
+  std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
+  msg.encode_header();
+  
+  room_.deliver(msg);
+
 }
 
 void Dealer_comm::do_accept()
@@ -186,8 +202,6 @@ void Dealer_comm::do_accept()
         {
           std::make_shared<chat_session>(std::move(socket), room_)->start();
         }
-
-
         do_accept();
       });
 }
