@@ -73,6 +73,8 @@ std::string Card::card_to_filename()
     ss << "Q";
   else if(_num == 11)
     ss << "J";
+  else if(_num == 1)
+    ss << "A";
   else
     ss << _num;
 

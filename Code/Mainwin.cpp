@@ -66,11 +66,11 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
     _player_name = e_name.get_text();
     playername_label->set_label(_player_name);
   }
-
   dialog->close();
   delete dialog;
 
   current_bet = 0;
+  wait_for_turn();
 }
 
 //destructor for the Mainwin class
@@ -78,31 +78,37 @@ Mainwin::~Mainwin()
 {}
 
 //method that links the player_game class and the gtk window together and sets the player's name
-void Mainwin::setPlayerGame(Player_Game pgame)
+/*
+void Mainwin::setPlayerGame(player_comm pgame)
 {
-  _pg = pgame;
-  _pg.setName(_player_name);
+  _pc = &pgame;
+  _pc->setName(_player_name);
 }
-
+*/
 //method that links the player_comm class and gtk window together
 void Mainwin::setPlayerComm(player_comm* pcomm)
 {
   _pc = pcomm;
+  _pc->setName(_player_name);
   //sets initial conditions for a starting player
-  chat_message join = _pg.move_j("join", 0, 0);
+  chat_message join = _pc->move_j("join", 0, 0);
+  std::cout << "b4 pc write" << std::endl; 
   _pc->write(join);
+  std::cout << "after pc write" << std::endl;
 }
 
 //method that sets the label for the gtk window
 void Mainwin::setLabel(std::string text)
 {
+  std::cout << "b4 set_label" << std::endl;
   msg->set_label(text);
+  std::cout << "after set_label" << std::endl;
 }
 
 //method that sets the cards in the player's hand
 void Mainwin::setCards(nlohmann::json cards, int num)
 {
-  std::vector<std::string> f = _pg.setHand(cards, num);
+  std::vector<std::string> f = _pc->setHand(cards, num);
   card_1->set(f[0]);
   card_2->set(f[1]);
   card_3->set(f[2]);
@@ -134,7 +140,7 @@ void Mainwin::on_about_click()
 //method that deals with the move stand pat (not exchanging cards)
 void Mainwin::on_stand_click()
 {
-  chat_message info = _pg.move_j("stand", 0, 0);
+  chat_message info = _pc->move_j("stand", 0, 0);
   _pc->write(info);
 }
 
@@ -143,10 +149,10 @@ void Mainwin::on_check_click()
 {
   if(current_bet)
   {
-    bet_entry->set_text("Cant Check!!");
+    bet_entry->set_text("Can't Check!!");
     return;
   }
-  chat_message info = _pg.move_j("check", 0, 0);
+  chat_message info = _pc->move_j("check", 0, 0);
   _pc->write(info);
 }
 
@@ -166,7 +172,7 @@ void Mainwin::on_bet_click()
     return;
   }
 
-  if(bet_amount > _pg.getChipAmount())
+  if(bet_amount > _pc->getChipAmount())
   {
     bet_entry->set_text("Not enough money!!");
     return;
@@ -174,16 +180,16 @@ void Mainwin::on_bet_click()
   else if(current_bet == 0)
   {
     current_bet = bet_amount;
-    info = _pg.move_j("bet", 0, bet_amount);
+    info = _pc->move_j("bet", 0, bet_amount);
   }
   else if(bet_amount > current_bet)
   {
     current_bet = bet_amount;
-    info = _pg.move_j("raise", 0, bet_amount);
+    info = _pc->move_j("raise", 0, bet_amount);
   }
   else if(bet_amount == current_bet)
   {
-    info = _pg.move_j("call", 0, bet_amount);
+    info = _pc->move_j("call", 0, bet_amount);
   }
   else
   {
@@ -197,7 +203,7 @@ void Mainwin::on_bet_click()
 //method that deals with when fold is clicked
 void Mainwin::on_fold_click()
 {
-  chat_message info = _pg.move_j("fold", 0, 0);
+  chat_message info = _pc->move_j("fold", 0, 0);
   _pc->write(info);
 
   card_1->clear();
@@ -211,8 +217,50 @@ void Mainwin::on_fold_click()
   check_button->set_sensitive(false);
   bet_button->set_sensitive(false);
   ante_button->set_sensitive(false);
+  stand_button->set_sensitive(false);
 }
 
+void Mainwin::wait_for_turn()
+{
+  exchange_button->set_sensitive(false);
+  fold_button->set_sensitive(false);
+  check_button->set_sensitive(false);
+  bet_button->set_sensitive(false);
+  ante_button->set_sensitive(false);
+  stand_button->set_sensitive(false);
+}
+
+void Mainwin::my_turn_first(){
+  exchange_button->set_sensitive(false);
+  fold_button->set_sensitive(true);
+  check_button->set_sensitive(true);
+  bet_button->set_sensitive(true);
+  ante_button->set_sensitive(false);
+  stand_button->set_sensitive(false);
+}
+
+void Mainwin::my_turn(){
+  fold_button->set_sensitive(true);
+  ante_button->set_sensitive(true);
+}
+
+void Mainwin::my_turn_second(){
+  exchange_button->set_sensitive(false);
+  fold_button->set_sensitive(true);
+  check_button->set_sensitive(true);
+  bet_button->set_sensitive(true);
+  ante_button->set_sensitive(false);
+  stand_button->set_sensitive(false);
+}
+
+void Mainwin::my_turn_third(){
+  exchange_button->set_sensitive(true);
+  fold_button->set_sensitive(true);
+  check_button->set_sensitive(false);
+  bet_button->set_sensitive(false);
+  ante_button->set_sensitive(false);
+  stand_button->set_sensitive(true);
+}
 
 //method that deals with when ante is clicked
 void Mainwin::on_ante_click()
@@ -228,7 +276,7 @@ void Mainwin::on_ante_click()
     return;
   }
 
-  chat_message info = _pg.move_j("ante", 0, ante_amount);
+  chat_message info = _pc->move_j("ante", 0, ante_amount);
   _pc->write(info);
 }
 
@@ -290,6 +338,6 @@ void Mainwin::on_exchange_click()
       card_5->clear();
   }
 
-  chat_message info = _pg.exchange_j("request_cards", cards.size(), cards);
+  chat_message info = _pc->exchange_j("request_cards", cards.size(), cards);
   _pc->write(info);
 }
