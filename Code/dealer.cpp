@@ -278,7 +278,7 @@ Dealer_Game::Dealer_Game(Deck deck) : _deck{deck}
 
 //sends the turn int to the players, if the player has the id
 //sent then its their turn
-chat_message chat_session::turn(int turn, std::string/*boost::uuids::uuid*/ id_player/*, std::string name*/, std::string move)
+chat_message chat_session::turn(int turn, std::string id_player/*, std::string name*/, std::string move, int bet, int cards)
 {
   nlohmann::json to_player;
   chat_message msg;
@@ -295,6 +295,9 @@ chat_message chat_session::turn(int turn, std::string/*boost::uuids::uuid*/ id_p
     to_player["event"] = "turn";
     to_player["move"] = move;
   }
+  //to_player["name"] = this->_name;
+  to_player["cards_requested"] = cards; //optional, number of cards requested, 1 to 5
+  to_player["current_bet"] = bet;
 
   json_str = to_player.dump();
 
@@ -371,7 +374,7 @@ void chat_session::do_round(nlohmann::json info)
       room_.name_players[ *( room_.participants().end() ) ] = info["name"];
       if(game == 1)
       {
-        room_.deliver( turn( 1, room_.id_players[*(room_.participants_it)], "join" ) );
+        room_.deliver( turn( 1, room_.id_players[*(room_.participants_it)], "join", 0, 0 ) );
       }
       return;
     }
@@ -389,7 +392,7 @@ void chat_session::do_round(nlohmann::json info)
         room_.participants_it++;
         turn_index++;
       }
-      room_.deliver( turn( -1, room_.id_players[*(room_.participants_it)], "fold" ) );
+      room_.deliver( turn( -1, room_.id_players[*(room_.participants_it)], "fold", 0, 0 ) );
       return;
     }
     else if( info["event"] == "ante" && game == 1 && info["player_id"] == room_.id_players[*(room_.participants_it)] )
@@ -399,7 +402,7 @@ void chat_session::do_round(nlohmann::json info)
       room_.deliver(read_msg_);
       if( turn_index == (PLAYERS - 1) )
       {
-        room_.deliver( turn( 1, room_.id_players[*(room_.participants_it)], "ante" ) );
+        room_.deliver( turn( 1, room_.id_players[*(room_.participants_it)], "ante", 0, 0 ) );
         room_.participants_it = room_.participants().begin();
         turn_index = 0;
         std::cout << "good exit, dealing to " << room_.name_players[*(room_.participants_it)] << std::endl;
@@ -409,7 +412,7 @@ void chat_session::do_round(nlohmann::json info)
       {
         room_.participants_it++;
         turn_index++;
-        room_.deliver( turn( 1, room_.id_players[*(room_.participants_it)], "ante" ) );
+        room_.deliver( turn( 1, room_.id_players[*(room_.participants_it)], "ante", 0, 0 ) );
         return;
       }
     }
@@ -418,7 +421,7 @@ void chat_session::do_round(nlohmann::json info)
       int amount = info["current_bet"];
       _dg.addMoney(amount);
       std::cout << "chip added" << std::endl;
-      room_.deliver(read_msg_);
+      //room_.deliver(read_msg_);
       if( turn_index == (PLAYERS) )
       {
         room_.participants_it = room_.participants().begin();
@@ -430,7 +433,7 @@ void chat_session::do_round(nlohmann::json info)
         turn_index++;
       }
       std::string event = info["event"];
-      room_.deliver( turn( 1, room_.id_players[*(room_.participants_it)], event ) );
+      room_.deliver( turn( 1, room_.id_players[*(room_.participants_it)], event, amount, 0 ) );
       return;
     }
     else 
@@ -454,7 +457,7 @@ void chat_session::do_round(nlohmann::json info)
       turn_index = 0;
       game = 0;
       std::cout << "done dealing" << std::endl; 
-      room_.deliver( turn( 2, room_.id_players[*(room_.participants_it)], "deal" ) );
+      room_.deliver( turn( 2, room_.id_players[*(room_.participants_it)], "deal", 0, 5 ) );
       return;
     }
     //std::cout << "player to be dealt: " << room_.name_players[*(room_.participants_it)] << std::endl;
@@ -493,14 +496,14 @@ void chat_session::do_round(nlohmann::json info)
         turn_index = 0;
         game = 2;
         std::cout << "done" << std::endl;
-        room_.deliver( turn( 3, room_.id_players[*(room_.participants_it)], event ) );
+        room_.deliver( turn( 3, room_.id_players[*(room_.participants_it)], event, 0, 0 ) );
       }
       else
       {
         turn_index++;
         room_.participants_it = room_.participants().begin();
         std::advance(room_.participants_it, turn_index);
-        room_.deliver( turn( 2, room_.id_players[*(room_.participants_it)], event ) );
+        room_.deliver( turn( 2, room_.id_players[*(room_.participants_it)], event, 0, 0 ) );
         return;
       }
     }
@@ -521,14 +524,14 @@ void chat_session::do_round(nlohmann::json info)
         turn_index = 0;
         game = 3;
         std::cout << "done phase 2" << std::endl; 
-        room_.deliver( turn( 4, room_.id_players[*(room_.participants_it)], event ) );
+        room_.deliver( turn( 4, room_.id_players[*(room_.participants_it)], event, 0, 0 ) );
       }
       else
       {
         turn_index++;
         room_.participants_it = room_.participants().begin();
         std::advance(room_.participants_it, turn_index);
-        room_.deliver( turn( 3, room_.id_players[*(room_.participants_it)], event ) );
+        room_.deliver( turn( 3, room_.id_players[*(room_.participants_it)], event, 0, 0 ) );
         return;
       }
     }
@@ -549,14 +552,14 @@ void chat_session::do_round(nlohmann::json info)
         turn_index = 0;
         game = -1;
         phase = 3;  //players in game 
-        room_.deliver( turn( -1, room_.id_players[*(room_.participants_it)], event ) );
+        room_.deliver( turn( -1, room_.id_players[*(room_.participants_it)], event, 0, 0 ) );
       }
       else
       {
         turn_index++;
         room_.participants_it = room_.participants().begin();
         std::advance(room_.participants_it, turn_index);
-        room_.deliver( turn( 2, room_.id_players[*(room_.participants_it)], event ) );
+        room_.deliver( turn( 2, room_.id_players[*(room_.participants_it)], event, 0, 0 ) );
         return;
       }
     }
@@ -597,7 +600,7 @@ void chat_session::do_round(nlohmann::json info)
       std::cout << "hand value stored" << std::endl;
       room_.participants_it = room_.participants().begin();
       std::advance(room_.participants_it, turn_index);
-      room_.deliver( turn( -1, room_.id_players[*(room_.participants_it)], "game over" ) );
+      room_.deliver( turn( -1, room_.id_players[*(room_.participants_it)], "game over", 0, 0 ) );
     }
 
   }

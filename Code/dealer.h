@@ -100,7 +100,7 @@ class chat_session
     void start(Dealer_comm* _dc);
     void deliver(const chat_message& msg);
     void startGame(Dealer_comm* _dc);
-    chat_message turn(int, std::string/*boost::uuids::uuid, std::string*/, std::string);
+    chat_message turn(int, std::string/*boost::uuids::uuid, std::string*/, std::string, int, int);
     //chat_message turn(int, std::string/*boost::uuids::uuid*/, int);
     chat_message set_id(std::string/*boost::uuids::uuid*/);
     void do_round(nlohmann::json info);

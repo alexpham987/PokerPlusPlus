@@ -157,7 +157,7 @@ void player_comm::do_read_body()
                 _win->my_turn_second();
               }
               //info["name"] = this->_name;
-              //this->updateLabel(info);
+              this->updateLabel(info);
             }
             else
             {
@@ -211,6 +211,7 @@ void player_comm::do_write()
 //updates label in the main window
 void player_comm::updateLabel(nlohmann::json info) 
 {
+
   std::string lab;
 
   if(info["event"] == "set_id")
@@ -245,16 +246,17 @@ void player_comm::updateLabel(nlohmann::json info)
   else
   {
     //std::string name = info["name"];
-    std::string event = info["event"];
+    std::string event = info["move"];
     //lab = name+"'s move:  ";
 
     if(event == "bet" || event == "raise" || event == "call") 
     {
-      std::string name = info["name"];
+      std::string name = "name";
       int bet = info["current_bet"];
       std::string bet_str = std::to_string(bet);
       lab = name+"'s move:  ";
       lab += event+" $"+bet_str;
+      std::cout << "setting label" << std::endl;
     }
     else if(event == "request_cards")
     {
