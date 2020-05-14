@@ -22,14 +22,18 @@ Deck::Deck()
 //method that deals cards
 Card Deck::deal()
 {
+  //std::cout << "inside deal" << std::endl;
   Card c = _deck.back();
+  //std::cout << "got a card" << std::endl;
   _deck.pop_back();
+  //std::cout << "removed card from deck" << std::endl;
   return c;
 }
 
 //method that shuffles the deck
 void Deck::shuffle()
 {
+  srand(time(NULL));
   std::random_shuffle(_deck.begin(), _deck.end());
 }
 

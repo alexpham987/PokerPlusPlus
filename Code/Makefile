@@ -8,11 +8,11 @@ SOURCES=$(wildcard *.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 
 #main link objects
-MOBJECTSP=$(filter-out main_dealer.o, $(OBJECTS))
-MOBJECTSD=$(filter-out main_player.o, $(OBJECTS))
+MOBJECTSP=$(filter-out dealer.o, $(OBJECTS))
+MOBJECTSD=$(filter-out player.o, $(OBJECTS))
 
 #test link objects
-TOBJECTS=$(filter-out main_dealer.o, main_player.o,$(OBJECTS))
+TOBJECTS=$(filter-out dealer.o, player.o,$(OBJECTS))
 
 #included libraries
 INCLUDE=`/usr/bin/pkg-config gtkmm-3.0 --cflags --libs` 
@@ -31,9 +31,9 @@ $(EXECUTABLEP): $(MOBJECTSP)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE) 
 
 
-$(EXECUTABLED):dealer_game.cpp round.cpp chip.cpp hand.cpp deck.cpp \
-               stack.cpp main_dealer.cpp  \
-               pot.cpp card.cpp dealer_comm.cpp
+$(EXECUTABLED):dealer.cpp round.cpp chip.cpp hand.cpp deck.cpp \
+               stack.cpp   \
+               pot.cpp card.cpp 
 	$(CXX) $(CXXFLAGS) -DSERVER $^ -o $@ -lpthread
 
 test: CXXFLAGS+= -g

@@ -14,7 +14,9 @@ bool comp_value(const Card & a, const Card & b)
 
 //constructor
 Hand::Hand()
-{}
+{
+  //hand_value = calc_value();
+}
 
 //destructor
 Hand::~Hand()
@@ -43,10 +45,18 @@ void Hand::modify_hand (std::vector<int> mod_cards)
   }
 }
 
+//method that returns the value of the highest card
+int Hand::find_high_card()
+{
+  std::sort(_hand.begin(), _hand.end(), comp_value); //sort by card value
+  std::cout <<"high card value: " << _hand.back().num() << std::endl;
+  return _hand.back().num();
+}
+
 //method that calculates the total value of a hand
 int Hand::calc_value ()
 {
-  int value = -1;
+  int value = 15;
 
   std::sort(_hand.begin(), _hand.end(), comp_suit);  //sort by suit
   if(_hand[0].suit() == _hand[4].suit()) //if first card is same suit as last, we have a flush

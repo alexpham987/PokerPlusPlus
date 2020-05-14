@@ -9,8 +9,7 @@
 #include <vector>
 #include "json.hpp"
 #include "chat_message.hpp"
-#include "player_comm.h"
-#include "player_game.h"
+#include "player.h"
 
 class player_comm;
 
@@ -20,10 +19,16 @@ class Mainwin : public Gtk::Window
   public:
     Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& reGlade);
     virtual ~Mainwin();
-    void setPlayerGame(Player_Game pgame);
+    void setPlayerGame(player_comm pgame);
     void setPlayerComm(player_comm* pcomm);
     void setLabel(std::string text);
     void setCards(nlohmann::json cards, int num);
+    void wait_for_turn();
+    void my_turn();
+    void my_turn_first();
+    void my_turn_second();
+    void my_turn_third();
+    void my_turn_fourth();
 
   protected:
     void on_quit_click();
@@ -34,6 +39,7 @@ class Mainwin : public Gtk::Window
     void on_stand_click();
     void on_exchange_click();
     void on_about_click();
+
 
   private:
     Gtk::MenuBar* MenuBar; //  represents the menu bar on the gtk window
@@ -65,7 +71,7 @@ class Mainwin : public Gtk::Window
 
   private:
     std::string _player_name;
-    Player_Game _pg;
+    //player_comm* _pg;
     player_comm* _pc;
     int current_bet;
 };
