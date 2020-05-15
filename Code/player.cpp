@@ -1,6 +1,7 @@
 #include "Mainwin.h"
 #include "player.h"
-
+#include "deck.h"
+#include "pot.h"
 
 player_comm::player_comm(asio::io_context& io_context, const tcp::resolver::results_type& endpoints)
    : io_context_(io_context), socket_(io_context) 
@@ -432,6 +433,8 @@ chat_message player_comm::exchange_j(std::string play, int cards_requested, std:
 
   return msg;
 }
+
+
 //main function for the player's side of the game
 int main(int argc, char *argv[])
 {
@@ -473,6 +476,6 @@ int main(int argc, char *argv[])
 
   t.join();
   std::cout << "t joined" << std::endl;
-
+  
   return 0;
 }

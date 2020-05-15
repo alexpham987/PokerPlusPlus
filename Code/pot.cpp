@@ -15,3 +15,4 @@ void Pot::addToPot(int amountToAdd)
 {
   potValue += amountToAdd;
 }
+

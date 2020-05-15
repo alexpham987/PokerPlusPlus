@@ -1,0 +1,61 @@
+Deck deck{};
+  for(int i = 0; i < 52; i++) {
+    Card c = deck.deal();
+    std::cout << c.card_to_string() << std:: endl;
+  }
+
+  Deck deck1{};
+  deck1.shuffle();
+  for(int i = 0; i < 52; i++) {
+    Card c = deck1.deal();
+    std::cout << c.card_to_string() << std:: endl;
+  }
+
+  Hand hand{};
+  Card c1{13, S};
+  Card c2{13, H};
+  Card c3{13, D};
+  Card c4{13, C};
+  Card c5{12, S};
+  hand.addCard(c1);
+  hand.addCard(c2);
+  hand.addCard(c3);
+  hand.addCard(c4);
+  hand.addCard(c5);
+
+  std::cout << hand.calc_value() << std::endl;
+
+  std::vector<int> cards = {4};
+  hand.modify_hand(cards);
+  Card c{12,H};
+  hand.addCard(c);
+  std::cout << hand.calc_value() << std::endl;
+
+  Chip ch1{BLUE};
+  Chip ch2{RED};
+  Chip ch3{GREEN};
+
+  Stack stack{};
+
+  std::cout << ch1.value() << std::endl;
+  std::cout << ch2.value() << std::endl;
+  std::cout << ch3.value() << std::endl;
+
+  std::cout << stack.get_total() << std::endl;
+  stack.remove_chips(1,1,1);
+  std::cout << stack.get_total() << std::endl;
+  stack.add_chips(1,1,1);
+  std::cout << stack.get_total() << std::endl;
+
+  Pot pot{0};
+ std::cout << pot.getCurrentPot() << std::endl;
+  pot.addToPot(25);
+  pot.addToPot(5);
+  pot.addToPot(1);
+
+ std::cout << pot.getCurrentPot() << std::endl;
+
+
+    
+
+
