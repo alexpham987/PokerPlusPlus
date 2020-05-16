@@ -485,7 +485,7 @@ void chat_session::do_round(nlohmann::json info)
   else if(phase == 1 && game == 0)
   {
     std::cout << "event = " << info["event"] << std::endl;
-    if( (info["event"] == "check") || (info["event"] == "fold") || (info["event"] == "bet") )
+    if( (info["event"] == "check") || (info["event"] == "fold") || (info["event"] == "bet") || (info["event"] == "call") || (info["event"] == "raise") )
     {
       room_.deliver(read_msg_);
       std::string event = info["event"]; 
@@ -514,10 +514,20 @@ void chat_session::do_round(nlohmann::json info)
   else if(phase == 1 && game == 2)
   {
     std::cout << "event = " << info["event"] << std::endl;
-    if( (info["event"] == "stand") || (info["event"] == "fold") || (info["event"] == "exchange") )
+    if( (info["event"] == "stand") || (info["event"] == "fold") || (info["event"] == "request_cards") )
     {
       room_.deliver(read_msg_);
-      std::string event = info["event"]; 
+      std::string event = "Deal"; 
+      if(info["event"] == "request_cards")
+      {
+        std::string c; 
+        int cards = info["cards_requested"];
+        room_.participants_it = room_.participants().begin();
+        std::advance(room_.participants_it, turn_index);
+        chat_message msg = _dg.exchangeCards(cards, room_.id_players[*(room_.participants_it)]);
+        room_.deliver( msg );
+      }
+
       if( turn_index == (PLAYERS-1) )
       {
         room_.participants_it = room_.participants().begin();
@@ -542,7 +552,7 @@ void chat_session::do_round(nlohmann::json info)
   else if(phase == 1 && game == 3)
   {
     std::cout << "event = " << info["event"] << std::endl;
-    if( (info["event"] == "check") || (info["event"] == "fold") || (info["event"] == "bet") )
+    if( (info["event"] == "check") || (info["event"] == "fold") || (info["event"] == "bet") || (info["event"] == "call") || (info["event"] == "raise") )
     {
       room_.deliver(read_msg_);
       std::string event = info["event"]; 
@@ -841,15 +851,19 @@ bool Dealer_Game::gameResult()
 }
 
 //method that exchanges the requested amount of cards in a player's hand
-chat_message Dealer_Game::exchangeCards(int amountOfCards)
+chat_message Dealer_Game::exchangeCards(int amountOfCards, std::string id_player)
 {
   nlohmann::json to_player;
   chat_message cards;
   std::string json_str;
 
+  to_player["event"] = "Deal";
+  to_player["id_player"] = id_player;
+  to_player["cards_requested"] = amountOfCards;
+
   for(int i = 0; i < amountOfCards; i++)
   {
-    std::string in = std::to_string(i);
+    std::string in = std::to_string(i+1);
     Card c = _deck.deal();
     to_player[in] = c.card_to_string();
   }

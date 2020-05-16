@@ -63,7 +63,7 @@ class Dealer_Game
     void shuffleCards();
     chat_message dealCards(int num, std::string id);
     bool gameResult();
-    chat_message exchangeCards(int amountOfCards);
+    chat_message exchangeCards(int amountOfCards, std::string id_player);
     void revealHand();
     void addMoney(int amount);
     chat_message turn(int, boost::uuids::uuid);

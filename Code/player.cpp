@@ -123,11 +123,18 @@ void player_comm::do_read_body()
             {
               std::cout << "dealing" << std::endl;
               int num = info["cards_requested"];
-              setHand(info, num);
+              //setHand(info, num);
               _win->setCards(info, num);
               this->updateLabel(info);
               _win->my_turn_first();
-              write( move_j("dealt", 0, 0) );
+              if(num == 5) 
+              {
+                write( move_j("dealt", 0, 0) );
+              }
+              else
+              {
+                write( move_j("done", 0, 0) );
+              }
               
             }
             else
@@ -261,7 +268,7 @@ void player_comm::updateLabel(nlohmann::json info)
     }
     else if(event == "request_cards")
     {
-      std::string name = info["name"];
+      std::string name = "name";
       int c = info["cards_requested"];
       std::string c_str = std::to_string(c);
       lab = name+"'s move:  ";
@@ -304,6 +311,7 @@ int player_comm::getChipAmount()
 //method that sets the player's hand
 std::vector<std::string> player_comm::setHand(nlohmann::json cards, int cardNum)
 {
+  std::cout << "setting hand" << std::endl;
   std::vector<std::string> files;
   int num;
   std::string s;
