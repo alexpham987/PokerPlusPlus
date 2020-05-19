@@ -13,7 +13,7 @@
 #include "chat_message.hpp"
 #include "dealer_game.h"
 #include "deck.h"
-
+#include "dealer.cpp"
 
 using asio::ip::tcp;
 

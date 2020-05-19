@@ -40,7 +40,6 @@ class player_comm
     int getChipAmount();
     std::vector<std::string> setHand(nlohmann::json cards, int cardNum);
     chat_message move_j(std::string play, int cards_requested, int current_bet);
-    //chat_message move_j(std::string play, int cards_requested, int current_bet, std::string name);
     chat_message exchange_j(std::string play, int cards_requested, std::vector<int> cards);
     int turn; // to show proper buttons, -1 = out of game, 0 = not your turn, 1 = ante, 2 = exchange button greyed out		
 
@@ -52,14 +51,13 @@ class player_comm
 
   private:
     asio::io_context& io_context_;
-    /*boost::uuids::uuid*/ /*nlohmann::basic_json<>*/std::string _id; //attribute that represents the player id
+    std::string _id; //attribute that represents the player id
     tcp::socket socket_;
     chat_message read_msg_;
     chat_message_queue write_msgs_;
     Mainwin* _win; //main window attribute
 
     std::string _name; //attribute that represents the player's name
-    //boost::uuids::uuid _id; //attribute that represents the player id
     Stack _stack; //attribute that represents the stack of chips
     Hand _hand; //attribute that represents the player's hand
   

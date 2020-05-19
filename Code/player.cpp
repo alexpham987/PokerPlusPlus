@@ -91,12 +91,9 @@ void player_comm::do_read_body()
           nlohmann::json info = nlohmann::json::parse(read_msg_.body());
           std::cout << "event = " << info["event"] << std::endl;
 
-          std::cout << "id = " << this->_id << std::endl;
 
-          if(/*info["event"] == "set id" &&*/ this->_id == "0")
+          if( this->_id == "0" )
           {
-            std::cout << "setting id" << std::endl;
-            //this->_id = info["id_player"];
             this->updateLabel(info);
           }
 
@@ -118,12 +115,9 @@ void player_comm::do_read_body()
 
           else if(info["event"] == "Deal")
           {
-            std::cout << "inside deal"  << std::endl;
             if(info["id_player"] == this->_id)
             {
-              std::cout << "dealing" << std::endl;
               int num = info["cards_requested"];
-              //setHand(info, num);
               _win->setCards(info, num);
               this->updateLabel(info);
               _win->my_turn_first();
@@ -148,7 +142,6 @@ void player_comm::do_read_body()
             {
               if(info["turn"] == 1)
               {
-                std::cout << "my turn" << std::endl;
                 turn = 1;
                 _win->my_turn();
               }
@@ -164,9 +157,17 @@ void player_comm::do_read_body()
               {
                 _win->my_turn_second();
               }
-              //info["name"] = this->_name;
               this->updateLabel(info);
             }
+
+            else if(info["event"] == "bet" || info["event"] == "raise")
+            {
+              if(info["id_player"] != this->_id)
+              {
+                this->updateLabel(info);
+              }
+            }
+
             else
             {
               turn = 0;
@@ -177,17 +178,23 @@ void player_comm::do_read_body()
           else if(info["event"] == "game over")
           {
             _win->wait_for_turn();
-            write( move_j( "hand value", -1, _hand.calc_value() ) );
+            if(info["id_player"] == this->_id)
+            {
+              write( move_j( "hand value", -1, _hand.calc_value() ) );
+            }
           }
-          //std::cout.write(read_msg_.body(), read_msg_.body_length());
-          std::cout << "write done" << std::endl;
-          std::cout << "\n";
+          else if(info["event"] == "tie")
+          {
+            _win->wait_for_turn();
+            if(info["id_player"] == this->_id)
+            {
+              write( move_j( "hand value", -1, _hand.find_next_highest() ) );
+            }
+          }
           do_read_header();
-          std::cout << "header read" << std::endl;
         }
         else
         {
-          //this->updateLabel(info);
           socket_.close();
         }
       });
@@ -224,18 +231,14 @@ void player_comm::updateLabel(nlohmann::json info)
 
   if(info["event"] == "set_id")
   {
-    std::cout << "id check 1" << std::endl;
     _id = info["id_player"];
     lab = "id set";
-    std::cout << "id now " << _id << std::endl;
   }
 
   else if(info["event"] == "Deal")
   {
     lab = "Cards Dealt!";
-    std::cout << "b4 setLabel" << std::endl;
     _win->setLabel(lab);
-    std::cout << "after setlabel" << std::endl;
   }
 
   else if(info["event"] == "winner")
@@ -246,7 +249,8 @@ void player_comm::updateLabel(nlohmann::json info)
     }
     else
     {
-      lab = "You won!";
+      int amount = info["amount"];
+      lab = "You won $" + std::to_string(amount) + ", congrats!";
     }
     _win->setLabel(lab);
   }
@@ -264,7 +268,7 @@ void player_comm::updateLabel(nlohmann::json info)
       std::string bet_str = std::to_string(bet);
       lab = name+"'s move:  ";
       lab += event+" $"+bet_str;
-      std::cout << "setting label" << std::endl;
+      _win->set_bet(bet);
     }
     else if(event == "request_cards")
     {
@@ -278,24 +282,10 @@ void player_comm::updateLabel(nlohmann::json info)
     {
       lab += event;
     }
-    std::cout << "b4 setLabel" << std::endl;
     _win->setLabel(lab);
-    std::cout << "after setlabel" << std::endl;
   }
 }
 
-
-
-
-//constructor that intitializes the _id attribute with a random value
-/*player_comm::player_comm()
-{
-//   boost::uuids::random_generator generator;
-//   boost::uuids::uuid id = generator();
-//   _id = id;
-     turn = 0;
-}
-*/
 //method that updates the _name attribute with the passed in parameter
 void player_comm::setName(std::string name)
 {
@@ -304,14 +294,12 @@ void player_comm::setName(std::string name)
 
 int player_comm::getChipAmount() 
 {
-  std::cout << _stack.get_total() << std::endl;
   return _stack.get_total();
 }
 
 //method that sets the player's hand
 std::vector<std::string> player_comm::setHand(nlohmann::json cards, int cardNum)
 {
-  std::cout << "setting hand" << std::endl;
   std::vector<std::string> files;
   int num;
   std::string s;
@@ -395,28 +383,6 @@ chat_message player_comm::move_j(std::string play, int cards_requested, int curr
 
   return msg;
 }
-/*
-chat_message player_comm::move_j(std::string play, int cards_requested, int current_bet/, std::string name/)
-{
-  nlohmann::json to_dealer;
-  chat_message msg;
-  std::string json_str;
-
-  to_dealer["player_id"] = this->_id;
-  to_dealer["name"] = this->_name;
-  //this->_name = name;
-  to_dealer["event"] = play;        // "stand","hit","fold","raise","join","request_cards"
-  to_dealer["cards_requested"] = cards_requested; //optional, number of cards requested, 1 to 5
-  to_dealer["current_bet"] = current_bet;
-
-  json_str = to_dealer.dump();
-
-  msg.body_length(std::strlen(json_str.c_str()));
-  std::memcpy(msg.body(), json_str.c_str(), msg.body_length());
-  msg.encode_header();
-
-  return msg;
-}*/
 
 //method that exchanges the cards in a player's hand
 chat_message player_comm::exchange_j(std::string play, int cards_requested, std::vector<int> cards)
@@ -453,37 +419,25 @@ int main(int argc, char *argv[])
 
   player_comm* p = new player_comm(io_context, endpoints);
   assert(p);
-  std::cout << "player comm made" << std::endl;
 
   std::thread t([&io_context](){ io_context.run(); });
 
   Gtk::Main kit(argc, argv);
   Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file("PokerPP.glade");
-  std::cout << "pokerpp.glade created" << std::endl;
   Mainwin *win = 0;
   builder->get_widget_derived("Mainwin", win);
 
   //player_comm pg;
   p->setMainwin(win);
-  std::cout << "window set" << std::endl;
 
   //win->setPlayerGame(pg);
   win->setPlayerComm(p);
-  std::cout << "player comm connected" << std::endl;
-  /*while(p->turn == 0)
-  {
-    win->wait_for_turn();
-    //if()
-  }
-*/
+
   kit.run(*win);
-  std::cout << "window ran" << std::endl;
 
   p->close();
-  std::cout << "p closed" << std::endl;
 
   t.join();
-  std::cout << "t joined" << std::endl;
   
   return 0;
 }

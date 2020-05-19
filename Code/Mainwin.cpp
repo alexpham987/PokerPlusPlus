@@ -77,14 +77,6 @@ Mainwin::Mainwin(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refG
 Mainwin::~Mainwin()
 {}
 
-//method that links the player_game class and the gtk window together and sets the player's name
-/*
-void Mainwin::setPlayerGame(player_comm pgame)
-{
-  _pc = &pgame;
-  _pc->setName(_player_name);
-}
-*/
 //method that links the player_comm class and gtk window together
 void Mainwin::setPlayerComm(player_comm* pcomm)
 {
@@ -92,17 +84,13 @@ void Mainwin::setPlayerComm(player_comm* pcomm)
   _pc->setName(_player_name);
   //sets initial conditions for a starting player
   chat_message join = _pc->move_j("join", 0, 0);
-  std::cout << "b4 pc write" << std::endl; 
   _pc->write(join);
-  std::cout << "after pc write" << std::endl;
 }
 
 //method that sets the label for the gtk window
 void Mainwin::setLabel(std::string text)
 {
-  std::cout << "b4 set_label" << std::endl;
   msg->set_label(text);
-  std::cout << "after set_label" << std::endl;
 }
 
 //method that sets the cards in the player's hand
@@ -140,6 +128,7 @@ void Mainwin::on_about_click()
 //method that deals with the move stand pat (not exchanging cards)
 void Mainwin::on_stand_click()
 {
+  current_bet = 0;
   chat_message info = _pc->move_j("stand", 0, 0);
   _pc->write(info);
 }
@@ -154,6 +143,11 @@ void Mainwin::on_check_click()
   }
   chat_message info = _pc->move_j("check", 0, 0);
   _pc->write(info);
+}
+
+void Mainwin::set_bet(int i)
+{
+  current_bet = i;
 }
 
 //method that deals with when bet is clicked
@@ -338,6 +332,7 @@ void Mainwin::on_exchange_click()
       card_5->clear();
   }
 
+  current_bet = 0;
   chat_message info = _pc->exchange_j("request_cards", cards.size(), cards);
   _pc->write(info);
 }

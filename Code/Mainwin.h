@@ -29,6 +29,7 @@ class Mainwin : public Gtk::Window
     void my_turn_second();
     void my_turn_third();
     void my_turn_fourth();
+    void set_bet(int);
 
   protected:
     void on_quit_click();

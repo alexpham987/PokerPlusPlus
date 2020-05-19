@@ -69,6 +69,7 @@ class Dealer_Game
     chat_message turn(int, boost::uuids::uuid);
     void startGame();
     void setDeck(Deck);
+    int getPot();
 
   private:
     bool _playerResult; //attribute that represents whether a player has won or lost
